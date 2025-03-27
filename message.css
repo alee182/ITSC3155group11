@@ -1,0 +1,103 @@
+/* General Styles */
+body {
+    background-color: #A8D5A8;
+    font-family: 'Baloo 2', cursive;
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
+}
+
+/* Navigation Bar */
+.navbar {
+    background-color: #145214;
+    padding: 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    width: 100%;
+}
+
+.logo {
+    font-family: 'Fredoka One', cursive;
+    color: white;
+    font-size: 28px;
+    font-weight: bold;
+    margin-left: 20px;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+/* Navigation Icons */
+.nav-icons {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    flex-grow: 1;
+    justify-content: left;
+    margin-left: 40px;
+}
+
+.nav-icons a {
+    display: flex;
+    align-items: left;
+    color: white;
+    font-size: 18px;
+    text-decoration: none;
+    gap: 8px;
+    font-weight: bold;
+    transition: color 0.2s ease-in-out;
+}
+
+.nav-icons a:hover {
+    color: #FFD700;
+}
+
+.nav-icons img {
+    width: 24px;
+    height: 24px;
+    cursor: pointer;
+    align-items: left;
+    margin-left: 20px
+}
+
+.profile-container {
+    display: flex;
+    align-items: center;
+    margin-right: 30px;
+}
+
+.profile-circle {
+    width: 35px;
+    height: 35px;
+    background-color: white;
+    border-radius: 50%;
+    border: 2px solid #0e3d0e;
+}
+
+.profile-name {
+    color: white;
+    font-weight: bold;
+    margin-left: 10px;
+}
+
+/* Search Bar */
+.search-container {
+    margin: 25px 0;
+    display: flex;
+    justify-content: flex-start;
+    position: relative;
+    width: 60%;
+}
+
+.search-bar {
+    width: 20%;
+    padding: 14px 20px;
+    border-radius: 25px;
+    border: 2px solid #D7EDD7;
+    font-size: 18px;
+    font-family: 'Baloo 2', cursive;
+    outline: none;
+    background-color: #D7EDD7;
+    color: #145214;
+}
