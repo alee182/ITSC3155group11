@@ -1,16 +1,16 @@
 from django.shortcuts import render
-from django.http import HttpResponse
+
 # Create your views here.
 
 def home(request):
-    return HttpResponse('Home page')
+    return render(request, 'home.html')
 
 def explore(request):
-    return HttpResponse('Explore Page')
+    return render(request, 'explore.html')
 
 def listing(request):
-    return HttpResponse('LISTING')
+    return render(request, 'sales.html')
 
 
 def messaging(request):
-    return HttpResponse("MESSAGE")
+    return render(request, 'message.html')
