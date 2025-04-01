@@ -22,12 +22,8 @@ from django.http import HttpResponse
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-<<<<<<< Updated upstream:ninermarket/urls.py
-    path('', include('base.urls'))
-=======
     path('', home),
     path('explore/', explore),
     path('LISTING/', listing),
     path('MESSAGE', messaging)
->>>>>>> Stashed changes:ninermarket/ninermarket/urls.py
 ]
