@@ -1,13 +1,80 @@
-/* General Styles */
+/* GENERAL STYLES */
 body {
-    background-color: #A8D5A8;
-    font-family: 'Baloo 2', cursive;
+    background: #a7ceaa;
+    font-family: 'Baloo 2', sans-serif;
     margin: 0;
     padding: 0;
     overflow-x: hidden;
 }
 
-/* Navigation Bar */
+.container {
+    text-align: center;
+    padding: 10px;
+}
+
+.logo {
+    width: 300px;
+    margin-bottom: 5px;
+}
+
+.title {
+    color: #004d06;
+    font-size: 175px;
+    font-weight: bold;
+    margin: 0;
+    line-height: 1;
+}
+
+.caption {
+    color: white;
+    font-size: 30px;
+    margin-top: 5px;
+    font-weight: 500;
+}
+
+.browse-btn {
+    background: #006208;
+    color: white;
+    font-size: 35px;
+    padding: 12px 50px;
+    border: none;
+    cursor: pointer;
+    margin-top: 20px;
+    border-radius: 50px;
+    font-weight: bold;
+    transition: all 0.3s ease;
+    box-shadow: 2px 4px 6px rgba(0, 0, 0, 0.2);
+    text-decoration: none;
+}
+
+.browse-btn:hover {
+    background:#c8c700;
+    transform: translateY(-2px);
+}
+
+.login-btn {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    color: white;
+    padding: 8px 16px;
+    text-decoration: none;
+    font-size: 25px;
+    font-weight: bold;
+    background: rgba(0, 98, 8, 0.8);
+    border-radius: 50px;
+    transition: all 0.3s ease;
+}
+
+.login-btn:hover {
+    background: #c8c700;
+    color: #004d06;
+    text-decoration: none;
+    transform: scale(1.05);
+}
+
+
+/* NAVBAR STYLES */
 .navbar {
     background-color: #145214;
     padding: 15px;
@@ -18,17 +85,6 @@ body {
     width: 100%;
 }
 
-.logo {
-    font-family: 'Fredoka One', cursive;
-    color: white;
-    font-size: 28px;
-    font-weight: bold;
-    margin-left: 20px;
-    cursor: pointer;
-    text-decoration: none;
-}
-
-/* Navigation Icons */
 .nav-icons {
     display: flex;
     align-items: center;
@@ -40,7 +96,7 @@ body {
 
 .nav-icons a {
     display: flex;
-    align-items: left;
+    align-items: center;
     color: white;
     font-size: 18px;
     text-decoration: none;
@@ -57,8 +113,7 @@ body {
     width: 24px;
     height: 24px;
     cursor: pointer;
-    align-items: left;
-    margin-left: 20px
+    margin-left: 20px;
 }
 
 .profile-container {
@@ -81,7 +136,8 @@ body {
     margin-left: 10px;
 }
 
-/* Search Bar */
+
+/* SEARCH BAR */
 .search-container {
     margin: 20px auto;
     display: flex;
@@ -107,6 +163,9 @@ body {
     color: #145214;
     opacity: 0.8;
 }
+
+
+/* EXPLORE SECTION */
 .section-title {
     color: #145214;
     font-size: 22px;
@@ -193,6 +252,8 @@ body {
     font-weight: bold;
 }
 
+
+/* MEDIA QUERIES */
 @media screen and (max-width: 1024px) {
     .scroll-container {
         max-width: 95%;
@@ -212,6 +273,24 @@ body {
 }
 
 @media screen and (max-width: 768px) {
+    .title {
+        font-size: 80px;
+    }
+
+    .caption {
+        font-size: 16px;
+    }
+
+    .browse-btn {
+        font-size: 18px;
+        padding: 10px 35px;
+    }
+
+    .login-btn {
+        font-size: 14px;
+        padding: 6px 12px;
+    }
+
     .scroll-container {
         max-width: 100%;
     }
@@ -230,6 +309,15 @@ body {
 }
 
 @media screen and (max-width: 480px) {
+    .title {
+        font-size: 60px;
+    }
+
+    .browse-btn {
+        font-size: 16px;
+        padding: 8px 25px;
+    }
+
     .scroll-items {
         gap: 10px;
     }
@@ -242,11 +330,13 @@ body {
     .search-container {
         width: 90%;
     }
+
     .nav-icons {
         flex-direction: column;
         align-items: flex-start;
         gap: 10px;
     }
+
     .profile-container {
         margin-right: 10px;
     }
