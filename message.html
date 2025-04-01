@@ -3,55 +3,59 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Niner Market - EXPLORE</title>
+  <title>Niner Market - Message</title>
   <link rel="stylesheet" href="message.css" />
   <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600&family=Fredoka+One&display=swap" rel="stylesheet" />
 </head>
 <body>
 
-  <!-- Navigation Bar -->
-  <nav class="navbar">
-    <a href="index.html"><h1 class="logo">NINER MARKET</h1></a>
-    <div class="nav-icons">
-      <a href="explore.html"><img src="images/home.png" alt="home-icon" class="icon">Home</a>
-      <a href="#"><img src="images/community.png" alt="community-icon" class="icon">Community</a>
-      <a href="#"><img src="images/Message.png" alt="message-icon" class="icon">Message</a>
-      <a href="#"><img src="images/Sales.png" alt="sales-icon" class="icon">Sell</a>
-    </div>
+  <div class="app-container">
 
-    <div class="profile-container">
-      <div class="profile-name">Login/Signup</div>
-    </div>
-  </nav>
-
-  <!-- Messaging Section -->
-  <div class="message-page">
+    <!-- Sidebar -->
     <div class="sidebar">
-      <input type="text" placeholder="Search..." class="search-bar" />
-      <div class="chat-list">
-        <div class="chat-bubble">
-          <img src="https://via.placeholder.com/40" alt="Profile" />
-          <span>John Doe</span>
-        </div>
-        <div class="chat-bubble">
-          <img src="https://via.placeholder.com/40" alt="Profile" />
-          <span>Jane Smith</span>
-        </div>
-        <!-- Add more chat bubbles here -->
+      <div class="search-box">
+        <input type="text" placeholder="Search..." />
+      </div>
+      <div class="contact-list">
+        {% for thread in threads %}
+          <a href="{% url 'messages_view' thread.id %}">
+            <div class="contact {% if selected_thread.id == thread.id %}active{% endif %}">
+              <span>
+                {% for user in thread.participants.all %}
+                  {% if user != request.user %}
+                    {{ user.username }}
+                  {% endif %}
+                {% endfor %}
+              </span>
+            </div>
+          </a>
+        {% endfor %}
       </div>
     </div>
-
-    <div class="chat-area">
-      <div class="messages">
-        <div class="message received">Hey, how are you?</div>
-        <div class="message sent">I'm good! You?</div>
-        <div class="message received">Pretty good, just checking in.</div>
+  
+    <!-- Chat area -->
+    <div class="main-content">
+      <div class="chat-area">
+        {% for message in messages %}
+          <div class="message {% if message.sender == request.user %}you{% else %}them{% endif %}">
+            <div class="bubble">{{ message.content }}</div>
+          </div>
+        {% empty %}
+          <p class="no-messages">Start a conversation</p>
+        {% endfor %}
       </div>
-      <div class="input-area">
-        <input type="text" placeholder="Type a message..." />
-        <button>Send</button>
+  
+      {% if selected_thread %}
+      <div class="chat-input">
+        <form method="post">
+          {% csrf_token %}
+          <input type="text" name="content" placeholder="Type a message..." required />
+          <button class="send-btn">⬆️</button>
+        </form>
       </div>
+      {% endif %}
     </div>
+  
   </div>
 
 </body>
