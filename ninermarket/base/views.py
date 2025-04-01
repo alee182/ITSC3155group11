@@ -1,29 +1,17 @@
-from django.shortcuts import render, get_object_or_404, redirect
-from .models import Thread, Message
-from django.contrib.auth.decorators import login_required
-from django.contrib.auth.models import User
+from django.shortcuts import render
+from django.http import HttpResponse
+# Create your views here.
 
-@login_required
-def messages_view(request, thread_id=None):
-    threads = Thread.objects.filter(participants=request.user)
+def home(request):
+    return HttpResponse('Home page')
 
-    selected_thread = None
-    messages = []
+def explore(request):
+    return HttpResponse('Explore Page')
 
-    if thread_id:
-        selected_thread = get_object_or_404(Thread, id=thread_id)
-        if request.user not in selected_thread.participants.all():
-            return redirect('messages')  # security: user not in this thread
-        messages = selected_thread.messages.all()
+def listing(request):
+    return HttpResponse('LISTING')
 
-    if request.method == "POST" and selected_thread:
-        content = request.POST.get("content")
-        if content:
-            Message.objects.create(thread=selected_thread, sender=request.user, content=content)
-            return redirect('messages_view', thread_id=thread_id)
 
-    return render(request, "messages.html", {
-        "threads": threads,
-        "selected_thread": selected_thread,
-        "messages": messages
-    })
+def messaging(request):
+    return HttpResponse("MESSAGE")
+
