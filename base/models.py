@@ -14,7 +14,7 @@ class Listing(models.Model):
         return self.name
 
 class DirectMessage(models.Model):
-    sender = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
+    sender = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, related_name="sender")
+    recipient = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, related_name="recipient")
     content = models.TextField()
     timestamp = models.DateTimeField(auto_now_add=True)
-    
