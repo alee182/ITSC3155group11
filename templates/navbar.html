@@ -1,14 +1,38 @@
 {% load static %}
-<nav class="navbar">
-    <a href="{% static 'images/uncc-logo.png' %}"><h1 class="logo">NINER MARKET</h1></a>
-    <div class="nav-icons">
-        <a href="explore.html"><img src="images/home.png" alt="home-icon" class="icon">Home</a>
-        <a href="#"><img src="images/community.png" alt="community-icon" class="icon">Community</a>
-        <a href="#"><img src="images/Message.png" alt="message-icon" class="icon">Message</a>
-        <a href="#"><img src="images/Sales.png" alt="sales-icon" class="icon">Sell</a>
-    </div>
 
-    <div class="profile-container">
-        <div class="profile-name">Login/Signup</div>
+<div class = "navbar">
+    <div class = "nav-left">
+        <a href="{% url 'home' %}" class = "logo">
+            NINER MARKET
+        </a>
+
+        <!-- mobile hamburger icon -->
+        <button class="hamburger" onclick="toggleNav()">☰</button>
     </div>
-</nav>
+        
+    <div class="nav-icons" id="navMenu">
+    <!-- Nav bar links -->
+        <a href="{% url 'explore' %}">
+            <img src="{% static 'images/icons/home.png' %}" alt="explore">Explore
+        </a>
+
+        <a href="{% url 'community' %}">
+            <img src="{% static 'images/icons/community.png' %}">Community
+        </a>
+
+        <a href="#">
+            <img src="{% static 'images/icons/message.png' %}">Message
+        </a>
+
+        <a href="#">
+            <img src="{% static 'images/icons/Sales.png' %}">Create Listings
+        </a>
+
+        <form action="#" method="get">
+            <button type="submit" class="login-button">
+                Login/Signup
+            </button>
+        </form>
+
+    </div>
+</div>

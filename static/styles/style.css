@@ -1,0 +1,160 @@
+@import url("https://fonts.googleapis.com/css2?family=Baloo+2:wght@600&family=Fredoka+One&display=swap");
+
+:root {
+    --color-main: #005035;
+    --color-main-light: #F1E6B2;
+    --color-dark-light: #899064;
+    --color-dark: #175f1e;
+    --color-light: #f7f7f7;
+    --color-bg: #a7d8a6;
+    --color-gold: #A49665;
+    --color-red: #802F2D;
+    --color-skyblue: #007377;
+    --color-black: #101820;
+    --color-white: #FFFFFF;
+}
+
+/* the base styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Baloo 2", cursive;
+    text-rendering: optimizeLegibility;
+    font-size: inherit;
+}
+
+html {
+    font-size: 62.5%;
+}
+
+@media only screen and (min-width: 1200px) {
+    html {
+        font-size: 75%;
+    }
+}
+
+@media screen and (min-width: 2100px) {
+    html {
+        font-size: 100%;
+    }  
+}
+
+body {
+    background-color: var(--color-bg);
+    list-style: 1.6;
+    font-weight: 400;
+    color: var(--color-main-light);
+    min-height: 100vh;
+    font-size: 1.5rem;
+}
+
+img {
+    width: 100%;
+}
+
+a {
+    text-decoration: none;
+    display: inline-block;
+    color: var(--color-main-light);
+}
+
+
+/* navigation */
+
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.6rem 1.6rem;
+    background-color: var(--color-main);
+    border-radius: 0 0 2rem 2rem;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.nav-left {
+    display: flex;
+    align-items: center;
+    gap: 1.6rem;
+}
+
+.logo {
+    font-family: "Fredoka One", cursive;
+    font-size: 2.4rem;
+    color: var(--color-light);
+    letter-spacing: 0.5px;
+    transition: transform 0.2s ease;
+}
+
+.logo:hover {
+    transform: scale(1.05);
+}
+
+.nav-icons {
+    display: flex;
+    align-items: center;
+    gap: 1.6rem;
+    color: var(--color-dark);
+}
+
+.nav-icons a {
+    color: var(--color-main-light);
+    border-radius: 1.2rem;
+    padding: 0.8rem;
+    transition: background-color 0.2s, transform 0.2s;
+}
+
+.nav-icons a:hover {
+    color: var(--color-dark);
+    background-color: var(--color-gold);
+    transform: scale(1.1);
+}
+
+.nav-icons a:active {
+    color: var(--color-dark-light);
+}
+
+.nav-icons img {
+    width: 2.4rem;
+}
+
+/* Mobile responsive nav bar */
+
+.hamburger {
+    display: none;
+    font-size: 2.4rem;
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: var(--color-main-light);
+}
+
+@media  only screen and (max-width: 768px) {
+    .hamburger {
+        display: block;
+    }
+
+    .nav-icons {
+        display: none;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 1.6rem;
+        position: absolute;
+        top: 7rem;
+        left: 0;
+        width: 100%;
+        background-color: var(--color-main);
+        padding: 1.6rem;
+        border-radius: 0 0 2rem 2rem;
+        z-index: 10;
+    }
+
+    .nav-icons.active {
+        display: flex;
+    }
+
+    .nav-left {
+        width: 100%;
+        justify-content: space-between;
+    }
+}
