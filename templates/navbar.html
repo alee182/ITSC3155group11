@@ -2,37 +2,58 @@
 
 <div class = "navbar">
     <div class = "nav-left">
-        <a href="{% url 'home' %}" class = "logo">
+        <a href="{% url 'home' %}" class ="logo">
             NINER MARKET
         </a>
-
-        <!-- mobile hamburger icon -->
-        <button class="hamburger" onclick="toggleNav()">☰</button>
     </div>
+
+    <!-- Center Nav bar links -->
+    <div class="nav-center">
+        <div class="nav-icons" id="navMenu">
+
+        <!-- Nav bar links -->
+            <a href="{% url 'explore' %}" class="{% if request.path == '/explore/' %}active{% endif %}">
+                <img src="{% static 'images/icons/home.png' %}" alt="explore"> Explore
+            </a>
+
+
+            <a href="{% url 'community' %}" class="{% if request.path == '/community/' %}active{% endif %}">
+                <img src="{% static 'images/icons/community.png' %}"> Community
+            </a>
+
+
+            <a href="#" class="{% if request.path == '/messages/' %}active{% endif %}">
+                <img src="{% static 'images/icons/message.png' %}"> Message
+            </a>
+
+            <a href="#" class="{% if request.path == '/create-listing/' %}active{% endif %}">
+                <img src="{% static 'images/icons/Sales.png' %}" >Create Listings
+            </a>
+
+            <!-- mobile login button -->
+            <form action="#" method="get" class="mobile-login">
+                <button type="submit" class="login-button">
+                    Login/Signup
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Right Nav bar links -->
+    <div class="nav-right">
         
-    <div class="nav-icons" id="navMenu">
-    <!-- Nav bar links -->
-        <a href="{% url 'explore' %}">
-            <img src="{% static 'images/icons/home.png' %}" alt="explore">Explore
-        </a>
+        <!-- mobile hamburger icon -->
+        <button class="hamburger" id="hamburger" aria-label="Toggle navigation">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
 
-        <a href="{% url 'community' %}">
-            <img src="{% static 'images/icons/community.png' %}">Community
-        </a>
-
-        <a href="#">
-            <img src="{% static 'images/icons/message.png' %}">Message
-        </a>
-
-        <a href="#">
-            <img src="{% static 'images/icons/Sales.png' %}">Create Listings
-        </a>
-
-        <form action="#" method="get">
+        <!-- desktop login button -->
+        <form action="#" method="get" class="desktop-login">
             <button type="submit" class="login-button">
                 Login/Signup
             </button>
         </form>
-
     </div>
 </div>
