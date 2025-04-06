@@ -1,24 +1,12 @@
 {% load static %}
 
-<nav class="navbar">
-    <a href="index.html">
-        <h1 class="logo">NINER MARKET</h1>
-    </a>
-
-    <div class="nav-icons">
-        <a href="explore.html">
-            <img src="{% static 'images/home.png' %}" alt="home-icon" class="icon">Home
-        </a>
-        <a href="#">
-            <img src="{% static 'images/community.png' %}" alt="community-icon" class="icon">Community
-        </a>
-        <a href="#">
-            <img src="{% static 'images/Message.png' %}" alt="message-icon" class="icon">Message
-        </a>
-        <a href="#">
-            <img src="{% static 'images/Sales.png' %}" alt="sales-icon" class="icon">Sell
+<div class = "navbar">
+    <div class = "nav-left">
+        <a href="{% url 'home' %}" class ="logo">
+            NINER MARKET
         </a>
     </div>
+
 
     <div class="profile-container">
         <div class="profile-name">
@@ -34,3 +22,54 @@
     </div>
 </nav>
 
+    <!-- Center Nav bar links -->
+    <div class="nav-center">
+        <div class="nav-icons" id="navMenu">
+
+
+        <!-- Nav bar links -->
+            <a href="{% url 'explore' %}" class="{% if request.path == '/explore/' %}active{% endif %}">
+                <img src="{% static 'images/icons/home.png' %}" alt="explore"> Explore
+            </a>
+
+
+            <a href="{% url 'community' %}" class="{% if request.path == '/community/' %}active{% endif %}">
+                <img src="{% static 'images/icons/community.png' %}"> Community
+            </a>
+
+
+            <a href="#" class="{% if request.path == '/messages/' %}active{% endif %}">
+                <img src="{% static 'images/icons/message.png' %}"> Message
+            </a>
+
+            <a href="#" class="{% if request.path == '/create-listing/' %}active{% endif %}">
+                <img src="{% static 'images/icons/Sales.png' %}" >Create Listings
+            </a>
+
+            <!-- mobile login button -->
+            <form action="#" method="get" class="mobile-login">
+                <button type="submit" class="login-button">
+                    Login/Signup
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Right Nav bar links -->
+    <div class="nav-right">
+        
+        <!-- mobile hamburger icon -->
+        <button class="hamburger" id="hamburger" aria-label="Toggle navigation">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+
+        <!-- desktop login button -->
+        <form action="#" method="get" class="desktop-login">
+            <button type="submit" class="login-button">
+                Login/Signup
+            </button>
+        </form>
+    </div>
+</div>
