@@ -1,0 +1,58 @@
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #0b4f12; 
+    padding: 10px 20px;
+ 
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    height: 60px;
+  }
+  
+  .navbar .logo {
+    font-family: 'Fredoka One', cursive;
+    font-size: 1.8rem;
+    color: #a7fba6;
+    letter-spacing: 1px;
+    margin: 0;
+  }
+  
+  .nav-icons {
+    display: flex;
+    gap: 25px;
+  }
+  
+  .nav-icons a {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+    padding: 6px 12px;
+    border-radius: 10px;
+    transition: background-color 0.2s ease;
+  }
+  
+  .nav-icons a:hover,
+  .nav-icons a.active {
+    background-color: #1c8731;
+  }
+  
+  .nav-icons .icon {
+    height: 24px;
+    width: 24px;
+  }
+  
+  .profile-container {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #b6fbb6;
+    margin-right: 20px;
+  }
+  
