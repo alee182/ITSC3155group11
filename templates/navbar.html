@@ -1,16 +1,14 @@
 {% load static %}
-
+<link rel="stylesheet" href="{% static 'css/navbar.css' %}">
 <nav class="navbar">
-    <a href="index.html">
-        <h1 class="logo">NINER MARKET</h1>
-    </a>
+    <h1 class="logo">NINER MARKET</h1>
 
     <div class="nav-icons">
         <a href="explore.html">
-            <img src="{% static 'images/home.png' %}" alt="home-icon" class="icon">Home
+            <img src="{% static 'images/Home.png' %}" alt="home-icon" class="icon">Explore
         </a>
         <a href="#">
-            <img src="{% static 'images/community.png' %}" alt="community-icon" class="icon">Community
+            <img src="{% static 'images/Community.png' %}" alt="community-icon" class="icon">Community
         </a>
         <a href="#">
             <img src="{% static 'images/Message.png' %}" alt="message-icon" class="icon">Message
@@ -20,8 +18,7 @@
         </a>
     </div>
 
-    <div class="profile-container">
-        <div class="profile-name">Login/Signup</div>
-    </div>
+    
+    <img src="{% static 'images/profile.png' %}" alt="profile-icon" class="profile-container">
+    
 </nav>
-

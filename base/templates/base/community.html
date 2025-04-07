@@ -1,0 +1,51 @@
+{% extends 'main.html' %}
+{% load static %}
+
+{% block content %}
+<link rel="stylesheet" href="{% static 'css/community.css' %}">
+
+<div class="community-wrapper">
+  <!-- Sidebar with Tag Filters -->
+  <div class="community-sidebar">
+    <div class="search-bar">
+      <input type="text" placeholder="Search services..." />
+    </div>
+    <div class="tag-filters">
+      <a href="?tag=haircut" class="tag">Haircut</a>
+      <a href="?tag=food" class="tag">Food</a>
+      <a href="?tag=nails" class="tag">Nails</a>
+      <a href="?tag=photography" class="tag">Photography</a>
+      <a href="?tag=events" class="tag">Events</a>
+    </div>
+  </div>
+
+  <!-- Main Feed -->
+  <div class="community-feed">
+    <div class="feed-header">
+      <h2>Community Listings</h2>
+      <a class="create-btn" href="{% url 'create-post' %}">Create</a>
+    </div>
+
+    <div class="post-list">
+      {% for post in posts %}
+      <div class="post-card">
+        <div class="post-image">
+          {% if post.image %}
+            <img src="{{ post.image.url }}" alt="Post Image" />
+          {% else %}
+            <img src="{% static 'images/default-post.png' %}" alt="Placeholder" />
+          {% endif %}
+        </div>
+        <div class="post-details">
+          <h3>{{ post.title }}</h3>
+          <p>{{ post.description|truncatewords:30 }}</p>
+          <p class="post-meta">Posted by {{ post.user.username }} on {{ post.created|date:"M d, Y" }}</p>
+        </div>
+      </div>
+      {% empty %}
+        <p>No posts available. Be the first to create one!</p>
+      {% endfor %}
+    </div>
+  </div>
+</div>
+{% endblock %}
