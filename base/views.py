@@ -15,7 +15,7 @@ def loginPage(request):
     page = 'login'
 
     if request.user.is_authenticated:
-        return redirect('home')
+        return redirect('explore')
 
     if request.method == 'POST':
         username = request.POST.get('username').lower()
@@ -30,7 +30,7 @@ def loginPage(request):
 
         if user is not None:
             login(request, user)
-            return redirect('home')
+            return redirect('explore')
         else:
             messages.error(request, 'Username OR password does not exist')
 
@@ -40,7 +40,7 @@ def loginPage(request):
 
 def logoutUser(request):
     logout(request)
-    return redirect('home')
+    return redirect('explore')
 
 def registerPage(request):
     form = UserCreationForm()
@@ -48,16 +48,18 @@ def registerPage(request):
     if request.method == 'POST':
         form = UserCreationForm(request.POST)
         if form.is_valid():
-            user = form.save(commit=False)
-            user.username = user.username.lower()
-            user.save()
-            login(request, user)
-            return redirect('home')
-        else: 
-            messages.error(request, 'An error occured during registration')
+            username = form.cleaned_data.get('username')
+            if not username.lower().endswith('@charlotte.edu'):
+                messages.error(request, 'Username must end with "@charlotte.edu"')
+            else:
+                user = form.save(commit=False)
+                user.username = username.lower()
+                user.save()
+                login(request, user)
+                return redirect('explore')
 
 
-    return  render(request, 'base/login_register.html', {'form': form})
+    return  render(request, 'ninermarket/templates/login_register.html', {'form': form})
 
 def home(request):
     return render(request, 'home.html')
