@@ -29,4 +29,9 @@ class User(AbstractUser):
 
     USERNAME_FIELD = 'email'
 
-
+class Report(models.Model):
+    listing = models.ForeignKey(Listing, on_delete=models.SET_NULL, null=True)
+    user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
+    reason = models.TextField()
+    timestamp = models.DateTimeField(auto_now_add=True)
+    category = models.CharField(max_length=255, choices=[('spam', 'Spam'), ('scam', 'Scam'), ('other', 'Other')])
