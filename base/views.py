@@ -9,13 +9,16 @@ from django.contrib.auth.forms import UserCreationForm
 
 # Create your views here.
 def home(request):
-    return render(request, 'home.html')
+    return render(request,'home.html')
+
+def explore(request):
+    return render(request, 'explore.html')
 
 def loginPage(request):
     page = 'login'
 
     if request.user.is_authenticated:
-        return redirect('home')
+        return redirect('explore')
 
     if request.method == 'POST':
         username = request.POST.get('username').lower()
@@ -30,7 +33,7 @@ def loginPage(request):
 
         if user is not None:
             login(request, user)
-            return redirect('home')
+            return redirect('explore')
         else:
             messages.error(request, 'Username OR password does not exist')
 
@@ -40,7 +43,7 @@ def loginPage(request):
 
 def logoutUser(request):
     logout(request)
-    return redirect('home')
+    return redirect('explore')
 
 def registerPage(request):
     form = UserCreationForm()
@@ -52,18 +55,15 @@ def registerPage(request):
             user.username = user.username.lower()
             user.save()
             login(request, user)
-            return redirect('home')
+            return redirect('explore')
         else: 
             messages.error(request, 'An error occured during registration')
 
 
     return  render(request, 'base/login_register.html', {'form': form})
 
-def home(request):
-    return render(request, 'home.html')
 
-def explore(request):
-    return render(request, 'explore.html')
+
 
 def listing(request):
     return render(request, 'sales.html')
