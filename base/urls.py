@@ -11,5 +11,6 @@ urlpatterns = [
     path('logout/', views.logoutUser, name='logout'),
     path('register/', views.registerPage, name='register'),
     path('community/', views.community, name='community'),
+    path('create-listing/', views.createListing, name='create-listing'),
 
 ]
