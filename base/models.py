@@ -10,6 +10,7 @@ class User(AbstractUser):
     profile_pic = models.ImageField(upload_to='static/images/profile_pics', null=True, default='uncc-logo.png')
 
     USERNAME_FIELD = 'email'
+    REQUIRED_FIELDS = []
 
 class Listing(models.Model):
     host = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
