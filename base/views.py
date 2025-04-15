@@ -6,6 +6,8 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.forms import UserCreationForm
+from.forms import ListingForm
+from .models import Listing
 
 # Create your views here.
 def home(request):
@@ -76,3 +78,26 @@ def messaging(request):
 def community(request):
     return render(request, 'community.html')
 
+def create_listing(request):
+    form = ListingForm()
+
+    if request.method == 'POST':
+        form = ListingForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('home')
+
+    context = {'form': form}
+    return render(request, 'base/listing_form.html', context)
+
+def edit_listing(request, pk):
+    listing = Listing.objects.get(id=pk)
+    form = ListingForm(instance=listing)
+    if request.method == 'POST':
+        form = ListingForm(request.POST, instance=listing)
+        if form.is_valid():
+            form.save()
+            return redirect('home')
+
+    context = {'form': form}
+    return render(request, 'base/listing_form.html', context)
