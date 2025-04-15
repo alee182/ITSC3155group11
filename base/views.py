@@ -6,6 +6,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.forms import UserCreationForm
+from .forms import UserProfileForm
 
 # Create your views here.
 def home(request):
@@ -67,7 +68,20 @@ def registerPage(request):
     return  render(request, 'ninermarket/templates/login_register.html', {'form': form})
 
 
+@login_required
+def edit_profile(request):
+    if request.method == 'POST':
+        form = UserProfileForm(request.POST, request.FILES, instance=request.user)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Your profile has been updated!')
+            return redirect('profile')
+        else:
+            messages.error(request, 'Please correct the errors below.')
+    else:
+        form = UserProfileForm(instance=request.user)
 
+    return render(request, 'edit_profile.html', {'form': form})
 
 def listing(request):
     return render(request, 'sales.html')

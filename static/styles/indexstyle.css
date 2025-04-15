@@ -1,14 +1,4 @@
-
-
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Niner Market</title>
-  <link rel="stylesheet" href="/static/styles/indexstyle.css">
-  <style>
-    * {
+* {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
@@ -22,7 +12,7 @@
     justify-content: center;
     align-items: center;
     height: 100vh;
-    background-image: url(/static/images/charlottecampus.jpg); 
+    background-image: url('campus-image.jpg'); /* Replace with actual campus background */
     background-size: cover;
     background-position: center;
   }
@@ -52,7 +42,7 @@
   }
   
   .cta-button {
-    background-color: #B9975B; /* UNC Charlotte Gold */
+    background-color: #FFBC00; /* UNC Charlotte Gold */
     color: white;
     border: none;
     padding: 15px 30px;
@@ -63,25 +53,9 @@
   }
   
   .cta-button:hover {
-    background-color: #006747; /* Slightly darker gold for hover effect */
+    background-color: #FF9F00; /* Slightly darker gold for hover effect */
   }
   
   .cta-button:focus {
     outline: none;
   }
-  </style>
-</head>
-<body>
-  <div class="container">
-    <header>
-      <h1>Niner Market</h1>
-      <p class="tagline">Buy and sell your items with fellow students</p>
-    </header>
-    <main>
-      <div class="cta-container">
-        <button class="cta-button" onclick="window.location.href='login_register.html'">Login / Sign Up</button>
-      </div>
-    </main>
-  </div>
-</body>
-</html>
