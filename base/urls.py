@@ -10,5 +10,15 @@ urlpatterns = [
     path('explore/', views.explore_view, name='explore'),
     path('community/<int:post_id>/', views.community_detail, name='community-detail'),
     path('community/delete/<int:pk>/', views.delete_post, name='delete-post'),
+    path('LISTING/', views.listing, name = 'listing'),
+    path('login/', views.loginPage, name='login'),
+    path('logout/', views.logoutUser, name='logout'),
+    path('register/', views.registerPage, name='register'),
+    path('profile/', views.profile, name='profile'),
+    path('profile/edit/', views.edit_profile, name='edit_profile'),
+    
+
+
+
 
 ]
