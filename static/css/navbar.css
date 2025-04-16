@@ -5,7 +5,7 @@
   --color-accent: #F1E6B2;
   --color-hover: #A49665;
   --color-white: #ffffff;
-  --color-bg: #a7d8a6;
+  --color-bg: hsl(0, 0%, 82%);;
 }
 
 * {
@@ -41,6 +41,7 @@ a {
 
 .navbar {
   background: rgba(0, 66, 37, 0.85);
+  background: linear-gradient(to right, rgba(0, 66, 37, 0.85),rgba(0, 37, 21, 0.85));
   padding: 1.6rem 3.2rem;
   display: flex;
   justify-content: space-between;

@@ -1,6 +1,6 @@
 from django import forms
 from .models import Comment
-from .models import User
+from base.models import User
 
 class CommentForm(forms.ModelForm):
     class Meta:
@@ -9,7 +9,6 @@ class CommentForm(forms.ModelForm):
         widgets = {
             'body': forms.Textarea(attrs={'rows': 3, 'placeholder': 'Write a comment...'}),
         }
-
 
 class UserProfileForm(forms.ModelForm):
     class Meta:

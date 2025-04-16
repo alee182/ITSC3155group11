@@ -1,8 +1,7 @@
 from django.contrib import admin
+from django.contrib.auth.admin import UserAdmin
+from base.models import User
 from .models import Message
-from .models import Listing, DirectMessage, User, Report
+
 admin.site.register(Message)
-admin.site.register(Listing)
-admin.site.register(DirectMessage)
-admin.site.register(User)
-admin.site.register(Report)
+admin.site.register(User, UserAdmin)

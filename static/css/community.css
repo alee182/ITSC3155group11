@@ -14,7 +14,7 @@ html, body {
 
 .community-sidebar {
   width: 20%;
-  background-color: #A49665;
+  background: linear-gradient(to bottom, #A49665, #544922);
   padding: 15px;
   display: flex;
   flex-direction: column;

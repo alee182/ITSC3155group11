@@ -1,10 +1,14 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.decorators import login_required
 from .models import Message
-from django.contrib.auth.models import User
+from django.contrib import messages
+from base.models import User
 from .models import Post, Comment
 from django.db.models import Q
 from taggit.models import Tag
+from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.forms import UserCreationForm
+from .forms import UserProfileForm
 # Create your views here.
 
 def home(request):
@@ -118,3 +122,120 @@ def delete_post(request, pk):
         post.delete()
         return redirect('community')
     return redirect('community-detail', post_id=pk)
+
+def loginPage(request):
+    page = 'login'
+
+    if request.user.is_authenticated:
+        return redirect('explore')
+
+    if request.method == 'POST':
+        username = request.POST.get('username').lower()
+        password = request.POST.get('password')
+
+        try: 
+            user = User.objects.get(username=username)
+        except:
+            messages.error(request, 'User does not exist')
+
+        user = authenticate(request, username=username, password=password)
+
+        if user is not None:
+            login(request, user)
+            return redirect('explore')
+        else:
+            messages.error(request, 'Username OR password does not exist')
+
+
+    context = {'page': page}
+    return render(request, 'base/login_register.html', context)
+
+def logoutUser(request):
+    logout(request)
+    return redirect('explore')
+
+def registerPage(request):
+    form = UserCreationForm()
+
+    if request.method == 'POST':
+        form = UserCreationForm(request.POST)
+        if form.is_valid():
+
+            username = form.cleaned_data.get('username')
+            if not username.lower().endswith('@charlotte.edu'):
+                messages.error(request, 'Username must end with "@charlotte.edu"')
+            else:
+                user = form.save(commit=False)
+                user.username = username.lower()
+                user.save()
+                login(request, user)
+                return redirect('explore')
+
+
+
+    return  render(request, 'ninermarket/templates/login_register.html', {'form': form})
+
+
+@login_required
+def edit_profile(request):
+    if request.method == 'POST':
+        form = UserProfileForm(request.POST, request.FILES, instance=request.user)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Your profile has been updated!')
+            return redirect('profile')
+        else:
+            messages.error(request, 'Please correct the errors below.')
+    else:
+        form = UserProfileForm(instance=request.user)
+
+    return render(request, 'edit_profile.html', {'form': form})
+
+@login_required
+def edit_profile_pic(request):
+    if request.method == 'POST':
+        profile_pic = request.FILES.get('profile_pic')
+        if profile_pic:
+            request.user.profile_pic = profile_pic
+            request.user.save()
+    return redirect('profile')
+
+@login_required
+def edit_first_name(request):
+    if request.method == 'POST':
+        first_name = request.POST.get('first_name')
+        if first_name:
+            request.user.first_name = first_name
+            request.user.save()
+            return redirect('profile')
+    return render(request, 'base/edit_first_name.html')
+
+@login_required
+def edit_last_name(request):
+    if request.method == 'POST':
+        last_name = request.POST.get('last_name')
+        if last_name:
+            request.user.last_name = last_name
+            request.user.save()
+            return redirect('profile')
+    return render(request, 'base/edit_last_name.html')
+
+@login_required
+def edit_email(request):
+    if request.method == 'POST':
+        email = request.POST.get('email')
+        if email:
+            request.user.email = email
+            request.user.save()
+            return redirect('profile')
+    return render(request, 'base/edit_email.html')
+
+def listing(request):
+    return render(request, 'sales.html')
+
+@login_required
+def profile(request):
+    return render(request, 'base/userprofile.html')
+
+
+
