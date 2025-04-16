@@ -1,27 +1,41 @@
-/* General */
+html, body {
+  height: 100%;
+  overflow: hidden;
+  margin: 0;
+  padding: 0;
+  font-family: 'Arial', sans-serif;
+}
+
 body {
   margin: 0;
   font-family: 'Arial', sans-serif;
-  background-color: hsl(103, 21%, 76%);
+  background-color: hsl(0, 0%, 82%);
   height: 100vh;
   display: flex;
   flex-direction: column;
 }
+.msg-content {
+  color: black;
+}
 
 .chat-wrapper {
   display: flex;
-  height: calc(100vh - 60px); /* Adjust if your navbar is 60px tall */
+  height: calc(100vh - 60px);
+  overflow: hidden;
 }
+
 /* Sidebar */
 .sidebar {
   width: 25%;
-  background-color: #95d69b;
+  background-color: #A49665;
   padding: 20px;
   display: flex;
   flex-direction: column;
   gap: 20px;
   border-right: 3px solid #2e8641;
+  overflow-y: auto; 
 }
+
 
 .search-bar input {
   width: 100%;
@@ -29,7 +43,7 @@ body {
   border-radius: 20px;
   border: none;
   outline: none;
-  font-size: 1rem;
+  font-size: 2rem;
   box-sizing: border-box;
 }
 /* User list */
@@ -40,7 +54,7 @@ body {
 }
 
 .user {
-  background-color: #64b66f;
+  background-color:rgba(0, 66, 37, 0.85);
   height: 40px;
   border-radius: 25px;
   display: flex;
@@ -52,7 +66,7 @@ body {
 }
 
 .user.active {
-  background-color: #175f1e;
+  background-color: #6ba365;
 }
 
 
@@ -64,6 +78,8 @@ body {
   height: 100%;
   flex: 1;
   position: relative;
+  background-color: hsl(0, 0%, 82%);
+  border-left: 1px solid #ccc;
 }
 
 .messages {
@@ -91,6 +107,20 @@ body {
   border-radius: 20px;
   font-size: 1rem;
   line-height: 1.4;
+}
+
+.sidebar::-webkit-scrollbar,
+.messages::-webkit-scrollbar {
+  width: 0;
+  height: 0;
+}
+
+/* Hide scrollbars (Firefox) */
+.sidebar {
+  scrollbar-width: none;
+}
+.messages {
+  scrollbar-width: none;
 }
 
 .message.them {
@@ -159,14 +189,14 @@ body {
 }
 
 .username {
-  font-size: 0.75rem;
-  color: #333;
+  font-size: 2rem;
+  color: #ffffff;
   margin-top: 4px;
 }
 .chat-header {
   width: 100%;
   text-align: center;
-  font-size: 1.4rem;
+  font-size: 3rem;
   font-weight: bold;
   color: #175f1e;
   position: sticky;
@@ -202,4 +232,28 @@ body {
   color: white;
   font-size: 20px;
   cursor: pointer;
+}
+
+.empty-chat {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  text-align: center;
+}
+
+.empty-chat img {
+  max-width: 80%;
+  max-height: 80%;
+  object-fit: contain;
+  margin-bottom: 15px;
+}
+
+.empty-chat p {
+  font-size: 1.5rem;
+  color: #444;
+  margin: 0;
+  font-weight: 500;
 }

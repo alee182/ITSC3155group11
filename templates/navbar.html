@@ -1,24 +1,76 @@
 {% load static %}
 <link rel="stylesheet" href="{% static 'css/navbar.css' %}">
-<nav class="navbar">
-    <h1 class="logo">NINER MARKET</h1>
-
-    <div class="nav-icons">
-        <a href="explore.html">
-            <img src="{% static 'images/Home.png' %}" alt="home-icon" class="icon">Explore
-        </a>
-        <a href="#">
-            <img src="{% static 'images/Community.png' %}" alt="community-icon" class="icon">Community
-        </a>
-        <a href="#">
-            <img src="{% static 'images/Message.png' %}" alt="message-icon" class="icon">Message
-        </a>
-        <a href="#">
-            <img src="{% static 'images/Sales.png' %}" alt="sales-icon" class="icon">Sell
+<div class = "navbar">
+    <div class = "nav-left">
+        <a href="{% url 'home' %}" class ="logo">
+            NINER MARKET
         </a>
     </div>
 
-    
-    <img src="{% static 'images/profile.png' %}" alt="profile-icon" class="profile-container">
-    
-</nav>
+    <!-- Center Nav bar links -->
+    <div class="nav-center">
+        <div class="nav-icons" id="navMenu">
+
+
+        <!-- Nav bar links -->
+            <a href="{% url 'explore' %}" class="{% if request.path == '/explore/' %}active{% endif %}">
+                <img src="{% static 'images/Home.png' %}" alt="explore"> Explore
+            </a>
+
+
+            <a href="{% url 'community' %}" class="{% if request.path == '/community/' %}active{% endif %}">
+                <img src="{% static 'images/Community.png' %}"> Community
+            </a>
+
+
+            <a href="{% url 'message' %}" class="{% if '/messages' in request.path %}active{% endif %}">
+                <img src="{% static 'images/Message.png' %}"> Message
+            </a>
+
+            <a href="#" class="{% if request.path == '/create-listing/' %}active{% endif %}">
+                <img src="{% static 'images/Sales.png' %}" >Create Listings
+            </a>
+
+            <!-- mobile login button -->
+            {% if request.user.is_authenticated %}
+
+            <a href="{%% url 'logout' }" class="login-button">Logout</a>
+
+            {% else %}
+
+            <form action="#" method="get" class="mobile-login">
+                <button type="submit" class="login-button">
+                    Login/Signup
+                </button>
+            </form>
+
+            {% endif %}
+        </div>
+    </div>
+
+    <!-- Right Nav bar links -->
+    <div class="nav-right">
+        
+        <!-- mobile hamburger icon -->
+        <button class="hamburger" id="hamburger" aria-label="Toggle navigation">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+
+        <!-- desktop login button -->
+        {% if request.user.is_authenticated %}
+
+        <a href="{% url 'logout' %}" class="login-button">Logout</a>
+
+        {% else %}
+
+        <form action="#" method="get" class="desktop-login">
+            <button type="submit" class="login-button">
+                Login/Signup
+            </button>
+        </form>
+
+        {% endif%}
+    </div>
+</div>

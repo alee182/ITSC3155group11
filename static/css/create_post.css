@@ -1,0 +1,180 @@
+.create-form-container {
+    display: flex;
+    justify-content: center;
+    padding: 40px;
+  }
+  
+  .create-form {
+    background-color: rgba(0, 66, 37, 0.85);
+    border: 4px solid #1c6e26;
+    border-radius: 12px;
+    display: flex;
+    padding: 30px;
+    gap: 40px;
+    width: 90%;
+    max-width: 1000px;
+    flex-wrap: wrap;
+    color: black;
+  }
+  
+  /* Columns */
+  .left-column,
+  .right-column {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    flex: 1;
+  }
+  
+  /* Keep left column items spaced out top-bottom */
+  .left-column {
+    justify-content: space-between;
+  }
+  
+  /* Image upload box */
+  .image-box {
+    background-color: #eafae7;
+    border: 2px dashed #5c9c5e;
+    border-radius: 8px;
+    height: 400px;
+    width: 400px;
+    text-align: center;
+    font-size: 24px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 20px;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    position: relative;
+    transition: border-color 0.2s ease, background-color 0.2s ease;
+  }
+  
+  .image-box:hover {
+    border-color: #8dd38d;
+    background-color: #f2fef2;
+  }
+  
+  .image-box input[type="file"] {
+    display: none;
+  }
+  
+  /* Date range inputs */
+  .date-group {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+  }
+  
+  .date-group label,
+  .right-column label {
+    font-weight: bold;
+    color: #ffffff;
+  }
+  
+  .date-group input,
+  .right-column input,
+  .right-column textarea {
+    background-color: #eafae7;
+    color: #000000;
+    border: none;
+    border-radius: 20px;
+    padding: 10px 15px;
+    font-size: 14px;
+    width: 100%;
+  }
+  
+  /* Textarea */
+  textarea {
+    resize: none;
+    min-height: 150px;
+  }
+  
+  /* Submit button */
+  .submit-btn {
+    background-color: #1c8731;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 20px;
+    font-size: 18px;
+    align-self: flex-end;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+  }
+  
+  .submit-btn:hover {
+    background-color: #A49665;
+  }
+
+  .tag-section {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 20px;
+    color: #ffffff;
+    font-size: 16px;
+    font-weight: 500;
+  }
+  
+  .tag-section label {
+    margin-bottom: 5px;
+    font-weight: bold;
+  }
+  
+  /* Input and dropdown consistency */
+  .tag-section select,
+  .tag-section input[type="text"] {
+    background-color: #eafae7;
+    color: #000000;
+    border: none;
+    border-radius: 20px;
+    padding: 10px 15px;
+    font-size: 14px;
+    width: 100%;
+    box-sizing: border-box;
+  }
+  
+  /* Multi-select dropdown styling */
+  .tag-section select[multiple] {
+    min-height: 60px;
+    max-height: 120px;
+    overflow-y: auto;
+    padding-right: 15px;
+    resize: none;
+  }
+  
+  /* Optional: Customize scrollbar for webkit browsers */
+  .tag-section select[multiple]::-webkit-scrollbar {
+    width: 6px;
+  }
+  
+  .tag-section select[multiple]::-webkit-scrollbar-thumb {
+    background-color: #bbb;
+    border-radius: 10px;
+  }
+  
+
+
+  
+  /* Mobile responsiveness */
+  @media (max-width: 768px) {
+    .create-form {
+      flex-direction: column;
+      align-items: center;
+    }
+  
+    .left-column,
+    .right-column {
+      width: 100%;
+    }
+  
+    .submit-btn {
+      align-self: center;
+    }
+  }
+  
+  

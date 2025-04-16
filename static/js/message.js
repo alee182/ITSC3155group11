@@ -1,11 +1,11 @@
 document.addEventListener("DOMContentLoaded", function () {
-    const messages = document.querySelector(".messages");
-    if (messages) {
-      messages.scrollTop = messages.scrollHeight;
-    }
-  });
+  // Auto-scroll to latest message
+  const messages = document.querySelector(".messages");
+  if (messages) {
+    messages.scrollTop = messages.scrollHeight;
+  }
 
-document.addEventListener("DOMContentLoaded", function () {
+  // Search bar filtering
   const searchInput = document.getElementById("userSearch");
   const userLinks = document.querySelectorAll(".user-link");
 
@@ -13,7 +13,9 @@ document.addEventListener("DOMContentLoaded", function () {
     const query = this.value.toLowerCase();
 
     userLinks.forEach(link => {
-      const username = link.textContent.trim().toLowerCase();
+      const usernameElement = link.querySelector(".username");
+      const username = usernameElement ? usernameElement.textContent.toLowerCase() : "";
+
       if (username.startsWith(query)) {
         link.style.display = "block";
       } else {

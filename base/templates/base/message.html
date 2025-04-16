@@ -1,4 +1,5 @@
 {% extends 'main.html' %}
+
 {% load static %}
 
 {% block content %}
@@ -15,7 +16,8 @@
       {% for user in users %}
         <a href="{% url 'message' username=user.username %}" class="user-link">
           <div class="user {% if selected_user and user == selected_user %}active{% endif %}">
-            <img src="{% static 'images/profile.png' %}" class="profile-pic" alt="{{ msg.sender.username }}"> {{ user.username }}
+            <img src="{% static 'images/profile.png' %}" class="profile-pic" alt="{{ user.username }}">
+            <span class="username">{{ user.username }}</span>
           </div>
         </a>
       {% endfor %}
@@ -61,7 +63,8 @@
       </form>
     {% else %}
       <div class="empty-chat">
-        <img src="{% static 'images/sleep.png' %}"  alt="{{ sleep.icon }}">
+        <img src="{% static 'images/Normsleep.png' %}"  alt="{{ sleep.icon }}">
+        <p>Norm has no one to talk to</p>
       </div>
     {% endif %}
   </div>

@@ -1,4 +1,4 @@
-{% extends 'main.html' %}
+{% include 'navbar.html' %}
 {% load static %}
 
 {% block content %}
@@ -8,44 +8,58 @@
   <!-- Sidebar with Tag Filters -->
   <div class="community-sidebar">
     <div class="search-bar">
-      <input type="text" placeholder="Search services..." />
+      <form method="GET" action="{% url 'community' %}" class="search-bar">
+        <input type="text" name="q" placeholder="Search services..." value="{{ search_query }}">
+      </form>
     </div>
-    <div class="tag-filters">
-      <a href="?tag=haircut" class="tag">Haircut</a>
-      <a href="?tag=food" class="tag">Food</a>
-      <a href="?tag=nails" class="tag">Nails</a>
-      <a href="?tag=photography" class="tag">Photography</a>
-      <a href="?tag=events" class="tag">Events</a>
+  
+    <div class="tag-scroll">
+      <div class="tag-filters">
+        <a href="?tag=haircut" class="tag">Haircut</a>
+        <a href="?tag=food" class="tag">Food</a>
+        <a href="?tag=nails" class="tag">Nails</a>
+        <a href="?tag=photography" class="tag">Photography</a>
+        <a href="?tag=events" class="tag">Events</a>
+        <!-- Add more tags as needed -->
+      </div>
     </div>
   </div>
 
   <!-- Main Feed -->
   <div class="community-feed">
-    <div class="feed-header">
-      <h2>Community Listings</h2>
+    <div class="create-bar">
       <a class="create-btn" href="{% url 'create-post' %}">Create</a>
     </div>
 
     <div class="post-list">
       {% for post in posts %}
-      <div class="post-card">
-        <div class="post-image">
-          {% if post.image %}
-            <img src="{{ post.image.url }}" alt="Post Image" />
-          {% else %}
-            <img src="{% static 'images/default-post.png' %}" alt="Placeholder" />
-          {% endif %}
-        </div>
-        <div class="post-details">
-          <h3>{{ post.title }}</h3>
-          <p>{{ post.description|truncatewords:30 }}</p>
-          <p class="post-meta">Posted by {{ post.user.username }} on {{ post.created|date:"M d, Y" }}</p>
-        </div>
-      </div>
-      {% empty %}
-        <p>No posts available. Be the first to create one!</p>
+        <a href="{% url 'community-detail' post.pk %}" class="post-card-link">
+          <div class="post-card">
+            <div class="post-image">
+              {% if post.image %}
+                <img src="{{ post.image.url }}" alt="{{ post.title }}">
+              {% else %}
+                <img src="{% static 'images/default-post.png' %}" alt="Default Image">
+              {% endif %}
+            </div>
+            <div class="post-details">
+              <h3>{{ post.title }}</h3>
+              <p>{{ post.description }}</p>
+              <div class="post-meta">
+                {{ post.start_date|date:"M d, Y" }} - {{ post.end_date|date:"M d, Y" }}
+                <div class="post-tags">
+                  {% for tag in post.tags.all %}
+                    <a href="?tag={{ tag.name }}" class="post-tag">{{ tag.name }}</a>
+                  {% endfor %}
+                </div>
+              </div>
+              
+            </div>
+          </div>
+        </a>
       {% endfor %}
     </div>
+    
   </div>
 </div>
 {% endblock %}
