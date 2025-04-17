@@ -2,6 +2,13 @@ from django.db import models
 from django.contrib.auth.models import AbstractUser
 
 
+class User(AbstractUser):
+    email = models.EmailField(unique=True)
+    first_name = models.CharField(max_length=30)
+    last_name = models.CharField(max_length=30)
+    profile_pic = models.ImageField(upload_to='static/images/profile_pics', null=True, default='uncc-logo.png')
+
+    USERNAME_FIELD = 'email'
 # Create your models here.
 class Listing(models.Model):
     host = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
@@ -21,13 +28,7 @@ class DirectMessage(models.Model):
     content = models.TextField()
     timestamp = models.DateTimeField(auto_now_add=True)
 
-class User(AbstractUser):
-    email = models.EmailField(unique=True)
-    first_name = models.CharField(max_length=30)
-    last_name = models.CharField(max_length=30)
-    profile_pic = models.ImageField(upload_to='static/images/profile_pics', null=True, default='uncc-logo.png')
 
-    USERNAME_FIELD = 'email'
 
 class Report(models.Model):
     listing = models.ForeignKey(Listing, on_delete=models.SET_NULL, null=True)
