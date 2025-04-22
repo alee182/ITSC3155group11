@@ -11,6 +11,7 @@ urlpatterns = [
     path('logout/', views.logoutUser, name='logout'),
     path('register/', views.registerPage, name='register'),
     path('community/', views.community, name='community'),
-    path('create-listing/', views.createListing, name='create-listing'),
+    path('create_listing/', views.create_listing, name='create-listing'),
+    path('edit_listing/<str:pk>', views.edit_listing, name='edit-listing'),
 
 ]
