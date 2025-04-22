@@ -3,42 +3,44 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Niner Market | Login</title>
+    <title>Login/Register</title>
     <link rel="stylesheet" href="{% static 'styles/navbar.css' %}">
     <link rel="stylesheet" href="{% static 'styles/login_register.css' %}">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 </head>
 <body>
 
     {% include 'navbar.html' %}
 
-    <div class="page-wrapper">
-        <div class="auth-container">
-            {% if page == 'login' %}
-            <h2>Login to Your Account</h2>
-            <form method="POST" action="" class="auth-form">
+    <div class="tab-container">
+        
+        <div class="tab-buttons">
+            <button id="login-tab" class="tab-btn active" onclick="showTab('login')">Login</button>
+            <button id="register-tab" class="tab-btn" onclick="showTab('register')">Register</button>
+        </div>
+
+        <div id="login-form" class="tab-content active">
+            <form method="post" action="{% url 'login' %}">
                 {% csrf_token %}
-                <label for="username">Email:</label>
-                <input type="text" id="username" name="username" placeholder="Enter Email" required>
+                <label>Email:</label>
+                <input type="text" name="username" placeholder="Enter Email" required />
 
-                <label for="password">Password:</label>
-                <input type="password" id="password" name="password" placeholder="Enter Password" required>
+                <label>Password:</label>
+                <input type="password" name="password" placeholder="Enter Password" required />
 
-                <button type="submit">Login</button>
+                <input type="submit" value="Login" />
             </form>
-            <p class="auth-switch">Haven't signed up yet? <a href="{% url 'register' %}">Sign up</a></p>
+        </div>
 
-            {% else %}
-            <h2>Create an Account</h2>
-            <form method="POST" action="" class="auth-form">
+        <div id="register-form" class="tab-content">
+            <form method="post" action="{% url 'register' %}">
                 {% csrf_token %}
                 {{ form.as_p }}
-                <button type="submit">Register</button>
+                <input type="submit" value="Register" />
             </form>
-            <p class="auth-switch">Already signed up? <a href="{% url 'login' %}">Login</a></p>
-            {% endif %}
         </div>
     </div>
+
+    <script src="{% static 'js/login_register.js' %}"></script>
 
 </body>
 </html>
