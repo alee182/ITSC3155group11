@@ -40,7 +40,7 @@ def loginPage(request):
 
 
     context = {'page': page}
-    return render(request, 'base/login_register.html', context)
+    return render(request, 'login_register.html', context)
 
 def logoutUser(request):
     logout(request)

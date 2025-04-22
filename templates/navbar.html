@@ -38,11 +38,16 @@
             </a>
 
             <!-- mobile login button -->
-            <form action="#" method="get" class="mobile-login">
-                <button type="submit" class="login-button">
-                    Login/Signup
-                </button>
-            </form>
+            {% if user.is_authenticated %}
+                <form action="{% url 'logout' %}" method="post" class="mobile-login">
+                    {% csrf_token %}
+                    <button type="submit" class="login-button">Logout</button>
+                </form>
+            {% else %}
+                <form action="{% url 'login' %}" method="get" class="mobile-login">
+                    <button type="submit" class="login-button">Login/Signup</button>
+                </form>
+            {% endif %}
         </div>
     </div>
 
@@ -56,14 +61,20 @@
         </button>
 
         <!-- desktop login button -->
-        <form action="#" method="get" class="desktop-login">
-            <button type="submit" class="login-button">
-                Login/Signup
-            </button>
-        </form>
+            {% if user.is_authenticated %}
+                <form action="{% url 'logout' %}" method="post" class="desktop-login">
+                    {% csrf_token %}
+                    <button type="submit" class="login-button">Logout</button>
+                </form>
+            {% else %}
+                <form action="{% url 'login' %}" method="get" class="desktop-login">
+                    <button type="submit" class="login-button">Login/Signup</button>
+                </form>
+            {% endif %}
     </div>
 </div>
-</body>
-</html>
 
 <script src="{% static 'js/navbar.js' %}"></script>
+
+</body>
+</html>
