@@ -19,6 +19,8 @@
     <!-- Center Nav bar links -->
     <div class="nav-center">
         <div class="nav-icons" id="navMenu">
+
+        <!-- Nav bar links -->
             <a href="{% url 'explore' %}" class="{% if request.path == '/explore/' %}active{% endif %}">
                 <img src="{% static 'images/icons/home.png' %}" alt="explore"> Explore
             </a>
@@ -35,17 +37,12 @@
                 <img src="{% static 'images/icons/Sales.png' %}" alt="create listings"> Create Listings
             </a>
 
-            <!-- Mobile login/logout button -->
-            {% if user.is_authenticated %}
-                <form action="#" method="post" class="mobile-login">
-                    {% csrf_token %}
-                    <button type="submit" class="login-button">Logout</button>
-                </form>
-            {% else %}
-                <form action="#" method="get" class="mobile-login">
-                    <button type="submit" class="login-button">Login/Signup</button>
-                </form>
-            {% endif %}
+            <!-- mobile login button -->
+            <form action="#" method="get" class="mobile-login">
+                <button type="submit" class="login-button">
+                    Login/Signup
+                </button>
+            </form>
         </div>
     </div>
 
@@ -58,17 +55,12 @@
             <span></span>
         </button>
 
-        <!-- Desktop login/logout button -->
-        {% if user.is_authenticated %}
-            <form action="#" method="post" class="desktop-login">
-                {% csrf_token %}
-                <button type="submit" class="login-button">Logout</button>
-            </form>
-        {% else %}
-            <form action="#" method="get" class="desktop-login">
-                <button type="submit" class="login-button">Login/Signup</button>
-            </form>
-        {% endif %}
+        <!-- desktop login button -->
+        <form action="#" method="get" class="desktop-login">
+            <button type="submit" class="login-button">
+                Login/Signup
+            </button>
+        </form>
     </div>
 </div>
 </body>
