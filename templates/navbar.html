@@ -1,5 +1,14 @@
+<!DOCTYPE html>
 {% load static %}
-
+<html lang="en">
+<head>
+    <meta charset='utf-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel='stylesheet' href="{% static 'styles/navbar.css' %}">
+    <title>Ninermarket</title>
+</head>
+<body>
 <div class="navbar">
     <div class="nav-left">
         <a href="{% url 'home' %}" class="logo">
@@ -28,12 +37,12 @@
 
             <!-- Mobile login/logout button -->
             {% if user.is_authenticated %}
-                <form action="{% url 'logout' %}" method="post" class="mobile-login">
+                <form action="#" method="post" class="mobile-login">
                     {% csrf_token %}
                     <button type="submit" class="login-button">Logout</button>
                 </form>
             {% else %}
-                <form action="{% url 'login_register' %}" method="get" class="mobile-login">
+                <form action="#" method="get" class="mobile-login">
                     <button type="submit" class="login-button">Login/Signup</button>
                 </form>
             {% endif %}
@@ -51,14 +60,18 @@
 
         <!-- Desktop login/logout button -->
         {% if user.is_authenticated %}
-            <form action="{% url 'logout' %}" method="post" class="desktop-login">
+            <form action="#" method="post" class="desktop-login">
                 {% csrf_token %}
                 <button type="submit" class="login-button">Logout</button>
             </form>
         {% else %}
-            <form action="{% url 'login_register' %}" method="get" class="desktop-login">
+            <form action="#" method="get" class="desktop-login">
                 <button type="submit" class="login-button">Login/Signup</button>
             </form>
         {% endif %}
     </div>
 </div>
+</body>
+</html>
+
+<script src="{% static 'js/navbar.js' %}"></script>
