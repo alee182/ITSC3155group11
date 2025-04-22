@@ -2,6 +2,84 @@
 
 {% block content %}
 
-<h1>Explore Page</h1>
+<style>
+    .grid {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 20px;
+        padding: 20px;
+    }
 
-{% endblock content %}
+    .card {
+        text-align: center;
+        width: 300px;
+    }
+
+    .image-wrapper {
+        width: 100%;
+        padding-top: 100%; /* 1:1 aspect ratio */
+        position: relative;
+        overflow: hidden;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+
+    .image-wrapper img {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+    .caption {
+        margin-top: 10px;
+        font-size: 20px;
+        font-weight: bold;
+    }
+
+    .page {
+      padding: 20px;
+    }
+
+    .search-bar {
+      display: flex;
+      justify-content: center;
+      height: 30px;
+    }
+
+    .search-button {
+      margin-left: 10px;
+    }
+
+</style>
+
+<div class="page">
+  <form method="get" action="" class="search-bar">
+    <input type="text" name="q" placeholder="Search by name" value="{{ request.GET.q }}">
+    <button class="search-button" type="submit">Search</button>
+  </form>
+
+  <div class="grid">
+    {% for listing in listings %}
+    <div class="card">
+      <a href="/listing/{{ listing.id }}">
+      <div class="image-wrapper">
+          {% if listing.image %}
+              <img src="{{ listing.image }}" alt="{{ listing.name }}">
+          {% else %}
+              <img src="/static/images/icons/uncc-logo.png" alt="No image">
+          {% endif %}
+      </div>
+    </a>
+      <div class="caption">
+          <a>{{ listing.name }}</a>
+      </div>
+      <a>${{ listing.price|default:"0.00" }}</a>
+  </div>
+    {% endfor %}
+  </div>
+
+</div>
+
+{% endblock content %} endblock content %}

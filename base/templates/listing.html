@@ -1,0 +1,76 @@
+{% extends 'main.html' %}
+
+{% block content %}
+<style>
+    .page {
+      padding: 20px;
+    }
+
+    .listing-info {
+      position: fixed; /* Stay in place even when scrolling */
+      bottom: 50px;    /* Distance from the bottom of the screen */
+      left: 20px;      /* Distance from the left edge */
+      color: white;
+      width: 600px;
+      padding: 10px 15px;
+      border-radius: 8px;
+      font-size: 25px;
+    }
+
+    .description-info {
+      position: fixed;        /* Stay in place even when scrolling */
+      bottom: 80px;           /* Distance from the bottom of the screen */
+      right: 80px;            /* Distance from the right edge */
+      color: white;
+      width: 600px;
+      padding: 10px 15px;
+      border-radius: 8px;
+      overflow: hidden;
+    }
+
+    .image-wrapper {
+        width: 260px;
+        height: 260px;
+        margin-left: 20px;
+        position: relative;
+        overflow: hidden;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+
+    .image-wrapper img {
+        position: absolute;
+        width: 200px;
+        height: 200px;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+
+</style>
+
+<div class="page">
+  <div class="image-wrapper">
+    {% if listing.image %}
+        <img src="{{ listing.image }}" alt="{{ listing.name }}">
+    {% else %}
+        <img src="/static/images/icons/uncc-logo.png" alt="No image">
+    {% endif %}
+  </div>    
+
+  <div class="listing-info">
+    <h1>{{listing.name}}</h1>
+    <h3>Listing Price: ${{listing.price}}</h3>
+    <h3>Negotiable?: Yes</h3>
+    <h3>Condition: Used</h3>
+  </div> 
+
+  <div class="description-info">
+    <h2>Description</h2>
+    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec sit amet vehicula justo. Maecenas tincidunt, augue ac finibus volutpat, lacus sapien aliquet sem, a tempor purus neque nec mi. Integer in eros sit amet nibh sollicitudin tincidunt. Suspendisse potenti. Nullam eget metus eget nisl vestibulum convallis a ut magna.</p>
+  </div>
+</div>
+
+{% endblock %}
