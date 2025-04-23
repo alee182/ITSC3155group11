@@ -1,0 +1,60 @@
+{% include 'navbar.html' %}
+{% load static %}
+
+{% block content %}
+<link rel="stylesheet" href="{% static 'css/community_detail.css' %}">
+
+{% if request.user == post.created_by %}
+<a href="{% url 'delete-post' post.id %}" class="delete-btn">🗑️ Delete</a>
+{% endif %}
+
+<div class="detail-container">
+  
+
+  <div class="post-detail-card">
+    <!-- Image and Info -->
+    <div class="image-section">
+      {% if post.image %}
+        <img src="{{ post.image.url }}" alt="{{ post.title }}">
+      {% else %}
+        <img src="{% static 'images/default-post.png' %}" alt="No image">
+      {% endif %}
+    </div>
+
+    <div class="info-section">
+      <h2>{{ post.title }}</h2>
+      <p class="description">{{ post.description }}</p>
+      <p class="date-range">
+        {{ post.start_date|date:"M d, Y" }} - {{ post.end_date|date:"M d, Y" }}
+      </p>
+
+      <div class="reaction-buttons">
+        <button class="like-btn">👍</button>
+        <button class="dislike-btn">👎</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Comments Section -->
+  <div class="comments-section">
+    <h3>Comments</h3>
+    <form method="POST" class="comment-form">
+      {% csrf_token %}
+      <textarea name="body" rows="3" placeholder="Write a comment..." required></textarea>
+      <button type="submit">Comment</button>
+    </form>
+
+    <div class="comment-list">
+      {% for comment in comments %}
+        <div class="comment">
+          <strong>@{{ comment.user.username }}</strong>
+          <span class="timestamp">{{ comment.created_at|timesince }} ago</span>
+          <p>{{ comment.body }}</p>
+        </div>
+      {% empty %}
+        <p>No comments yet. Be the first to comment!</p>
+      {% endfor %}
+    </div>
+  </div>
+</div>
+{% endblock %}

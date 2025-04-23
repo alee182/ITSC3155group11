@@ -1,0 +1,35 @@
+{% include 'navbar.html' %}
+{% load static %}
+
+{% block content %}
+<link rel="stylesheet" href="{% static 'css/sales.css' %}">
+
+<div class="sales-page">
+  <div class="sales-header">
+    <a href="{% url 'create_sale' %}" class="create-btn">Create Sale</a>
+    <form method="get" class="search-bar">
+      <input type="text" name="q" placeholder="Search" value="{{ query }}">
+    </form>
+  </div>
+
+  <div class="sales-grid">
+    {% for item in listings %}
+    <a href="{% url 'edit_sale' item.id %}">
+      <div class="sale-card">
+        {% if item.images.all %}
+          <img src="{{ item.images.first.image.url }}" alt="{{ item.title }}">
+        {% else %}
+          <img src="{% static 'images/empty.png' %}" alt="No Image Available">
+        {% endif %}
+        <div class="item-name">{{ item.title }}</div>
+        <div class="item-price">${{ item.price }}</div>
+      </div>
+    </a>
+      
+    {% empty %}
+      <p style="text-align:center;">No items available.</p>
+    {% endfor %}
+  </div>
+</div>
+
+{% endblock %}
