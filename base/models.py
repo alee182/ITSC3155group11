@@ -47,3 +47,46 @@ class Message(models.Model):
 
     def __str__(self):
         return f"From {self.sender.username} to {self.receiver.username}"
+
+#sales-listing
+class Listing(models.Model):
+    PAYMENT_CHOICES = [
+        ('cash', 'Cash'),
+        ('paypal', 'PayPal'),
+        ('venmo', 'Venmo'),
+        ('zelle', 'Zelle'),
+        ('cashapp', 'CashApp'),
+        ('other', 'Other'),
+    ]
+
+    CONDITION_CHOICES = [
+        ('used', 'Used'),
+        ('new', 'New'),
+    ]
+
+    title = models.CharField(max_length=100)
+    description = models.TextField(default='No description provided.')
+    price = models.DecimalField(max_digits=8, decimal_places=2)
+    quantity = models.PositiveIntegerField(default=1)
+    accepted_payments = models.CharField(max_length=100, null=True, blank=True)  # comma-separated string
+    negotiable = models.BooleanField(default=False)
+    condition = models.CharField(max_length=20, choices=CONDITION_CHOICES, default='used')
+    created_by = models.ForeignKey('base.User', on_delete=models.CASCADE)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.title
+
+    def featured_image(self):
+        return self.images.first().image if self.images.exists() else None
+
+
+class ListingImage(models.Model):
+    listing = models.ForeignKey(Listing, on_delete=models.CASCADE, related_name='images')
+    image = models.ImageField(upload_to='listing_images/')
+    uploaded_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"Image for {self.listing.title}"
+
+

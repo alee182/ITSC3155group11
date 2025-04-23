@@ -1,0 +1,75 @@
+.edit-sale-wrapper {
+    max-width: 900px;
+    margin: 40px auto;
+    background-color: hsl(103, 21%, 76%);
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 0 15px rgba(0,0,0,0.1);
+  }
+  
+  .form-grid {
+    display: flex;
+    gap: 30px;
+  }
+  
+  .left-section,
+  .right-section {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+  }
+  
+  label {
+    font-weight: bold;
+    margin-bottom: 5px;
+  }
+  
+  input[type="text"],
+  input[type="number"],
+  input[type="file"],
+  textarea,
+  select {
+    padding: 10px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+    width: 100%;
+  }
+  
+  textarea {
+    resize: vertical;
+  }
+  
+  .submit-btn,
+  .delete-section {
+    margin-top: 20px;
+    text-align: center;
+  }
+  
+  button[type="submit"],
+  .delete-btn {
+    padding: 10px 30px;
+    font-weight: bold;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+  }
+  
+  button[type="submit"] {
+    background-color: #175f1e;
+    color: white;
+  }
+  
+  button[type="submit"]:hover {
+    background-color: #143d18;
+  }
+  
+  .delete-btn {
+    background-color: #c0392b;
+    color: white;
+  }
+  
+  .delete-btn:hover {
+    background-color: #a93226;
+  }

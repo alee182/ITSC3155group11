@@ -1,5 +1,5 @@
 from django import forms
-from .models import Comment
+from .models import Comment, Listing, ListingImage
 from base.models import User
 
 class CommentForm(forms.ModelForm):
@@ -26,3 +26,23 @@ class UserProfileForm(forms.ModelForm):
         if not email.lower().endswith('@charlotte.edu'):
             raise forms.ValidationError('Email must end with "@charlotte.edu"')
         return email
+
+class ListingForm(forms.ModelForm):
+    accepted_payments = forms.MultipleChoiceField(
+        choices=Listing.PAYMENT_CHOICES,
+        widget=forms.CheckboxSelectMultiple,
+        required=False
+    )
+    negotiable = forms.ChoiceField(
+        choices=[(True, 'Yes'), (False, 'No')],
+        widget=forms.RadioSelect
+    )
+    condition = forms.ChoiceField(
+        choices=Listing.CONDITION_CHOICES,
+        widget=forms.RadioSelect
+    )
+
+    class Meta:
+        model = Listing
+        fields = ['title', 'description', 'price', 'quantity',
+                  'accepted_payments', 'negotiable', 'condition']

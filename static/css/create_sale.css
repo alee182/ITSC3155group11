@@ -1,0 +1,65 @@
+.create-sale-wrapper {
+    max-width: 1000px;
+    margin: auto;
+    background-color: hsl(103, 21%, 76%);
+    padding: 30px;
+    border-radius: 15px;
+  }
+  
+  .create-sale-wrapper h2 {
+    text-align: center;
+    color: #004225;
+  }
+  
+  .form-grid {
+    display: flex;
+    gap: 50px;
+  }
+  
+  .left-section,
+  .right-section {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+  }
+  
+  label {
+    font-weight: bold;
+    color: #004225;
+  }
+  
+  input[type="text"],
+  input[type="number"],
+  textarea,
+  select,
+  input[type="file"] {
+    padding: 10px;
+    font-size: 1rem;
+    border-radius: 10px;
+    border: none;
+    width: 100%;
+  }
+  
+  textarea {
+    min-height: 100px;
+  }
+  
+  .submit-btn {
+    text-align: center;
+    margin-top: 20px;
+  }
+  
+  button {
+    background-color: #175f1e;
+    color: white;
+    padding: 12px 40px;
+    border: none;
+    font-size: 1.2rem;
+    border-radius: 20px;
+    cursor: pointer;
+  }
+  
+  button:hover {
+    background-color: #143d18;
+  }
