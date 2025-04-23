@@ -7,6 +7,14 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Niner Market</title>
   <link rel="stylesheet" href="{% static 'styles/indexstyle.css' %}">
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Niner Market</title>
+  <link rel="stylesheet" href="{% static 'css/index.css' %}">
 </head>
 <body>
   <div class="container">
@@ -17,8 +25,11 @@
     <main>
       <div class="cta-container">
         <button class="cta-button" onclick="window.location.href='login_register.html'">Login / Sign Up</button>
+        <a class="cta-button" href="{% url 'explore' %}">Explore</a>
       </div>
     </main>
   </div>
 </body>
 </html>
+</html>
+

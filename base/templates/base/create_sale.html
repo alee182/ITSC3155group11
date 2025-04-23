@@ -1,0 +1,45 @@
+{% include 'navbar.html' %}
+{% load static %}
+
+{% block content %}
+<link rel="stylesheet" href="{% static 'css/create_sale.css' %}">
+
+<div class="create-sale-wrapper">
+  <h2>Create Sale</h2>
+  <form method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+    <div class="form-grid">
+      <div class="left-section">
+        <label for="images">Upload Images</label>
+        <input type="file" name="images" multiple required>
+
+        <label>Item Name</label>
+        {{ form.title }}
+
+        <label>Quantity</label>
+        {{ form.quantity }}
+
+        <label>Price</label>
+        {{ form.price }}
+      </div>
+
+      <div class="right-section">
+        <label>Description</label>
+        {{ form.description }}
+
+        <label>Accepted Payments</label>
+        {{ form.accepted_payments }}
+
+        <label>Negotiable?</label>
+        {{ form.negotiable }}
+
+        <label>Condition</label>
+        {{ form.condition }}
+      </div>
+    </div>
+    <div class="submit-btn">
+      <button type="submit">Create</button>
+    </div>
+  </form>
+</div>
+{% endblock %}

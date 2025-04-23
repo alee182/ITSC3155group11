@@ -1,0 +1,53 @@
+{% include 'navbar.html' %}
+{% load static %}
+
+{% block content %}
+<script src="{% static 'js/create_post.js' %}"></script>
+<link rel="stylesheet" href="{% static 'css/create_post.css' %}">
+
+<div class="create-form-container">
+  <form method="POST" enctype="multipart/form-data" class="create-form">
+    {% csrf_token %}
+
+    <!-- Image Upload -->
+    <label for="image-upload" class="image-box" id="image-preview-box">
+      <span id="upload-text">Upload Image</span>
+      <input type="file" name="image" id="image-upload" accept="image/*" hidden>
+    </label>
+    <!-- Left Column -->
+    <div class="left-column">
+      <!-- Tags Section -->
+      <div class="tag-section">
+        <label for="tag-select">Choose Tags:</label>
+        <select id="tag-select" multiple>
+          {% for tag in all_tags %}
+            <option value="{{ tag.name }}">{{ tag.name }}</option>
+          {% endfor %}
+        </select>
+
+        <label for="tags">Or type custom tags (comma separated):</label>
+        <input type="text" name="tags" id="tags" placeholder="e.g. haircut, food, events">
+      
+      </div>
+    </div>
+
+    <!-- Right Column -->
+    <div class="right-column">
+      <label for="title">Name:</label>
+      <input type="text" name="title" id="title" placeholder="Event Name" required>
+
+      <label for="description">Description:</label>
+      <textarea name="description" id="description" rows="6" placeholder="Write event description..." required></textarea>
+      <!-- Dates -->
+      <div class="date-group">
+        <label for="start_date">From:</label>
+        <input type="date" name="start_date" id="start_date" required>
+
+        <label for="end_date">To:</label>
+        <input type="date" name="end_date" id="end_date" required>
+      </div>
+      <button type="submit" class="submit-btn">Post</button>
+    </div>
+  </form>
+</div>
+{% endblock %}
