@@ -52,6 +52,7 @@ a {
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
   z-index: 1000;
   height: 60px;
+  flex-wrap: nowrap; 
 }
 
 
@@ -103,22 +104,35 @@ a {
   top: 9px;
 }
 
-.nav-left,
-.nav-center,
-.nav-right {
+.nav-left {
+  flex: 1;
   display: flex;
   align-items: center;
 }
 
 .nav-center {
-  flex: 1;
+  flex: 2;
+  display: flex;
   justify-content: center;
+  align-items: center;
+}
+
+.nav-right {
+  flex: 1;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  position: relative;
 }
 
 .nav-icons {
   display: flex;
   align-items: center;
   gap: 2.4rem;
+}
+
+.nav-icons.active .mobile-login {
+  display: flex;
 }
 
 .nav-icons a {
@@ -150,17 +164,23 @@ a {
   height: 2rem;
 }
 
+.desktop-login,
+.mobile-login {
+  color: var(--color-accent) !important;
+}
+
 .desktop-login {
   display: block;
 }
 
 .mobile-login {
-  display: none;
+  display: none !important;
 }
 
-.login-button {
+
+.desktop-login {
   background-color: var(--color-accent);
-  color: var(--color-main);
+  color: var(--color-main) !important;
   padding: 0.8rem 1.6rem;
   border: none;
   border-radius: 999px;
@@ -169,21 +189,25 @@ a {
   max-width: 100%;
 }
 
-.login-button:hover {
+.desktop-login:hover {
   background-color: var(--color-hover);
 }
 
 /* Mobile version */
 @media screen and (max-width: 768px) {
-  .desktop-login {
+  .mobile-login {
     display: none;
   }
 
-  .mobile-login {
-    display: flex;
+  .desktop-login {
+    display: none !important;
+  }
+  
+  .nav-icons.active .mobile-login {
+    display: flex !important;
     width: 100%;
     justify-content: center;
-    margin: 1.2rem 0 0.8rem;
+    margin-top: 1rem;
   }
 
   .hamburger {
@@ -233,25 +257,18 @@ a {
   }
   
   .mobile-login {
-    margin-top: 1rem;
-    width: 100%;
-    display: flex;
-    justify-content: center;
-  }
-  
-  .login-button {
     width: 100%;
     padding: 1rem;
     font-size: 1.6rem;
     font-weight: bold;
     background-color: var(--color-accent);
-    color: var(--color-main);
+    color: var(--color-main) !important;
     border: none;
     border-radius: 999px;
     transition: 0.3s ease;
   }
   
-  .login-button:hover {
+  .mobile-login:hover {
     background-color: var(--color-hover);
   }  
 

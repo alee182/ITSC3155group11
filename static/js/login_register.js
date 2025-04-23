@@ -1,18 +1,27 @@
-function showTab(tab) {
-    const loginBtn = document.getElementById('login-tab');
-    const registerBtn = document.getElementById('register-tab');
+document.addEventListener("DOMContentLoaded", function() {
+    const loginBtn = document.getElementById('show-login');
+    const signupBtn = document.getElementById('show-signup');
     const loginForm = document.getElementById('login-form');
-    const registerForm = document.getElementById('register-form');
+    const signupForm = document.getElementById('signup-form');
 
-    if (tab === 'login') {
-        loginBtn.classList.add('active');
-        registerBtn.classList.remove('active');
-        loginForm.classList.add('active');
-        registerForm.classList.remove('active');
-    } else {
-        registerBtn.classList.add('active');
-        loginBtn.classList.remove('active');
-        registerForm.classList.add('active');
-        loginForm.classList.remove('active');
+    if (loginBtn && signupBtn && loginForm && signupForm) {
+        loginBtn.addEventListener('click', function() {
+            loginBtn.classList.add('active');
+            signupBtn.classList.remove('active');
+            loginForm.classList.remove('hidden');
+            signupForm.classList.add('hidden');
+            
+            history.pushState(null, '', '/auth/?page=login');
+        });
+
+        signupBtn.addEventListener('click', function() {
+            signupBtn.classList.add('active');
+            loginBtn.classList.remove('active');
+            signupForm.classList.remove('hidden');
+            loginForm.classList.add('hidden');
+            
+            history.pushState(null, '', '/auth/?page=register');
+        });
     }
-}
+});
+
