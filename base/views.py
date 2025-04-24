@@ -1,42 +1,57 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.decorators import login_required
-from .models import Message
+from .models import Message, Post, Comment, Listing, ListingImage, Review
 from django.contrib import messages
 from base.models import User
-from .models import Post, Comment
 from django.db.models import Q
 from taggit.models import Tag
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.forms import UserCreationForm
-from .forms import UserProfileForm
+from .forms import UserProfileForm, ListingForm, ReviewForm
+from django.contrib.auth import get_user_model
+from django.utils.text import slugify
 # Create your views here.
 
 def home(request):
-    return render(request, 'base/home.html')
+    return render(request, 'base/index.html')
+
+User = get_user_model()
 
 @login_required
-def message_view(request, username=None):
-    users = User.objects.exclude(username=request.user.username)
-    selected_user = User.objects.get(username=username) if username else None
+def message_view(request, slug=None):
+    users = User.objects.exclude(id=request.user.id)
+    selected_user = None
+    messages_qs = []
 
-    messages = []
+    if slug:
+        for user in users:
+            if slugify(f"{user.first_name} {user.last_name}") == slug:
+                selected_user = user
+                break
+
     if selected_user:
-        messages = Message.objects.filter(
-    sender__in=[request.user, selected_user],
-    receiver__in=[request.user, selected_user]
-    ).order_by("timestamp")
+        messages_qs = Message.objects.filter(
+            sender__in=[request.user, selected_user],
+            receiver__in=[request.user, selected_user]
+        ).order_by("timestamp")
 
     if request.method == "POST":
         content = request.POST.get("message")
         if selected_user and content:
-            Message.objects.create(sender=request.user, receiver=selected_user, content=content)
-            return redirect('message', username=selected_user.username)
+            Message.objects.create(
+                sender=request.user,
+                receiver=selected_user,
+                content=content
+            )
+            return redirect('message', slug=selected_user.full_name_slug)
 
     return render(request, "base/message.html", {
         "users": users,
         "selected_user": selected_user,
-        "messages": messages
+        "messages": messages_qs
     })
+
+
 
 @login_required
 def community_view(request):
@@ -237,5 +252,137 @@ def listing(request):
 def profile(request):
     return render(request, 'base/userprofile.html')
 
+def login_register(request):
+    if request.method == 'POST':
+        form_type = request.POST.get('form_type')
+
+        if form_type == 'login':
+            username = request.POST.get('username').lower()
+            password = request.POST.get('password')
+            user = authenticate(request, username=username, password=password)
+            if user:
+                login(request, user)
+                return redirect('explore')
+            else:
+                messages.error(request, 'Invalid login credentials.')
+
+        elif form_type == 'signup':
+            form = UserCreationForm(request.POST)
+            if form.is_valid():
+                username = form.cleaned_data.get('username').lower()
+                if not username.endswith('@charlotte.edu'):
+                    messages.error(request, 'Email must end with "@charlotte.edu".')
+                else:
+                    user = form.save(commit=False)
+                    user.username = username
+                    user.save()
+                    login(request, user)
+                    return redirect('explore')
+            else:
+                messages.error(request, 'Signup failed. Check your form and try again.')
+
+    else:
+        form = UserCreationForm()
+
+    return render(request, 'base/login_register.html')
+
+@login_required
+@login_required
+def sales_page(request):
+    query = request.GET.get('q', '')
+    listings = Listing.objects.filter(created_by=request.user)
+
+    if query:
+        listings = listings.filter(title__icontains=query)
+
+    return render(request, 'base/sales.html', {
+        'listings': listings,
+        'query': query
+    })
+
+@login_required
+def create_sale(request):
+    if request.method == 'POST':
+        form = ListingForm(request.POST)
+        images = request.FILES.getlist('images')  # Get all uploaded files
+
+        if form.is_valid():
+            listing = form.save(commit=False)
+            listing.created_by = request.user
+            listing.accepted_payments = ','.join(form.cleaned_data['accepted_payments'])
+            listing.save()
+
+            # Save each uploaded image
+            for img in images:
+                ListingImage.objects.create(listing=listing, image=img)
+
+            return redirect('sales')
+    else:
+        form = ListingForm()
+    
+    return render(request, 'base/create_sale.html', {'form': form})
+
+@login_required
+def edit_sale(request, pk):
+    listing = get_object_or_404(Listing, pk=pk, created_by=request.user)
+
+    if request.method == 'POST':
+        form = ListingForm(request.POST, request.FILES, instance=listing)
+
+        if form.is_valid():
+            form.save()
+
+            # Handle new image uploads
+            files = request.FILES.getlist('images')
+            for f in files:
+                ListingImage.objects.create(listing=listing, image=f)
+
+            messages.success(request, 'Listing updated successfully!')
+            return redirect('sales')
+    else:
+        form = ListingForm(instance=listing)
+
+    return render(request, 'base/edit_sale.html', {'form': form, 'listing': listing})
+
+@login_required
+def delete_sale(request, pk):
+    listing = get_object_or_404(Listing, pk=pk, created_by=request.user)
+    if request.method == 'POST':
+        listing.delete()
+        return redirect('sales')
+    return redirect('edit_sale', pk=pk)
+
+def explore(request):
+    listings = Listing.objects.all()
+    query = request.GET.get('q')
+    if query:
+        listings = listings.filter(title__icontains=query)
+    return render(request, 'base/explore.html', {'listings': listings, 'query': query})
 
 
+def explore_detail(request, pk):
+    listing = get_object_or_404(Listing, pk=pk)
+    return render(request, 'base/explore_detail.html', {'listing': listing})
+
+@login_required
+def explore_detail(request, pk):
+    listing = get_object_or_404(Listing, pk=pk)
+    reviews = listing.reviews.all().order_by('-created_at')
+
+    # Handle review submission
+    if request.method == 'POST':
+        form = ReviewForm(request.POST)
+        if form.is_valid():
+            review = form.save(commit=False)
+            review.user = request.user
+            review.listing = listing
+            review.save()
+            return redirect('explore_detail', pk=pk)
+    else:
+        form = ReviewForm()
+
+    return render(request, 'base/explore_detail.html', {
+        'listing': listing,
+        'form': form,
+        'reviews': reviews
+    })

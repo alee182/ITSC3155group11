@@ -257,3 +257,9 @@ body {
   margin: 0;
   font-weight: 500;
 }
+
+.user-link {
+  text-decoration: none;
+  color: inherit;
+  display: block;
+}

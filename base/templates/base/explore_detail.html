@@ -1,0 +1,73 @@
+{% load static %}
+{% include 'navbar.html' %}
+
+<link rel="stylesheet" href="{% static 'css/explore_detail.css' %}">
+
+<div class="detail-wrapper">
+  <a href="{% url 'explore' %}" class="back-button">← Back</a>
+
+  <!-- Carousel Wrapper with Peeking Effect -->
+  <div class="carousel-wrapper">
+    <button class="carousel-btn left" onclick="moveSlide(-1)">❮</button>
+    
+    <div class="carousel" id="carousel">
+      {% for img in listing.images.all %}
+        <div class="carousel-slide {% if forloop.first %}active{% endif %}">
+          <img src="{{ img.image.url }}" alt="{{ listing.title }}">
+        </div>
+      {% endfor %}
+    </div>
+
+    <button class="carousel-btn right" onclick="moveSlide(1)">❯</button>
+  </div>
+
+  <!-- Listing Info -->
+  <div class="listing-info">
+    <h2>{{ listing.title }}</h2>
+    <p><strong>In stock:</strong> {{ listing.quantity }}</p>
+    <p><strong>Price per item:</strong> ${{ listing.price }}</p>
+    <p><strong>Negotiable?</strong> {{ listing.negotiable|yesno:"Yes,No" }}</p>
+    <p><strong>Condition:</strong> {{ listing.condition }}</p>
+    <p class="description">{{ listing.description }}</p>
+
+    <a href="{% url 'message' slug=listing.created_by.first_name|lower|add:'-'|add:listing.created_by.last_name|lower %}" class="contact-btn">Contact Seller</a>
+  </div>
+
+  <!-- Reviews -->
+<div class="review-section">
+    <h3>Reviews</h3>
+  
+    {% for review in reviews %}
+      <div class="review">
+        <strong>{{ review.user.email }}</strong> <span class="timestamp">{{ review.created_at|date:"M d, Y" }}</span>
+        <p>{{ review.body }}</p>
+      </div>
+    {% empty %}
+      <p>No reviews yet. Be the first to write one!</p>
+    {% endfor %}
+  
+    {% if user.is_authenticated %}
+      <form method="POST" class="review-form">
+        {% csrf_token %}
+        {{ form.body }}
+        <button type="submit" class="submit-review-btn">Submit Review</button>
+      </form>
+    {% else %}
+      <p><a href="{% url 'login' %}">Login</a> to write a review.</p>
+    {% endif %}
+  </div>
+</div>
+
+<script>
+  const carousel = document.getElementById('carousel');
+  let currentIndex = 0;
+
+  function moveSlide(step) {
+    const slides = document.querySelectorAll('.carousel-slide');
+    currentIndex = (currentIndex + step + slides.length) % slides.length;
+    const offset = -currentIndex * (slides[0].offsetWidth + 20); // width + gap
+    carousel.style.transform = `translateX(${offset}px)`;
+  }
+</script>
+
+

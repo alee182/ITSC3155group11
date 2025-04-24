@@ -19,7 +19,7 @@
 
   .container {
     text-align: center;
-    background-color: rgba(255, 255, 255, 0.7); /* White background with transparency */
+    background-color: rgba(255, 255, 255, 0.95);
     padding: 50px;
     border-radius: 15px;
     width: 90%;
@@ -28,7 +28,7 @@
   
   header h1 {
     font-size: 3em;
-    color: #006747; /* UNC Charlotte Green */
+    color: #006747;
   }
   
   header .tagline {
@@ -42,7 +42,7 @@
   }
   
   .cta-button {
-    background-color: #FFBC00; /* UNC Charlotte Gold */
+    background-color: #21622c;
     color: white;
     border: none;
     padding: 15px 30px;
@@ -50,10 +50,11 @@
     cursor: pointer;
     border-radius: 8px;
     transition: background-color 0.3s ease;
+    text-decoration: none;
   }
   
   .cta-button:hover {
-    background-color: #FF9F00; /* Slightly darker gold for hover effect */
+    background-color: #A49665;
   }
   
   .cta-button:focus {

@@ -28,8 +28,8 @@
                 <img src="{% static 'images/Message.png' %}"> Message
             </a>
 
-            <a href="#" class="{% if request.path == '/create-listing/' %}active{% endif %}">
-                <img src="{% static 'images/Sales.png' %}" >Create Listings
+            <a href="{% url 'sales' %}" class="{% if request.path == '/sales/' %}active{% endif %}">
+                <img src="{% static 'images/Sales.png' %}" >Sales
             </a>
 
             <!-- mobile login button -->

@@ -1,0 +1,136 @@
+.detail-wrapper {
+    padding: 40px;
+    background-color: hsl(0, 0%, 82%);
+    min-height: 100vh;
+    color: black;
+  }
+  
+  .back-button {
+    font-size: 1.2rem;
+    text-decoration: none;
+    color: #175f1e;
+    font-weight: bold;
+    display: inline-block;
+    margin-bottom: 20px;
+  }
+  
+  /* Peek Carousel */
+  .carousel-wrapper {
+    position: relative;
+    overflow: hidden;
+    padding: 0 60px;
+    margin-bottom: 40px;
+  }
+  
+  .carousel {
+    display: flex;
+    gap: 20px;
+    transition: transform 0.5s ease;
+    width: max-content;
+  }
+  
+  .carousel-slide {
+    flex: 0 0 300px;
+    height: 300px;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  }
+  
+  .carousel-slide img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  
+  .carousel-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 2rem;
+    background-color: #175f1e;
+    color: white;
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+    z-index: 2;
+    border-radius: 50%;
+  }
+  
+  .carousel-btn.left {
+    left: 10px;
+  }
+  
+  .carousel-btn.right {
+    right: 10px;
+  }
+  
+  /* Info Section */
+  .listing-info {
+    background-color: #ffffff;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 0 8px rgba(0,0,0,0.1);
+  }
+  
+  .listing-info h2 {
+    color: #2b5d34;
+    margin-bottom: 15px;
+  }
+  
+  .description {
+    margin-top: 20px;
+    color: #333;
+  }
+  
+  .contact-btn {
+    display: inline-block;
+    margin-top: 30px;
+    background-color: #175f1e;
+    color: white;
+    padding: 12px 24px;
+    text-decoration: none;
+    border-radius: 8px;
+    font-weight: bold;
+  }
+  
+
+  .review-section {
+    margin-top: 50px;
+    background-color: #fff;
+    padding: 25px;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  }
+  
+  .review {
+    border-bottom: 1px solid #ddd;
+    padding: 10px 0;
+  }
+  
+  .review .timestamp {
+    font-size: 0.9rem;
+    color: #666;
+  }
+  
+  .review-form textarea {
+    width: 100%;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    padding: 10px;
+    font-size: 1rem;
+    resize: vertical;
+  }
+  
+  .submit-review-btn {
+    margin-top: 10px;
+    background-color: #175f1e;
+    color: white;
+    padding: 8px 16px;
+    border: none;
+    border-radius: 6px;
+    font-weight: bold;
+    cursor: pointer;
+  }
+  
+  

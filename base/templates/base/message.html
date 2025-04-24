@@ -1,7 +1,5 @@
-{% extends 'main.html' %}
-
+{% include 'navbar.html' %}
 {% load static %}
-
 {% block content %}
 <script src="{% static 'js/message.js' %}"></script>
 <link rel="stylesheet" href="{% static 'css/message.css' %}">
@@ -14,30 +12,29 @@
     </div>
     <div class="user-list">
       {% for user in users %}
-        <a href="{% url 'message' username=user.username %}" class="user-link">
+        <a href="{% url 'message' slug=user.full_name_slug %}" class="user-link">
           <div class="user {% if selected_user and user == selected_user %}active{% endif %}">
-            <img src="{% static 'images/profile.png' %}" class="profile-pic" alt="{{ user.username }}">
-            <span class="username">{{ user.username }}</span>
+            <img src="{% static 'images/profile.png' %}" class="profile-pic" alt="{{ user.get_full_name }}">
+            <span class="username">{{ user.get_full_name }}</span>
           </div>
         </a>
       {% endfor %}
     </div>
   </div>
 
-  
   <!-- Chat Area -->
   <div class="chat-area">
     {% if selected_user %}
     <div class="chat-header">
-      <h4>{{ selected_user.username }}</h4>
+      <h4>{{ selected_user.get_full_name }}</h4>
     </div>
     <div class="messages">
       {% for msg in messages %}
       <div class="message-row {% if msg.sender == request.user %}you{% else %}them{% endif %}">
         {% if msg.sender != request.user %}
           <div class="profile-info">
-            <img src="{% static 'images/profile.png' %}" class="profile-pic" alt="{{ msg.sender.username }}">
-            <p class="username">{{ msg.sender.username }}</p>
+            <img src="{% static 'images/profile.png' %}" class="profile-pic" alt="{{ msg.sender.get_full_name }}">
+            <p class="username">{{ msg.sender.get_full_name }}</p>
           </div>
         {% endif %}
       
@@ -48,7 +45,7 @@
       
         {% if msg.sender == request.user %}
           <div class="profile-info">
-            <img src="{% static 'images/profile.png' %}" class="profile-pic" alt="{{ msg.sender.username }}">
+            <img src="{% static 'images/profile.png' %}" class="profile-pic" alt="You">
             <p class="username">You</p>
           </div>
         {% endif %}
@@ -56,27 +53,21 @@
       {% endfor %}
     </div>
 
-      <form method="POST" action="{% url 'message' username=selected_user.username %}" class="chat-input">
-        {% csrf_token %}
-        <input type="text" name="message" placeholder="Type your message..." required>
-        <button type="submit">&#8679;</button>
-      </form>
+    <form method="POST" action="{% url 'message' slug=selected_user.full_name_slug %}" class="chat-input">
+      {% csrf_token %}
+      <input type="text" name="message" placeholder="Type your message..." required>
+      <button type="submit">&#8679;</button>
+    </form>
     {% else %}
-      <div class="empty-chat">
-        <img src="{% static 'images/Normsleep.png' %}"  alt="{{ sleep.icon }}">
-        <p>Norm has no one to talk to</p>
-      </div>
+    <div class="empty-chat">
+      <img src="{% static 'images/Normsleep.png' %}" alt="No Chat">
+      <p>Norm has no one to talk to</p>
+    </div>
     {% endif %}
   </div>
 </div>
 
-<style>
-.user-link {
-  text-decoration: none;
-  color: inherit;
-  display: block;
-}
-</style>
-
 {% endblock %}
+
+
 
