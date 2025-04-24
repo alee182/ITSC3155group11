@@ -1,19 +1,14 @@
-.sales-page {
-    padding: 30px;
-    background-color: hsl(0, 0%, 82%);
-    min-height: 100vh;
-  }
-  
-  .sales-header {
+.sales-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
     margin-bottom: 20px;
   }
   
+
   .create-btn {
     background-color: #175f1e;
-    color: white;
+    background: linear-gradient(135deg, #a8d5ba, #d0ebc5);
     font-weight: bold;
     padding: 12px 25px;
     border-radius: 25px;

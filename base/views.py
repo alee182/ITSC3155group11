@@ -6,9 +6,10 @@ from base.models import User
 from django.db.models import Q
 from taggit.models import Tag
 from django.contrib.auth import authenticate, login, logout
-from django.contrib.auth.forms import UserCreationForm
-from .forms import UserProfileForm, ListingForm
+from .forms import ListingForm, UserProfileForm, CreateUserForm
 from django.contrib.auth import get_user_model
+
+User = get_user_model()
 # Create your views here.
 
 def home(request):
@@ -92,7 +93,7 @@ def create_post(request):
 
 
 
-def explore_view(request):
+def explore(request):
     return render(request, 'base/explore.html')
 
 
@@ -123,157 +124,92 @@ def delete_post(request, pk):
         return redirect('community')
     return redirect('community-detail', post_id=pk)
 
-def loginPage(request):
-    page = 'login'
+def login_register(request):
 
+    form = CreateUserForm()
+    
+    page = request.GET.get('page', 'login')
+    
+    context = {
+        'page': page,
+        'form': form
+    }
+    return render(request, 'base/login_register.html', context)
+
+def loginPage(request):
     if request.user.is_authenticated:
         return redirect('explore')
 
     if request.method == 'POST':
-        username = request.POST.get('username').lower()
+        email = request.POST.get('email')
         password = request.POST.get('password')
 
-        try: 
-            user = User.objects.get(username=username)
+        if email:
+            email = email.lower()
+        else:
+            messages.error(request, 'Please enter your email.')
+            return redirect('login_register')
+
+        try:
+            user = User.objects.get(email=email)
         except:
             messages.error(request, 'User does not exist')
+            return redirect('login_register')
 
-        user = authenticate(request, username=username, password=password)
+        user = authenticate(request, email=email, password=password)
 
         if user is not None:
             login(request, user)
             return redirect('explore')
         else:
-            messages.error(request, 'Username OR password does not exist')
+            messages.error(request, 'Email OR password is incorrect')
+            return redirect('login_register')
 
+    return redirect('login_register')
 
-    context = {'page': page}
-    return render(request, 'base/login_register.html', context)
-
-def logoutUser(request):
-    logout(request)
-    return redirect('explore')
 
 def registerPage(request):
-    form = UserCreationForm()
-
+    """
+    Handle register form submission
+    """
+    if request.user.is_authenticated:
+        return redirect('explore')
+        
     if request.method == 'POST':
-        form = UserCreationForm(request.POST)
+        form = CreateUserForm(request.POST)
+        email = request.POST.get('email').lower()
         if form.is_valid():
-
-            username = form.cleaned_data.get('username')
-            if not username.lower().endswith('@charlotte.edu'):
-                messages.error(request, 'Username must end with "@charlotte.edu"')
-            else:
-                user = form.save(commit=False)
-                user.username = username.lower()
-                user.save()
-                login(request, user)
-                return redirect('explore')
-
-
-
-    return  render(request, 'ninermarket/templates/login_register.html', {'form': form})
-
-
-@login_required
-def edit_profile(request):
-    if request.method == 'POST':
-        form = UserProfileForm(request.POST, request.FILES, instance=request.user)
-        if form.is_valid():
-            form.save()
-            messages.success(request, 'Your profile has been updated!')
-            return redirect('profile')
+            
+            if not email.endswith('@charlotte.edu'):
+                messages.error(request, 'Email must end with "@charlotte.edu"')
+                return redirect('auth')  # Change from login_register to auth
+            
+            # Save the user
+            user = form.save(commit=False)
+            user.email = email  # Set email field too
+            user.save()
+            
+            # Log the user in
+            login(request, user)
+            return redirect('explore')
         else:
-            messages.error(request, 'Please correct the errors below.')
-    else:
-        form = UserProfileForm(instance=request.user)
+            # Form has errors - pass it back to the template
+            # Map raw field names to friendly labels
 
-    return render(request, 'edit_profile.html', {'form': form})
+# Display custom-labeled errors
+            for errors in form.errors.values():
+                for error in errors:
+                    messages.error(request, error)
 
-@login_required
-def edit_profile_pic(request):
-    if request.method == 'POST':
-        profile_pic = request.FILES.get('profile_pic')
-        if profile_pic:
-            request.user.profile_pic = profile_pic
-            request.user.save()
-    return redirect('profile')
 
-@login_required
-def edit_first_name(request):
-    if request.method == 'POST':
-        first_name = request.POST.get('first_name')
-        if first_name:
-            request.user.first_name = first_name
-            request.user.save()
-            return redirect('profile')
-    return render(request, 'base/edit_first_name.html')
+            return redirect('login_register') 
 
-@login_required
-def edit_last_name(request):
-    if request.method == 'POST':
-        last_name = request.POST.get('last_name')
-        if last_name:
-            request.user.last_name = last_name
-            request.user.save()
-            return redirect('profile')
-    return render(request, 'base/edit_last_name.html')
+    # If not POST, redirect to the auth page with register parameter
+    return redirect('login_register')  
+def logoutUser(request):
+    logout(request)
+    return redirect('login_register') 
 
-@login_required
-def edit_email(request):
-    if request.method == 'POST':
-        email = request.POST.get('email')
-        if email:
-            request.user.email = email
-            request.user.save()
-            return redirect('profile')
-    return render(request, 'base/edit_email.html')
-
-def listing(request):
-    return render(request, 'sales.html')
-
-@login_required
-def profile(request):
-    return render(request, 'base/userprofile.html')
-
-User = get_user_model()
-
-def login_register(request):
-    if request.method == 'POST':
-        form_type = request.POST.get('form_type')
-
-        if form_type == 'login':
-            username = request.POST.get('username').lower()
-            password = request.POST.get('password')
-            user = authenticate(request, username=username, password=password)
-            if user:
-                login(request, user)
-                return redirect('explore')
-            else:
-                messages.error(request, 'Invalid login credentials.')
-
-        elif form_type == 'signup':
-            form = UserCreationForm(request.POST)
-            if form.is_valid():
-                username = form.cleaned_data.get('username').lower()
-                if not username.endswith('@charlotte.edu'):
-                    messages.error(request, 'Email must end with "@charlotte.edu".')
-                else:
-                    user = form.save(commit=False)
-                    user.username = username
-                    user.save()
-                    login(request, user)
-                    return redirect('explore')
-            else:
-                messages.error(request, 'Signup failed. Check your form and try again.')
-
-    else:
-        form = UserCreationForm()
-
-    return render(request, 'base/login_register.html')
-
-@login_required
 @login_required
 def sales_page(request):
     query = request.GET.get('q', '')

@@ -1,7 +1,7 @@
 .edit-sale-wrapper {
     max-width: 900px;
     margin: 40px auto;
-    background-color: hsl(103, 21%, 76%);
+    background: linear-gradient(135deg, #a8d5ba, #d0ebc5);
     padding: 30px;
     border-radius: 10px;
     box-shadow: 0 0 15px rgba(0,0,0,0.1);

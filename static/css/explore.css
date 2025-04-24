@@ -1,6 +1,6 @@
 .explore-page {
     padding: 30px;
-    background-color: hsl(0, 0%, 82%);
+    background: linear-gradient(135deg, #a8d5ba, #d0ebc5);
   }
   
   .search-bar {
@@ -54,4 +54,6 @@
     font-size: 1.1rem;
     margin-bottom: 10px;
   }
+
+  
   
