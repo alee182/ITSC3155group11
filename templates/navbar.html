@@ -1,17 +1,9 @@
-<!DOCTYPE html>
 {% load static %}
-<html lang="en">
-<head>
-    <meta charset='utf-8'>
-    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel='stylesheet' href="{% static 'css/navbar.css' %}">
-    <title>Ninermarket</title>
-</head>
-<body>
-<div class="navbar">
-    <div class="nav-left">
-        <a href="{% url 'home' %}" class="logo">
+<script src="{% static 'js/navbar.js' %}"></script>
+<link rel="stylesheet" href="{% static 'css/navbar.css' %}">
+<div class = "navbar">
+    <div class = "nav-left">
+        <a href="{% url 'home' %}" class ="logo">
             NINER MARKET
         </a>
     </div>
@@ -20,35 +12,47 @@
     <div class="nav-center">
         <div class="nav-icons" id="navMenu">
 
+
         <!-- Nav bar links -->
             <a href="{% url 'explore' %}" class="{% if request.path == '/explore/' %}active{% endif %}">
-                <img src="{% static 'images/icons/Home.png' %}" alt="explore"> Explore
+                <img src="{% static 'images/Home.png' %}" alt="explore"> Explore
             </a>
+
 
             <a href="{% url 'community' %}" class="{% if request.path == '/community/' %}active{% endif %}">
-                <img src="{% static 'images/icons/Community.png' %}" alt="community"> Community
+                <img src="{% static 'images/Community.png' %}"> Community
             </a>
 
-            <a href="{% url 'message' %}" class="{% if request.path == '/messages/' %}active{% endif %}">
-                <img src="{% static 'images/icons/Message.png' %}" alt="messages icon"> Message
+
+            <a href="{% url 'message' %}" class="{% if '/messages' in request.path %}active{% endif %}">
+                <img src="{% static 'images/Message.png' %}"> Message
             </a>
 
-            <a href="{% url 'create_sale' %}" class="{% if request.path == '/create-listing/' %}active{% endif %}">
-                <img src="{% static 'images/icons/Sales.png' %}" alt="sales icon"> Create Listings
+            <a href="{% url 'sales' %}" class="{% if request.path == '/sales/' %}active{% endif %}">
+                <img src="{% static 'images/Sales.png' %}" >Sales
             </a>
 
             <!-- mobile login button -->
-            {% if user.is_authenticated %}
-                <a href="{% url 'logout' %}" class="mobile-login">Logout</a>
+            {% if request.user.is_authenticated %}
+
+            <a href="{%% url 'logout' }" class="login-button">Logout</a>
+
             {% else %}
-                <a href="{% url 'login' %}" class="mobile-login">Login/Signup</a>
+
+            <form action="#" method="get" class="mobile-login">
+                <button type="submit" class="login-button">
+                    Login/Signup
+                </button>
+            </form>
+
             {% endif %}
         </div>
     </div>
 
-    <!-- Right Nav bar -->
+    <!-- Right Nav bar links -->
     <div class="nav-right">
-        <!-- Mobile hamburger menu -->
+        
+        <!-- mobile hamburger icon -->
         <button class="hamburger" id="hamburger" aria-label="Toggle navigation">
             <span></span>
             <span></span>
@@ -56,15 +60,18 @@
         </button>
 
         <!-- desktop login button -->
-            {% if user.is_authenticated %}
-                <a href="{% url 'logout' %}" class="desktop-login">Logout</a>
-            {% else %}
-                <a href="{% url 'login' %}" class="desktop-login">Login/Signup</a>
-            {% endif %}
+        {% if request.user.is_authenticated %}
+
+        <a href="{% url 'logout' %}" class="login-button">Logout</a>
+
+        {% else %}
+
+        <form action="#" method="get" class="desktop-login">
+            <button type="submit" class="login-button">
+                Login/Signup
+            </button>
+        </form>
+
+        {% endif%}
     </div>
 </div>
-
-<script src="{% static 'js/navbar.js' %}"></script>
-
-</body>
-</html>

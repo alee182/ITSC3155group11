@@ -1,7 +1,7 @@
 .create-sale-wrapper {
     max-width: 1000px;
     margin: auto;
-    background: linear-gradient(135deg, #a8d5ba, #d0ebc5);
+    background-color: hsl(103, 21%, 76%);
     padding: 30px;
     border-radius: 15px;
   }

@@ -1,16 +1,8 @@
-{% include 'navbar.html' %}
-
-<!DOCTYPE html>
 {% load static %}
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login / Sign Up</title>
-    <link rel="stylesheet" href="{% static 'css/login_register.css' %}">
 
-</head>
-<body>
+{% block content %}
+<link rel="stylesheet" href="{% static 'css/login_register.css' %}">
+
 {% if messages %}
   <ul class="messages">
     {% for message in messages %}
@@ -21,55 +13,33 @@
 
 <div class="auth-wrapper">
   <div class="auth-toggle">
-    <button id="show-login" class="{% if page != 'register' %}active{% endif %}">Login</button>
-    <button id="show-signup" class="{% if page == 'register' %}active{% endif %}">Sign Up</button>
+    <button id="show-login" class="active">Login</button>
+    <button id="show-signup">Sign Up</button>
   </div>
 
   <div class="auth-forms">
     <!-- Login Form -->
-    <form id="login-form" method="POST" action="{% url 'login' %}" class="form-section {% if page == 'register' %}hidden{% endif %}">
-      {% csrf_token %}
-      <h2>Login</h2>
-      <input type="text" name="email" placeholder="Email" required>
-      <input type="password" name="password" placeholder="Password" required>
-      <button type="submit">Login</button>
-    </form>
+<form id="login-form" method="POST" class="form-section">
+    {% csrf_token %}
+    <input type="hidden" name="form_type" value="login">
+    <h2>Login</h2>
+    <input type="text" name="username" placeholder="Email or Username" required>
+    <input type="password" name="password" placeholder="Password" required>
+    <button type="submit">Login</button>
+  </form>
   
-    <!-- Signup Form -->
-    <form id="signup-form" method="POST" action="{% url 'register' %}" class="form-section {% if page != 'register' %}hidden{% endif %}">
-      {% csrf_token %}
-      <h2>Sign Up</h2>
-      
-      {% for field in form %}
-  <div class="form-field">
-    {% if field.errors %}
-      <div class="field-errors">
-        {% for error in field.errors %}
-          <p>{{ error }}</p>
-        {% endfor %}
-      </div>
-    {% endif %}
-
-    {% if field.name == 'email' %}
-      <input type="text" name="{{ field.name }}" placeholder="UNC Charlotte Email (@charlotte.edu)" required>
-    {% elif field.name == 'first_name' %}
-      <input type="text" name="{{ field.name }}" placeholder="First Name" required>
-    {% elif field.name == 'last_name' %}
-      <input type="text" name="{{ field.name }}" placeholder="Last Name" required>
-    {% elif 'password' in field.name %}
-      <input type="password" name="{{ field.name }}" placeholder="{% if field.name == 'password1' %}Password{% else %}Confirm Password{% endif %}" required>
-    {% else %}
-      {{ field }}
-    {% endif %}
-  </div>
-{% endfor %}
-
-
-      
-      <button type="submit">Sign Up</button>
-    </form>
+  <!-- Signup Form -->
+  <form id="signup-form" method="POST" class="form-section hidden">
+    {% csrf_token %}
+    <input type="hidden" name="form_type" value="signup">
+    <h2>Sign Up</h2>
+    <input type="text" name="username" placeholder="UNC Charlotte Email" required>
+    <input type="password" name="password1" placeholder="Password" required>
+    <input type="password" name="password2" placeholder="Confirm Password" required>
+    <button type="submit">Sign Up</button>
+  </form>
   </div>
 </div>
-<script src="{% static 'js/login_register.js' %}"></script>
-</body>
-</html>
+
+<script src="{% static 'js/register_login.js' %}"></script>
+{% endblock %}

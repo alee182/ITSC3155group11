@@ -7,7 +7,7 @@ html, body {
 .community-wrapper {
   display: flex;
   height: 100%;
-  background: linear-gradient(135deg, #a8d5ba, #d0ebc5);
+  background-color: #a7d8a6;
   overflow: hidden; /* prevent scroll */
 }
 

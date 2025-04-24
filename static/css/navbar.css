@@ -5,14 +5,14 @@
   --color-accent: #F1E6B2;
   --color-hover: #A49665;
   --color-white: #ffffff;
-  --color-bg: #a7d8a6;
+  --color-bg: hsl(0, 0%, 82%);;
 }
 
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: "Baloo 2", cursive;
+  font-family:sans-serif
 }
 
 html {
@@ -20,11 +20,12 @@ html {
 }
 
 body {
-  background: linear-gradient(135deg, #a8d5ba, #d0ebc5);
+  background-color: var(--color-bg);
   color: var(--color-white);
   font-size: 1.6rem;
   min-height: 100vh;
 }
+
 
 img {
   max-width: 100%;
@@ -39,22 +40,18 @@ a {
 /* Navbar */
 
 .navbar {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0; 
-  width: 100%;
-  background-color: var(--color-main);
-  padding: 0.75rem 1.6rem;
+  background: rgba(0, 66, 37, 0.85);
+  background: linear-gradient(to right, rgba(0, 66, 37, 0.85),rgba(0, 37, 21, 0.85));
+  padding: 1.6rem 3.2rem;
   display: flex;
-  align-items: center;
   justify-content: space-between;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-  z-index: 1000;
-  height: 60px;
-  flex-wrap: nowrap; 
+  align-items: center;
+  position: sticky;
+  top: 0;
+  z-index: 999;
+  backdrop-filter: blur(6px);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.15);
 }
-
 
 .logo {
   font-family: "Fredoka One", cursive;
@@ -104,35 +101,22 @@ a {
   top: 9px;
 }
 
-.nav-left {
-  flex: 1;
+.nav-left,
+.nav-center,
+.nav-right {
   display: flex;
   align-items: center;
 }
 
 .nav-center {
-  flex: 2;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.nav-right {
   flex: 1;
-  display: flex;
-  justify-content: flex-end;
-  align-items: center;
-  position: relative;
+  justify-content: center;
 }
 
 .nav-icons {
   display: flex;
   align-items: center;
   gap: 2.4rem;
-}
-
-.nav-icons.active .mobile-login {
-  display: flex;
 }
 
 .nav-icons a {
@@ -164,23 +148,17 @@ a {
   height: 2rem;
 }
 
-.desktop-login,
-.mobile-login {
-  color: var(--color-accent) !important;
-}
-
 .desktop-login {
   display: block;
 }
 
 .mobile-login {
-  display: none !important;
+  display: none;
 }
 
-
-.desktop-login {
+.login-button {
   background-color: var(--color-accent);
-  color: var(--color-main) !important;
+  color: var(--color-main);
   padding: 0.8rem 1.6rem;
   border: none;
   border-radius: 999px;
@@ -189,25 +167,21 @@ a {
   max-width: 100%;
 }
 
-.desktop-login:hover {
+.login-button:hover {
   background-color: var(--color-hover);
 }
 
 /* Mobile version */
 @media screen and (max-width: 768px) {
-  .mobile-login {
+  .desktop-login {
     display: none;
   }
 
-  .desktop-login {
-    display: none !important;
-  }
-  
-  .nav-icons.active .mobile-login {
-    display: flex !important;
+  .mobile-login {
+    display: flex;
     width: 100%;
     justify-content: center;
-    margin-top: 1rem;
+    margin: 1.2rem 0 0.8rem;
   }
 
   .hamburger {
@@ -224,20 +198,31 @@ a {
     top: 100%;
     left: 0;
     width: 100%;
-  padding: 2rem 1.6rem;
+    padding: 2rem 1.6rem;
     background: rgba(0, 66, 37, 0.95);
     backdrop-filter: blur(6px);
     display: none;
-    z-index: 1000;
+    opacity: 0;
+    transform: translateY(-10px);
+    transition: all 0.3s ease;
     border-radius: 0 0 1.6rem 1.6rem;
-    animation: none;
+    overflow: hidden;
+    max-height: 0;
+    opacity: 0;
+    transform: translateY(-10px);
+    pointer-events: none;
+    transition: all 0.4s ease;
+    z-index: 1000;
   }
   
   .nav-icons.active {
-    display: flex; 
+    max-height: 500px;
+    display: flex;
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
     animation: dropdownSlide 0.35s ease forwards;
   }
-
   
   .nav-icons a {
     padding: 1.2rem 0;
@@ -257,18 +242,25 @@ a {
   }
   
   .mobile-login {
+    margin-top: 1rem;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+  }
+  
+  .login-button {
     width: 100%;
     padding: 1rem;
     font-size: 1.6rem;
     font-weight: bold;
     background-color: var(--color-accent);
-    color: var(--color-main) !important;
+    color: var(--color-main);
     border: none;
     border-radius: 999px;
     transition: 0.3s ease;
   }
   
-  .mobile-login:hover {
+  .login-button:hover {
     background-color: var(--color-hover);
   }  
 
