@@ -1,8 +1,15 @@
 {% include 'navbar.html' %}
+<!DOCTYPE html>
 {% load static %}
-
-{% block content %}
-<link rel="stylesheet" href="{% static 'css/sales.css' %}"> {# Reusing the sales CSS #}
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Explore</title>
+  <link rel="stylesheet" href="{% static 'css/explore.css' %}">
+  <link rel="stylesheet" href="{% static 'css/sales.css' %}"> 
+</head>
+<body>
 
 <div class="sales-page">
   <div class="sales-header">
@@ -31,5 +38,4 @@
     {% endfor %}
   </div>
 </div>
-{% endblock %}
 
