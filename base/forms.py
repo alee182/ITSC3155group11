@@ -1,5 +1,5 @@
 from django import forms
-from .models import Comment, Listing, ListingImage
+from .models import Comment, Listing, Review
 from base.models import User
 from django.contrib.auth.forms import UserCreationForm
 
@@ -74,3 +74,11 @@ class ListingForm(forms.ModelForm):
         model = Listing
         fields = ['title', 'description', 'price', 'quantity',
                   'accepted_payments', 'negotiable', 'condition']
+        
+class ReviewForm(forms.ModelForm):
+    class Meta:
+        model = Review
+        fields = ['body']
+        widgets = {
+            'body': forms.Textarea(attrs={'rows': 3, 'placeholder': 'Write your review here...'})
+        }

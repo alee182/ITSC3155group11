@@ -2,6 +2,8 @@ from django.db import models
 from django.contrib.auth.models import AbstractUser
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, PermissionsMixin
 from taggit.managers import TaggableManager
+from django.conf import settings
+from django.utils.text import slugify
 
 class CustomUserManager(BaseUserManager):
     def create_user(self, email, password=None, **extra_fields):
@@ -109,11 +111,19 @@ class Listing(models.Model):
 
 
 class ListingImage(models.Model):
-    listing = models.ForeignKey(Listing, on_delete=models.CASCADE, related_name='images')
+    listing = models.ForeignKey('Listing', related_name='images', on_delete=models.CASCADE)
     image = models.ImageField(upload_to='listing_images/')
-    uploaded_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
         return f"Image for {self.listing.title}"
+
+class Review(models.Model):
+    listing = models.ForeignKey('Listing', on_delete=models.CASCADE, related_name='reviews')
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    body = models.TextField()
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"Review by {self.user.email} on {self.listing.title}"
 
 

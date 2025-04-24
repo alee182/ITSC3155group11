@@ -47,7 +47,7 @@
     <div class="comment-list">
       {% for comment in comments %}
         <div class="comment">
-          <strong>@{{ comment.user.username }}</strong>
+          <strong>@{{ comment.user.first_name }} {{ comment.user.last_name }}</strong>
           <span class="timestamp">{{ comment.created_at|timesince }} ago</span>
           <p>{{ comment.body }}</p>
         </div>
@@ -55,6 +55,7 @@
         <p>No comments yet. Be the first to comment!</p>
       {% endfor %}
     </div>
-  </div>
+</div>
+
 </div>
 {% endblock %}

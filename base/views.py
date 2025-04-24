@@ -1,6 +1,6 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.decorators import login_required
-from .models import Message, Post, Comment, Listing, ListingImage
+from .models import Message, Post, Comment, Listing, ListingImage, Review
 from django.contrib import messages
 from base.models import User
 from django.db.models import Q
@@ -17,28 +17,40 @@ User = get_user_model()
 def home(request):
     return render(request, 'base/index.html')
 
-@login_required
-def message_view(request, username=None):
-    users = User.objects.exclude(username=request.user.username)
-    selected_user = User.objects.get(username=username) if username else None
+User = get_user_model()
 
-    messages = []
+@login_required
+def message_view(request, slug=None):
+    users = User.objects.exclude(id=request.user.id)
+    selected_user = None
+    messages_qs = []
+
+    if slug:
+        for user in users:
+            if slugify(f"{user.first_name} {user.last_name}") == slug:
+                selected_user = user
+                break
+
     if selected_user:
-        messages = Message.objects.filter(
-    sender__in=[request.user, selected_user],
-    receiver__in=[request.user, selected_user]
-    ).order_by("timestamp")
+        messages_qs = Message.objects.filter(
+            sender__in=[request.user, selected_user],
+            receiver__in=[request.user, selected_user]
+        ).order_by("timestamp")
 
     if request.method == "POST":
         content = request.POST.get("message")
         if selected_user and content:
-            Message.objects.create(sender=request.user, receiver=selected_user, content=content)
-            return redirect('message', username=selected_user.username)
+            Message.objects.create(
+                sender=request.user,
+                receiver=selected_user,
+                content=content
+            )
+            return redirect('message', slug=selected_user.full_name_slug)
 
     return render(request, "base/message.html", {
         "users": users,
         "selected_user": selected_user,
-        "messages": messages
+        "messages": messages_qs
     })
 
 @login_required(login_url=settings.LOGIN_URL)
@@ -288,3 +300,26 @@ def explore(request):
 def explore_detail(request, pk):
     listing = get_object_or_404(Listing, pk=pk)
     return render(request, 'base/explore_detail.html', {'listing': listing})
+
+@login_required
+def explore_detail(request, pk):
+    listing = get_object_or_404(Listing, pk=pk)
+    reviews = listing.reviews.all().order_by('-created_at')
+
+    # Handle review submission
+    if request.method == 'POST':
+        form = ReviewForm(request.POST)
+        if form.is_valid():
+            review = form.save(commit=False)
+            review.user = request.user
+            review.listing = listing
+            review.save()
+            return redirect('explore_detail', pk=pk)
+    else:
+        form = ReviewForm()
+
+    return render(request, 'base/explore_detail.html', {
+        'listing': listing,
+        'form': form,
+        'reviews': reviews
+    })
