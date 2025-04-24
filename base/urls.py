@@ -10,9 +10,12 @@ urlpatterns = [
     path('community/<int:post_id>/', views.community_detail, name='community-detail'),
     path('community/delete/<int:pk>/', views.delete_post, name='delete-post'),
 
+  # Authentication URLs
     path('auth/', views.login_register, name='login_register'),
     path('login/', views.loginPage, name='login'),
+    path('register/', views.registerPage, name='register'),
     path('logout/', views.logoutUser, name='logout'),
+
     path('profile/', views.profile, name='profile'),
     path('profile/edit/', views.edit_profile, name='edit_profile'),
 
@@ -25,6 +28,7 @@ urlpatterns = [
     path('sales/create/', views.create_sale, name='create_sale'),
     path('sales/edit/<int:pk>/', views.edit_sale, name='edit_sale'),
     path('sales/delete/<int:pk>/', views.delete_sale, name='delete_sale'),
+    
     path('explore/', views.explore, name='explore'),
     path('explore/<int:pk>/', views.explore_detail, name='explore_detail'),
 

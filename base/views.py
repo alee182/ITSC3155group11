@@ -10,6 +10,8 @@ from django.contrib.auth.forms import UserCreationForm
 from .forms import UserProfileForm, ListingForm, ReviewForm
 from django.contrib.auth import get_user_model
 from django.utils.text import slugify
+from .forms import CreateUserForm
+
 # Create your views here.
 
 def home(request):
@@ -138,57 +140,91 @@ def delete_post(request, pk):
         return redirect('community')
     return redirect('community-detail', post_id=pk)
 
-def loginPage(request):
-    page = 'login'
+def login_register(request):
 
+    form = CreateUserForm()
+    
+    page = request.GET.get('page', 'login')
+    
+    context = {
+        'page': page,
+        'form': form
+    }
+    return render(request, 'base/login_register.html', context)
+
+def loginPage(request):
     if request.user.is_authenticated:
         return redirect('explore')
 
     if request.method == 'POST':
-        username = request.POST.get('username').lower()
+        email = request.POST.get('email')
         password = request.POST.get('password')
 
-        try: 
-            user = User.objects.get(username=username)
+        if email:
+            email = email.lower()
+        else:
+            messages.error(request, 'Please enter your email.')
+            return redirect('login_register')
+
+        try:
+            user = User.objects.get(email=email)
         except:
             messages.error(request, 'User does not exist')
+            return redirect('login_register')
 
-        user = authenticate(request, username=username, password=password)
+        user = authenticate(request, email=email, password=password)
 
         if user is not None:
             login(request, user)
             return redirect('explore')
         else:
-            messages.error(request, 'Username OR password does not exist')
+            messages.error(request, 'Email OR password is incorrect')
+            return redirect('login_register')
 
+    return redirect('login_register')
 
-    context = {'page': page}
-    return render(request, 'base/login_register.html', context)
-
-def logoutUser(request):
-    logout(request)
-    return redirect('explore')
 
 def registerPage(request):
-    form = UserCreationForm()
-
+    """
+    Handle register form submission
+    """
+    if request.user.is_authenticated:
+        return redirect('explore')
+        
     if request.method == 'POST':
-        form = UserCreationForm(request.POST)
+        form = CreateUserForm(request.POST)
+        email = request.POST.get('email').lower()
         if form.is_valid():
+            
+            if not email.endswith('@charlotte.edu'):
+                messages.error(request, 'Email must end with "@charlotte.edu"')
+                return redirect('auth')  # Change from login_register to auth
+            
+            # Save the user
+            user = form.save(commit=False)
+            user.email = email  # Set email field too
+            user.save()
+            
+            # Log the user in
+            login(request, user)
+            return redirect('explore')
+        else:
+            # Form has errors - pass it back to the template
+            # Map raw field names to friendly labels
 
-            username = form.cleaned_data.get('username')
-            if not username.lower().endswith('@charlotte.edu'):
-                messages.error(request, 'Username must end with "@charlotte.edu"')
-            else:
-                user = form.save(commit=False)
-                user.username = username.lower()
-                user.save()
-                login(request, user)
-                return redirect('explore')
+# Display custom-labeled errors
+            for errors in form.errors.values():
+                for error in errors:
+                    messages.error(request, error)
 
 
+            return redirect('login_register') 
 
-    return  render(request, 'ninermarket/templates/login_register.html', {'form': form})
+    # If not POST, redirect to the auth page with register parameter
+    return redirect('login_register')  
+def logoutUser(request):
+    logout(request)
+    return redirect('login_register') 
 
 
 @login_required
@@ -252,41 +288,6 @@ def listing(request):
 def profile(request):
     return render(request, 'base/userprofile.html')
 
-def login_register(request):
-    if request.method == 'POST':
-        form_type = request.POST.get('form_type')
-
-        if form_type == 'login':
-            username = request.POST.get('username').lower()
-            password = request.POST.get('password')
-            user = authenticate(request, username=username, password=password)
-            if user:
-                login(request, user)
-                return redirect('explore')
-            else:
-                messages.error(request, 'Invalid login credentials.')
-
-        elif form_type == 'signup':
-            form = UserCreationForm(request.POST)
-            if form.is_valid():
-                username = form.cleaned_data.get('username').lower()
-                if not username.endswith('@charlotte.edu'):
-                    messages.error(request, 'Email must end with "@charlotte.edu".')
-                else:
-                    user = form.save(commit=False)
-                    user.username = username
-                    user.save()
-                    login(request, user)
-                    return redirect('explore')
-            else:
-                messages.error(request, 'Signup failed. Check your form and try again.')
-
-    else:
-        form = UserCreationForm()
-
-    return render(request, 'base/login_register.html')
-
-@login_required
 @login_required
 def sales_page(request):
     query = request.GET.get('q', '')

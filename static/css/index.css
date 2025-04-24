@@ -1,62 +1,151 @@
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-  }
-  
-  body {
-    font-family: Arial, sans-serif;
-    background-color: white;
-    color: #333;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    background-image: url("../images/charlottecampus.jpg");
-    background-size: cover;
-    background-position: center;
-  }
+body {
+  font-family: Arial, sans-serif;
+  background-color: #d4e9d4; /* Light green background */
+  margin: 0;
+  padding: 0;
+  color: #333;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
 
-  .container {
-    text-align: center;
-    background-color: rgba(255, 255, 255, 0.95);
-    padding: 50px;
-    border-radius: 15px;
-    width: 90%;
-    max-width: 600px;
-  }
-  
-  header h1 {
-    font-size: 3em;
-    color: #006747;
-  }
-  
-  header .tagline {
-    font-size: 1.2em;
-    color: #333;
-    margin-top: 10px;
-  }
-  
-  .cta-container {
-    margin-top: 50px;
-  }
-  
-  .cta-button {
-    background-color: #21622c;
-    color: white;
-    border: none;
-    padding: 15px 30px;
-    font-size: 1.2em;
-    cursor: pointer;
-    border-radius: 8px;
-    transition: background-color 0.3s ease;
-    text-decoration: none;
-  }
-  
-  .cta-button:hover {
-    background-color: #A49665;
-  }
-  
-  .cta-button:focus {
-    outline: none;
-  }
+/* Container */
+.auth-wrapper {
+  width: 375px;
+  background: white;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+}
+
+/* Message alerts */
+.messages {
+  padding: 0;
+  margin: 0 auto 20px;
+  max-width: 400px;
+  list-style: none;
+}
+
+.messages li {
+  padding: 10px 15px;
+  margin-bottom: 10px;
+  border-radius: 5px;
+  color: white;
+}
+
+.messages li.error {
+  background-color: #ff4d4d;
+}
+
+.messages li.success {
+  background-color: #33cc33;
+}
+
+/* Tab toggle buttons */
+.auth-toggle {
+  display: flex;
+  width: 100%;
+}
+
+.auth-toggle button {
+  flex: 1;
+  padding: 16px 0;
+  background: none;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  font-size: 18px;
+  font-weight: 500;
+  color: #666;
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+.auth-toggle button.active {
+  color: #066a54;
+}
+
+.auth-toggle button.active::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 3px;
+  background-color: #066a54;
+}
+
+/* Form sections */
+.form-section {
+  padding: 30px 35px;
+}
+
+.form-section.hidden {
+  display: none;
+}
+
+.form-section h2 {
+  text-align: center;
+  margin: 0 0 30px;
+  color: #333;
+  font-size: 28px;
+  font-weight: 600;
+}
+
+/* Form fields */
+.form-section input[type="text"],
+.form-section input[type="password"],
+.form-section input[type="email"] {
+  display: block;
+  width: 100%;
+  padding: 13px 15px;
+  margin-bottom: 20px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  font-size: 16px;
+  box-sizing: border-box;
+}
+
+.form-section input:focus {
+  border-color: #066a54;
+  outline: none;
+}
+
+.field-errors {
+  color: #ff4d4d;
+  font-size: 13px;
+  margin-bottom: 8px;
+}
+
+/* Submit button */
+.form-section button[type="submit"] {
+  display: block;
+  width: 100%;
+  padding: 15px;
+  background-color: #066a54;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  font-size: 16px;
+  font-weight: 500;
+  cursor: pointer;
+  margin-top: 25px;
+}
+
+.form-section button[type="submit"]:hover {
+  background-color: #055643;
+}
+
+/* Form field styling */
+.form-field {
+  margin-bottom: 15px;
+}
+
+.errorlist {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 5px 0;
+  color: #ff4d4d;
+  font-size: 13px;
+}
