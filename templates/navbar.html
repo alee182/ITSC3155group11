@@ -33,8 +33,8 @@
                 <img src="{% static 'images/Message.png' %}" alt="messages"> Message
             </a>
 
-            <a href="{% url 'create_sale' %}" class="{% if request.path == '/create-listing/' %}active{% endif %}">
-                <img src="{% static 'images/Sales.png' %}" alt="create listings"> Create Listings
+            <a href="{% url 'sales' %}" class="{% if request.path == '/sales/' %}active{% endif %}">
+                <img src="{% static 'images/Sales.png' %}" alt="create listings"> Sales
             </a>
 
             <!-- mobile login button -->
