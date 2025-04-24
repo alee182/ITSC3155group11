@@ -1,16 +1,24 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 from taggit.managers import TaggableManager
+from django.conf import settings
+from django.utils.text import slugify
 
 class User(AbstractUser):
     email = models.EmailField(unique=True)
     profile_pic = models.ImageField(upload_to='profile_pics/', null=True, blank=True, default='uncc-logo.png')
 
     USERNAME_FIELD = 'email'
-    REQUIRED_FIELDS = ['username']  # Keep 'username' for admin
+    REQUIRED_FIELDS = ['username']  # For admin login compatibility
 
     def __str__(self):
         return self.email
+
+    @property
+    def full_name_slug(self):
+        return slugify(f"{self.first_name} {self.last_name}")
+
+
 
 
 # Post model for community listings
@@ -82,11 +90,19 @@ class Listing(models.Model):
 
 
 class ListingImage(models.Model):
-    listing = models.ForeignKey(Listing, on_delete=models.CASCADE, related_name='images')
+    listing = models.ForeignKey('Listing', related_name='images', on_delete=models.CASCADE)
     image = models.ImageField(upload_to='listing_images/')
-    uploaded_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
         return f"Image for {self.listing.title}"
+
+class Review(models.Model):
+    listing = models.ForeignKey('Listing', on_delete=models.CASCADE, related_name='reviews')
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    body = models.TextField()
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"Review by {self.user.email} on {self.listing.title}"
 
 
