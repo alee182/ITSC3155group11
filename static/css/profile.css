@@ -1,0 +1,76 @@
+/* Global styles */
+body {
+    font-family: 'Segoe UI', sans-serif;
+    background-color: #f8f9fa;
+    color: #333;
+}
+
+/* Container spacing */
+.container {
+    max-width: 800px;
+}
+
+/* Card styling */
+.card {
+    border: 1px solid #ddd;
+    border-radius: 12px;
+    background-color: #ffffff;
+}
+
+/* Profile picture */
+img.rounded-circle {
+    border: 3px solid #046A38;
+    object-fit: cover;
+}
+
+/* Header */
+h2 {
+    color: #046A38;
+    font-weight: bold;
+    margin-bottom: 1.5rem;
+}
+
+/* Edit buttons */
+.btn-outline-secondary {
+    border-color: #A49661;
+    color: #A49661;
+}
+
+.btn-outline-secondary:hover {
+    background-color: #A49661;
+    color: #fff;
+}
+
+.btn-outline-primary {
+    border-color: #046A38;
+    color: #046A38;
+}
+
+.btn-outline-primary:hover {
+    background-color: #046A38;
+    color: #fff;
+}
+
+/* Spacing tweaks */
+.mb-2 {
+    margin-bottom: 1rem;
+}
+
+.me-3 {
+    margin-right: 1rem;
+}
+
+.ms-2 {
+    margin-left: 0.5rem;
+}
+
+/* File input trigger button */
+button[onclick] {
+    font-weight: 500;
+}
+
+/* Optional: subtle card shadow */
+.card.shadow-sm {
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+}
+
