@@ -22,19 +22,19 @@
 
         <!-- Nav bar links -->
             <a href="{% url 'explore' %}" class="{% if request.path == '/explore/' %}active{% endif %}">
-                <img src="{% static 'images/icons/Home.png' %}" alt="explore"> Explore
+                <img src="{% static 'images/Home.png' %}" alt="explore"> Explore
             </a>
 
             <a href="{% url 'community' %}" class="{% if request.path == '/community/' %}active{% endif %}">
-                <img src="{% static 'images/icons/Community.png' %}" alt="community"> Community
+                <img src="{% static 'images/Community.png' %}" alt="community"> Community
             </a>
 
             <a href="{% url 'message' %}" class="{% if request.path == '/messages/' %}active{% endif %}">
-                <img src="{% static 'images/icons/Message.png' %}" alt="messages"> Message
+                <img src="{% static 'images/Message.png' %}" alt="messages"> Message
             </a>
 
             <a href="{% url 'create_sale' %}" class="{% if request.path == '/create-listing/' %}active{% endif %}">
-                <img src="{% static 'images/icons/Sales.png' %}" alt="create listings"> Create Listings
+                <img src="{% static 'images/Sales.png' %}" alt="create listings"> Create Listings
             </a>
 
             <!-- mobile login button -->

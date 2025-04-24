@@ -38,10 +38,14 @@ class User(AbstractBaseUser, PermissionsMixin):
     is_staff = models.BooleanField(default=False)
 
     objects = CustomUserManager()
+    
 
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = ['first_name', 'last_name']
 
+    def full_name_slug(self):
+        return slugify(f"{self.first_name} {self.last_name}")
+    
     def __str__(self):
         return self.email
 
