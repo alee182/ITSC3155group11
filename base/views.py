@@ -8,6 +8,8 @@ from taggit.models import Tag
 from django.contrib.auth import authenticate, login, logout
 from .forms import ListingForm, UserProfileForm, CreateUserForm
 from django.contrib.auth import get_user_model
+from django.conf import settings
+
 
 User = get_user_model()
 # Create your views here.
@@ -39,7 +41,7 @@ def message_view(request, username=None):
         "messages": messages
     })
 
-@login_required
+@login_required(login_url=settings.LOGIN_URL)
 def community_view(request):
     tag = request.GET.get('tag')
     search_query = request.GET.get('q', '')
