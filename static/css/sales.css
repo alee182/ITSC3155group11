@@ -2,14 +2,22 @@
     padding: 30px;
     background-color: hsl(0, 0%, 82%);
     min-height: 100vh;
+    margin-top: 80px;
   }
   
   .sales-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 20px;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    background-color: hsl(0, 0%, 82%);
+    padding: 20px;
   }
+
+  .sales-content {
+    overflow-y: auto;
+    max-height: calc(100vh - 100px); /* Adjust depending on header height */
+  }
+
   
   .create-btn {
     background-color: #175f1e;
@@ -30,7 +38,7 @@
     font-size: 1.2rem;
     border-radius: 25px;
     border: none;
-    width: 250px;
+    width: 400px;
   }
   
   .sales-grid {

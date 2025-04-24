@@ -5,6 +5,7 @@ html, body {
 }
 
 .community-wrapper {
+  margin-top: 80px;
   display: flex;
   height: 100%;
   background-color: #a7d8a6;

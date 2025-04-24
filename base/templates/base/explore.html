@@ -11,31 +11,31 @@
 </head>
 <body>
 
-<div class="sales-page">
-  <div class="sales-header">
-    <form method="get" class="search-bar">
-      <input type="text" name="q" placeholder="Search" value="{{ query }}">
-    </form>
-  </div>
+  <div class="sales-page">
+    <div class="sales-header">
+      <form method="get" class="search-bar">
+        <input type="text" name="q" placeholder="Search" value="{{ query }}">
+      </form>
+    </div>
 
-  <div class="sales-grid">
-    {% for listing in listings %}
-      <div class="sale-card">
-        <a href="{% url 'explore_detail' listing.id %}">
-          {% with images=listing.images.all %}
-            {% if images %}
-              <img src="{{ images.0.image.url }}" alt="{{ listing.title }}">
-            {% else %}
-              <img src="{% static 'images/empty.png' %}" alt="No image available">
-            {% endif %}
-          {% endwith %}
-          <div class="item-name">{{ listing.title }}</div>
-          <div class="item-price">${{ listing.price }}</div>
-        </a>
+    <div class="sales-content">
+      <div class="sales-grid">
+        {% for listing in listings %}
+          <div class="sale-card">
+            <a href="{% url 'explore_detail' listing.id %}">
+              {% if listing.images.all %}
+                <img src="{{ listing.images.all.0.image.url }}" alt="{{ listing.title }}">
+              {% else %}
+                <img src="{% static 'images/empty.png' %}" alt="No image available">
+              {% endif %}
+              <div class="item-name">{{ listing.title }}</div>
+              <div class="item-price">${{ listing.price }}</div>
+            </a>
+          </div>
+        {% empty %}
+          <p style="text-align:center;">No listings found.</p>
+        {% endfor %}
       </div>
-    {% empty %}
-      <p style="text-align:center;">No listings found.</p>
-    {% endfor %}
+    </div>
   </div>
-</div>
 

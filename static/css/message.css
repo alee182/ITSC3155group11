@@ -19,6 +19,7 @@ body {
 }
 
 .chat-wrapper {
+  margin-top: 80px;
   display: flex;
   height: calc(100vh - 60px);
   overflow: hidden;

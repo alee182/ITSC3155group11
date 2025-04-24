@@ -51,7 +51,7 @@ a {
   justify-content: space-between;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
   z-index: 1000;
-  height: 60px;
+  height: 80px;
   flex-wrap: nowrap; 
 }
 
@@ -170,7 +170,7 @@ a {
 }
 
 .desktop-login {
-  display: block;
+  display: flex;
 }
 
 .mobile-login {
