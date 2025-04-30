@@ -1,4 +1,5 @@
 {% include 'navbar.html' %}
+
 <!DOCTYPE html>
 {% load static %}
 <html lang="en">
@@ -7,35 +8,199 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Explore</title>
   <link rel="stylesheet" href="{% static 'css/explore.css' %}">
-  <link rel="stylesheet" href="{% static 'css/sales.css' %}"> 
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body>
-
-  <div class="sales-page">
-    <div class="sales-header">
+  <div class="container">
+    
+    <!-- Search Bar -->
+    <div class="search-container">
       <form method="get" class="search-bar">
-        <input type="text" name="q" placeholder="Search" value="{{ query }}">
+        <i class="fas fa-search search-icon"></i>
+        <input type="text" name="q" class="search-input" placeholder="Search" value="{{ query }}">
       </form>
     </div>
-
-    <div class="sales-content">
-      <div class="sales-grid">
-        {% for listing in listings %}
-          <div class="sale-card">
-            <a href="{% url 'explore_detail' listing.id %}">
-              {% if listing.images.all %}
-                <img src="{{ listing.images.all.0.image.url }}" alt="{{ listing.title }}">
-              {% else %}
-                <img src="{% static 'images/empty.png' %}" alt="No image available">
-              {% endif %}
-              <div class="item-name">{{ listing.title }}</div>
-              <div class="item-price">${{ listing.price }}</div>
-            </a>
-          </div>
-        {% empty %}
-          <p style="text-align:center;">No listings found.</p>
-        {% endfor %}
+    
+    <!-- Categories Section -->
+    <h2 class="section-title">Browse Categories</h2>
+    <div class="categories-container">
+      <div class="categories-grid">
+        <a href="?category=electronics" class="category-card {% if category == 'electronics' %}active{% endif %}">
+          <div class="category-icon"><i class="fas fa-laptop"></i></div>
+          <span>Electronics</span>
+        </a>
+        <a href="?category=books" class="category-card {% if category == 'books' %}active{% endif %}">
+          <div class="category-icon"><i class="fas fa-book"></i></div>
+          <span>Books</span>
+        </a>
+        <a href="?category=furniture" class="category-card {% if category == 'furniture' %}active{% endif %}">
+          <div class="category-icon"><i class="fas fa-couch"></i></div>
+          <span>Furniture</span>
+        </a>
+        <a href="?category=clothing" class="category-card {% if category == 'clothing' %}active{% endif %}">
+          <div class="category-icon"><i class="fas fa-tshirt"></i></div>
+          <span>Clothing</span>
+        </a>
+        <a href="?category=sports" class="category-card {% if category == 'sports' %}active{% endif %}">
+          <div class="category-icon"><i class="fas fa-basketball-ball"></i></div>
+          <span>Sports</span>
+        </a>
+        <a href="?category=other" class="category-card {% if category == 'other' %}active{% endif %}">
+          <div class="category-icon"><i class="fas fa-ellipsis-h"></i></div>
+          <span>Other</span>
+        </a>
       </div>
     </div>
+
+    <!-- Filter and Sort Tools -->
+    <div class="listings-header">
+      <div class="current-filter">
+        <h2>{{ category_display|default:"All Items" }} <span class="item-count">({{ listings|length|default:"0" }} items)</span></h2>
+      </div>
+      
+      <div class="sort-view-tools">
+        <div class="dropdown">
+          <button class="sort-btn">
+            <i class="fas fa-sort"></i> Sort by
+          </button>
+          <div class="dropdown-content">
+            <a href="?{% if category %}category={{ category }}&{% endif %}{% if query %}q={{ query }}&{% endif %}sort=recent" {% if sort_by == 'recent' %}class="active"{% endif %}>Most Recent</a>
+            <a href="?{% if category %}category={{ category }}&{% endif %}{% if query %}q={{ query }}&{% endif %}sort=price_low" {% if sort_by == 'price_low' %}class="active"{% endif %}>Price: Low to High</a>
+            <a href="?{% if category %}category={{ category }}&{% endif %}{% if query %}q={{ query }}&{% endif %}sort=price_high" {% if sort_by == 'price_high' %}class="active"{% endif %}>Price: High to Low</a>
+          </div>
+        </div>
+        
+        <div class="view-toggle">
+          <button class="view-btn grid-view active" data-view="grid"><i class="fas fa-th"></i></button>
+          <button class="view-btn list-view" data-view="list"><i class="fas fa-list"></i></button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Product Grid -->
+    <div class="product-grid" id="productGrid">
+      {% for listing in listings %}
+      <div class="product-card">
+        {% if listing.condition == 'new' %}
+        <div class="condition-tag">New</div>
+        {% elif listing.condition == 'like_new' %}
+        <div class="condition-tag">Like New</div>
+        {% endif %}
+        
+        <a href="{% url 'explore_detail' listing.id %}">
+          <div class="product-image-container">
+            {% if listing.images.all %}
+            <img src="{{ listing.images.all.0.image.url }}" alt="{{ listing.title }}" class="product-image">
+            {% else %}
+            <img src="{% static 'images/empty.png' %}" alt="No image available" class="product-image">
+            {% endif %}
+            
+            <button class="wishlist-btn" data-id="{{ listing.id }}">
+              <i class="far fa-heart"></i>
+            </button>
+          </div>
+          
+          <div class="product-info">
+            <h3 class="product-title">{{ listing.title }}</h3>
+            <div class="product-price">${{ listing.price }}</div>
+            
+            <div class="product-meta">
+              <div class="posted-time">
+                <i class="far fa-clock"></i>
+                <span>{{ listing.created_at|timesince }} ago</span>
+              </div>
+            </div>
+          </div>
+        </a>
+      </div>
+      {% empty %}
+      <div class="no-results">
+        <p>No listings found matching your criteria.</p>
+        <a href="{% url 'explore' %}" class="reset-link">Clear filters</a>
+      </div>
+      {% endfor %}
+    </div>
+    
+    <!-- Pagination -->
+    {% if is_paginated %}
+    <div class="pagination">
+      {% if page_obj.has_previous %}
+      <a href="?page={{ page_obj.previous_page_number }}{% if category %}&category={{ category }}{% endif %}{% if query %}&q={{ query }}{% endif %}{% if sort_by %}&sort={{ sort_by }}{% endif %}" class="page-btn"><i class="fas fa-chevron-left"></i></a>
+      {% endif %}
+      
+      {% for num in page_obj.paginator.page_range %}
+        {% if page_obj.number == num %}
+        <a href="#" class="page-btn active">{{ num }}</a>
+        {% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %}
+        <a href="?page={{ num }}{% if category %}&category={{ category }}{% endif %}{% if query %}&q={{ query }}{% endif %}{% if sort_by %}&sort={{ sort_by }}{% endif %}" class="page-btn">{{ num }}</a>
+        {% endif %}
+      {% endfor %}
+      
+      {% if page_obj.has_next %}
+      <a href="?page={{ page_obj.next_page_number }}{% if category %}&category={{ category }}{% endif %}{% if query %}&q={{ query }}{% endif %}{% if sort_by %}&sort={{ sort_by }}{% endif %}" class="page-btn"><i class="fas fa-chevron-right"></i></a>
+      {% endif %}
+    </div>
+    {% endif %}
   </div>
 
+  <script>
+    // View toggle functionality
+    document.querySelectorAll('.view-btn').forEach(button => {
+      button.addEventListener('click', function() {
+        // Remove active class from all buttons
+        document.querySelectorAll('.view-btn').forEach(btn => {
+          btn.classList.remove('active');
+        });
+        
+        // Add active class to clicked button
+        this.classList.add('active');
+        
+        // Change grid view
+        const view = this.getAttribute('data-view');
+        const productGrid = document.getElementById('productGrid');
+        
+        if (view === 'list') {
+          productGrid.classList.add('list-view');
+        } else {
+          productGrid.classList.remove('list-view');
+        }
+      });
+    });
+    
+    // Sort dropdown functionality
+    const sortBtn = document.querySelector('.sort-btn');
+    const dropdownContent = document.querySelector('.dropdown-content');
+    
+    if (sortBtn) {
+      sortBtn.addEventListener('click', function(e) {
+        e.stopPropagation();
+        dropdownContent.classList.toggle('show');
+      });
+    }
+    
+    // Close dropdown when clicking outside
+    window.addEventListener('click', function() {
+      if (dropdownContent && dropdownContent.classList.contains('show')) {
+        dropdownContent.classList.remove('show');
+      }
+    });
+    
+    // Wishlist functionality
+    document.querySelectorAll('.wishlist-btn').forEach(button => {
+      button.addEventListener('click', function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        
+        const icon = this.querySelector('i');
+        if (icon.classList.contains('far')) {
+          icon.classList.remove('far');
+          icon.classList.add('fas');
+        } else {
+          icon.classList.remove('fas');
+          icon.classList.add('far');
+        }
+      });
+    });
+  </script>
+</body>
+</html>
