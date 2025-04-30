@@ -1,53 +1,165 @@
-{% include 'navbar.html' %}
+<!DOCTYPE html>
 {% load static %}
-
-{% block content %}
-<script src="{% static 'js/create_post.js' %}"></script>
-<link rel="stylesheet" href="{% static 'css/create_post.css' %}">
-
-<div class="create-form-container">
-  <form method="POST" enctype="multipart/form-data" class="create-form">
-    {% csrf_token %}
-
-    <!-- Image Upload -->
-    <label for="image-upload" class="image-box" id="image-preview-box">
-      <span id="upload-text">Upload Image</span>
-      <input type="file" name="image" id="image-upload" accept="image/*" hidden>
-    </label>
-    <!-- Left Column -->
-    <div class="left-column">
-      <!-- Tags Section -->
-      <div class="tag-section">
-        <label for="tag-select">Choose Tags:</label>
-        <select id="tag-select" multiple>
-          {% for tag in all_tags %}
-            <option value="{{ tag.name }}">{{ tag.name }}</option>
-          {% endfor %}
-        </select>
-
-        <label for="tags">Or type custom tags (comma separated):</label>
-        <input type="text" name="tags" id="tags" placeholder="e.g. haircut, food, events">
-      
-      </div>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Create Event</title>
+  <link rel="stylesheet" href="{% static 'css/create_post.css' %}">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+  {% include 'navbar.html' %}
+  
+  <div class="page-container">
+    <div class="header-section">
+      <h1>Create New Event</h1>
+      <p class="subtitle">Share your upcoming event with the community</p>
     </div>
 
-    <!-- Right Column -->
-    <div class="right-column">
-      <label for="title">Name:</label>
-      <input type="text" name="title" id="title" placeholder="Event Name" required>
+    <div class="create-form-container">
+      <form method="POST" enctype="multipart/form-data" class="create-form">
+        {% csrf_token %}
+        
+        <div class="form-section main-info">
+          <div class="section-header">
+            <i class="fas fa-info-circle"></i>
+            <h2>Event Details</h2>
+          </div>
+          
+          <div class="field-group">
+            <label for="title" class="required">Event Name</label>
+            <div class="input-wrapper">
+              <i class="fas fa-bookmark"></i>
+              <input type="text" name="title" id="title" placeholder="Enter a descriptive event name" required>
+            </div>
+          </div>
 
-      <label for="description">Description:</label>
-      <textarea name="description" id="description" rows="6" placeholder="Write event description..." required></textarea>
-      <!-- Dates -->
-      <div class="date-group">
-        <label for="start_date">From:</label>
-        <input type="date" name="start_date" id="start_date" required>
+          <div class="field-group">
+            <label for="description" class="required">Event Description</label>
+            <div class="input-wrapper textarea-wrapper">
+              <i class="fas fa-align-left"></i>
+              <textarea name="description" id="description" rows="6" placeholder="Describe your event, including time, agenda, and any other important details..." required></textarea>
+            </div>
+          </div>
+        </div>
+        
+        <div class="two-column-section">
+          <div class="form-section date-section">
+            <div class="section-header">
+              <i class="fas fa-calendar-alt"></i>
+              <h2>Event Schedule</h2>
+            </div>
+            
+            <div class="date-fields">
+              <div class="field-group">
+                <label for="start_date" class="required">Start Date</label>
+                <div class="input-wrapper">
+                  <i class="fas fa-calendar-day"></i>
+                  <input type="date" name="start_date" id="start_date" required>
+                </div>
+              </div>
 
-        <label for="end_date">To:</label>
-        <input type="date" name="end_date" id="end_date" required>
-      </div>
-      <button type="submit" class="submit-btn">Post</button>
+              <div class="field-group">
+                <label for="end_date" class="required">End Date</label>
+                <div class="input-wrapper">
+                  <i class="fas fa-calendar-check"></i>
+                  <input type="date" name="end_date" id="end_date" required>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Improved Tag Section -->
+          <div class="form-section tag-section-container">
+            <div class="section-header">
+              <i class="fas fa-tags"></i>
+              <h2>Event Tags</h2>
+            </div>
+            
+            <div class="tag-input-area">
+              <label for="tag-search" class="tag-input-label">Search or add tags:</label>
+              <div class="tag-search-wrapper">
+                <i class="fas fa-search search-icon"></i>
+                <input type="text" id="tag-search" placeholder="Type to add or search tags...">
+                <button type="button" id="add-tag-btn" title="Add tag (Alt+A)">
+                  <i class="fas fa-plus"></i>
+                </button>
+              </div>
+              <div class="input-hint">Press Enter or click + to add tag</div>
+              
+              <div class="tag-suggestions" id="tag-suggestions">
+                <!-- Tag suggestions will appear here -->
+              </div>
+              
+              <!-- Hidden input to store the actual tag values to be submitted -->
+              <input type="hidden" name="tags" id="tags">
+            </div>
+            
+            <div class="selected-tags-container">
+              <h3>Selected Tags</h3>
+              <div class="selected-tags" id="selected-tags-display">
+                <div class="no-tags-message">No tags selected yet</div>
+                <!-- Selected tags will appear here -->
+              </div>
+            </div>
+            
+            <div class="popular-tags">
+              <h3>Popular Tags</h3>
+              <div class="popular-tags-list">
+                {% for tag in all_tags|slice:":8" %}
+                  <button type="button" class="quick-tag-btn" 
+                          data-tag="{{ tag.name }}" 
+                          data-count="{{ tag.count|default:0 }}">
+                    {{ tag.name }}
+                  </button>
+                {% endfor %}
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="form-section image-section">
+          <div class="section-header">
+            <i class="fas fa-image"></i>
+            <h2>Event Image</h2>
+          </div>
+          
+          <div class="image-upload-area">
+            <div class="image-upload-container">
+              <label for="image-upload" class="image-box" id="image-preview-box">
+                <div id="upload-text">
+                  <i class="fas fa-cloud-upload-alt"></i>
+                  <span>Click or drag to upload image</span>
+                  <span class="upload-hint">Recommended size: 1200 × 800 pixels</span>
+                </div>
+                <input type="file" name="image" id="image-upload" accept="image/*" hidden>
+              </label>
+            </div>
+            
+            <div class="image-info">
+              <h3>Event Image Guidelines</h3>
+              <ul>
+                <li><i class="fas fa-check"></i> Use high-quality, clear images</li>
+                <li><i class="fas fa-check"></i> Landscape orientation works best</li>
+                <li><i class="fas fa-check"></i> Avoid text-heavy images</li>
+                <li><i class="fas fa-check"></i> Make sure the image represents your event</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        
+        <div class="form-actions">
+          <button type="button" class="cancel-btn">Cancel</button>
+          <button type="submit" class="submit-btn">
+            <i class="fas fa-calendar-plus"></i>
+            Create Event
+          </button>
+        </div>
+      </form>
     </div>
-  </form>
-</div>
-{% endblock %}
+  </div>
+
+  <script src="{% static 'js/create_post.js' %}"></script>
+</body>
+</html>
