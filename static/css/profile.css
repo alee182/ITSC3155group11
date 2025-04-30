@@ -3,11 +3,16 @@ body {
     font-family: 'Segoe UI', sans-serif;
     background-color: #f8f9fa;
     color: #333;
+    padding-top: 80px; /* Adjust this value based on the height of your navbar */
+
 }
 
 /* Container spacing */
 .container {
-    max-width: 800px;
+    width: 90%;
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 2rem 1rem;
 }
 
 /* Card styling */
@@ -15,6 +20,7 @@ body {
     border: 1px solid #ddd;
     border-radius: 12px;
     background-color: #ffffff;
+    padding: 2rem;
 }
 
 /* Profile picture */
