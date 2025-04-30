@@ -7,7 +7,7 @@
   --color-accent: #F1E6B2;
   --color-hover: #A49665;
   --color-white: #ffffff;
-  --color-bg: #a7d8a6;
+  --color-bg: #f0f5f0;
   --shadow-sm: 0 4px 12px rgba(0, 0, 0, 0.1);
   --shadow-md: 0 6px 18px rgba(0, 0, 0, 0.15);
   --transition-fast: 0.2s ease;
@@ -28,7 +28,7 @@ html {
 }
 
 body {
-  background: linear-gradient(135deg, #a8d5ba, #d0ebc5);
+  background: var(--color-bg);
   color: var(--color-white);
   font-size: 1.6rem;
   min-height: 100vh;
