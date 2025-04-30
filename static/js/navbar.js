@@ -35,27 +35,6 @@ document.addEventListener("DOMContentLoaded", function () {
         window.scrollTo({ top: 0, behavior: 'smooth' });
     });
 
-    // Hide navbar on scroll down, show on scroll up
-    window.addEventListener("scroll", function() {
-        let scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-        
-        if (scrollTop > lastScrollTop && scrollTop > 80) {
-            // Scroll down
-            navbar.style.transform = "translateY(-100%)";
-        } else {
-            // Scroll up
-            navbar.style.transform = "translateY(0)";
-        }
-        
-        lastScrollTop = scrollTop <= 0 ? 0 : scrollTop;
-
-        // Add shadow when scrolled
-        if (scrollTop > 20) {
-            navbar.style.boxShadow = "0 8px 20px rgba(0, 0, 0, 0.15)";
-        } else {
-            navbar.style.boxShadow = "";
-        }
-    });
 
     // Add hover animations for nav links
     navLinks.forEach(link => {
@@ -83,29 +62,6 @@ document.addEventListener("DOMContentLoaded", function () {
             link.classList.add("active");
         }
     });
-
-    // Add scroll indicator
-    const scrollIndicator = document.createElement("div");
-    scrollIndicator.className = "scroll-indicator";
-    scrollIndicator.style.cssText = `
-        position: fixed;
-        top: 80px;
-        left: 0;
-        height: 3px;
-        background: linear-gradient(90deg, var(--color-accent), var(--color-hover));
-        width: 0%;
-        z-index: 1001;
-        transition: width 0.1s ease;
-    `;
-    document.body.appendChild(scrollIndicator);
-
-    window.addEventListener("scroll", function() {
-        const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
-        const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
-        const scrolled = (winScroll / height) * 100;
-        scrollIndicator.style.width = scrolled + "%";
-    });
-
     // Add ripple effect to buttons
     const buttons = document.querySelectorAll(".desktop-login, .mobile-login");
     
