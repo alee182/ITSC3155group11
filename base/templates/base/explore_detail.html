@@ -55,7 +55,9 @@
           
           <!-- Seller info -->
           <div class="seller-info">
-            <img src="{% static 'images/avatar.png' %}" alt="Seller Avatar" class="seller-avatar">
+            <img src="{% if listing.created_by.profile_pic %}{{ listing.created_by.profile_pic.url }}{% else %}{% static 'images/avatar.png' %}{% endif %}" 
+              alt="Seller Avatar" 
+              class="seller-avatar">
             <div class="seller-details">
               <div class="seller-name">{{ listing.created_by.first_name }} {{ listing.created_by.last_name }}</div>
               <div class="seller-rating">
@@ -89,7 +91,10 @@
             
             <div class="detail-item">
               <div class="detail-label">Category</div>
-              <div class="detail-value">{{ listing.category.name }}</div>
+              <div class="detail-value">
+                  {{ listing.get_category_display }}
+                </a>
+              </div>              
             </div>
           </div>
           

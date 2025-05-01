@@ -185,6 +185,11 @@ a {
   font-weight: 600;
 }
 
+.badge.used {
+  background-color: #f0f0f0;
+  color: #333333;
+}
+
 .badge.new {
   background-color: #e3f6ec;
   color: #2e7d32;

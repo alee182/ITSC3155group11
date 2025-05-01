@@ -86,12 +86,6 @@
     <div class="product-grid" id="productGrid">
       {% for listing in listings %}
       <div class="product-card">
-        {% if listing.condition == 'new' %}
-        <div class="condition-tag">New</div>
-        {% elif listing.condition == 'like_new' %}
-        <div class="condition-tag">Like New</div>
-        {% endif %}
-        
         <a href="{% url 'explore_detail' listing.id %}">
           <div class="product-image-container">
             {% if listing.images.all %}
