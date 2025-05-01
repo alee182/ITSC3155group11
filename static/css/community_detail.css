@@ -285,11 +285,7 @@ body {
   gap: 15px;
 }
 
-.comment-avatar {
-  flex-shrink: 0;
-}
-
-.avatar-initials {
+/* .avatar-initials {
   width: 45px;
   height: 45px;
   border-radius: 50%;
@@ -300,7 +296,7 @@ body {
   justify-content: center;
   font-weight: 700;
   font-size: 1.6rem;
-}
+} */
 
 .comment-body {
   flex: 1;
@@ -381,6 +377,26 @@ body {
 .dislike-button.clicked,
 .share-button.clicked {
   transform: scale(0.95);
+}
+
+.comment-avatar {
+  width: 45px;
+  height: 45px;
+  border-radius: 50%;
+  overflow: hidden;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 15px;
+}
+
+.comment-pfp {
+  width: 45px;
+  height: 45px;
+  border-radius: 50%;
+  object-fit: cover;
+  display: block;
 }
 
 /* Responsive Design */
