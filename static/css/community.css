@@ -575,7 +575,6 @@ div[style*="background-color: #e8f4e8"] {
   line-height: 1.6;
   margin-bottom: 20px;
   display: -webkit-box;
-  -webkit-line-clamp: 3;
   -webkit-box-orient: vertical;
   overflow: hidden;
 }
@@ -652,7 +651,6 @@ div[style*="background-color: #e8f4e8"] {
 .posts-grid .post-description {
   font-size: 14px;
   margin-bottom: 15px;
-  -webkit-line-clamp: 2;
 }
 
 .posts-grid .post-footer {

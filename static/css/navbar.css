@@ -29,7 +29,6 @@ html {
 
 body {
   background: var(--color-bg);
-  color: var(--color-white);
   font-size: 1.6rem;
   min-height: 100vh;
 }

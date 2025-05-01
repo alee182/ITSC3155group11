@@ -1,61 +1,118 @@
-{% include 'navbar.html' %}
 {% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Community | Niner Market</title>
+  <link rel="stylesheet" href="{% static 'css/community_detail.css' %}">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+  {% include 'navbar.html' %}
 
-{% block content %}
-<link rel="stylesheet" href="{% static 'css/community_detail.css' %}">
-
-{% if request.user == post.created_by %}
-<a href="{% url 'delete-post' post.id %}" class="delete-btn">🗑️ Delete</a>
-{% endif %}
-
-<div class="detail-container">
-  
-
-  <div class="post-detail-card">
-    <!-- Image and Info -->
-    <div class="image-section">
-      {% if post.image %}
-        <img src="{{ post.image.url }}" alt="{{ post.title }}">
-      {% else %}
-        <img src="{% static 'images/default-post.png' %}" alt="No image">
+  <div class="container">
+    <!-- Navigation Buttons at the top -->
+    <div class="navigation-controls">
+      <a href="{% url 'community' %}" class="back-button">
+        <i class="fas fa-arrow-left"></i> Back
+      </a>
+      {% if request.user == post.created_by %}
+      <a href="{% url 'delete-post' post.id %}" class="delete-button">
+        <i class="fas fa-trash-alt"></i> Delete
+      </a>
       {% endif %}
     </div>
+    
+    <div class="event-card">
+      <!-- Event Image -->
+      <div class="event-image">
+        {% if post.image %}
+          <img src="{{ post.image.url }}" alt="{{ post.title }}">
+        {% else %}
+          <img src="{% static 'images/default-post.png' %}" alt="No image">
+        {% endif %}
+      </div>
 
-    <div class="info-section">
-      <h2>{{ post.title }}</h2>
-      <p class="description">{{ post.description }}</p>
-      <p class="date-range">
-        {{ post.start_date|date:"M d, Y" }} - {{ post.end_date|date:"M d, Y" }}
-      </p>
+      <!-- Event Content -->
+      <div class="event-content">
+        <h1 class="event-title">{{ post.title }}</h1>
+        
+        <div class="event-date">
+          <i class="far fa-calendar-alt"></i>
+          <span>{{ post.start_date|date:"M d, Y" }} - {{ post.end_date|date:"M d, Y" }}</span>
+        </div>
+        
+        <div class="event-description">
+          <p>{{ post.description }}</p>
+        </div>
+        
+        <div class="reaction-section">
+          <div class="reaction-buttons">
+            <button class="like-button">
+              <i class="far fa-thumbs-up"></i>
+            </button>
+            
+            <button class="dislike-button">
+              <i class="far fa-thumbs-down"></i>
+            </button>
+          </div>
+          
+          <div class="share-wrapper">
+            <button class="share-button">
+              <i class="fas fa-share-alt"></i> Share
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
 
-      <div class="reaction-buttons">
-        <button class="like-btn">👍</button>
-        <button class="dislike-btn">👎</button>
+    <!-- Comments Section -->
+    <div class="comments-section">
+      <h2 class="section-heading">
+        Comments
+        <span class="comments-count">{{ comments|length }}</span>
+      </h2>
+      
+      <!-- Comment Form -->
+      <form method="POST" class="comment-form">
+        {% csrf_token %}
+        <textarea name="body" placeholder="Write a comment..." required></textarea>
+        <button type="submit" class="post-comment-button">
+          Post Comment
+        </button>
+      </form>
+      
+      <!-- Comments List -->
+      <div class="comments-list">
+        {% for comment in comments %}
+        <div class="comment">
+          <div class="comment-avatar">
+            <div class="avatar-initials">
+              {{ comment.user.first_name|first }}{{ comment.user.last_name|first }}
+            </div>
+          </div>
+          
+          <div class="comment-body">
+            <div class="comment-header">
+              <span class="comment-author">@{{ comment.user.first_name }} {{ comment.user.last_name }}</span>
+              <span class="comment-time">{{ comment.created_at|timesince }} ago</span>
+            </div>
+            
+            <p class="comment-text">{{ comment.body }}</p>
+          </div>
+        </div>
+        {% empty %}
+        <div class="no-comments">
+          <i class="far fa-comments"></i>
+          <p>No comments yet. Be the first to comment!</p>
+        </div>
+        {% endfor %}
       </div>
     </div>
   </div>
 
-  <!-- Comments Section -->
-  <div class="comments-section">
-    <h3>Comments</h3>
-    <form method="POST" class="comment-form">
-      {% csrf_token %}
-      <textarea name="body" rows="3" placeholder="Write a comment..." required></textarea>
-      <button type="submit">Comment</button>
-    </form>
-
-    <div class="comment-list">
-      {% for comment in comments %}
-        <div class="comment">
-          <strong>@{{ comment.user.first_name }} {{ comment.user.last_name }}</strong>
-          <span class="timestamp">{{ comment.created_at|timesince }} ago</span>
-          <p>{{ comment.body }}</p>
-        </div>
-      {% empty %}
-        <p>No comments yet. Be the first to comment!</p>
-      {% endfor %}
-    </div>
-</div>
-
-</div>
-{% endblock %}
+  <script src="{% static 'js/community_detail.js' %}"></script>
+</body>
+</html>
