@@ -24,27 +24,33 @@
     <h2 class="section-title">Browse Categories</h2>
     <div class="categories-container">
       <div class="categories-grid">
-        <a href="?category=electronics" class="category-card {% if category == 'electronics' %}active{% endif %}">
+        <a href="{% if category == 'electronics' %}{% url 'explore' %}{% else %}?category=electronics{% endif %}"
+          class="category-card {% if category == 'electronics' %}active{% endif %}">
           <div class="category-icon"><i class="fas fa-laptop"></i></div>
           <span>Electronics</span>
         </a>
-        <a href="?category=books" class="category-card {% if category == 'books' %}active{% endif %}">
+        <a href="{% if category == 'books' %}{% url 'explore' %}{% else %}?category=books{% endif %}"
+          class="category-card {% if category == 'books' %}active{% endif %}">
           <div class="category-icon"><i class="fas fa-book"></i></div>
           <span>Books</span>
         </a>
-        <a href="?category=furniture" class="category-card {% if category == 'furniture' %}active{% endif %}">
+        <a href="{% if category == 'furniture' %}{% url 'explore' %}{% else %}?category=furniture{% endif %}"
+          class="category-card {% if category == 'furniture' %}active{% endif %}">
           <div class="category-icon"><i class="fas fa-couch"></i></div>
           <span>Furniture</span>
         </a>
-        <a href="?category=clothing" class="category-card {% if category == 'clothing' %}active{% endif %}">
+        <a href="{% if category == 'clothes' %}{% url 'explore' %}{% else %}?category=clothes{% endif %}"
+          class="category-card {% if category == 'clothes' %}active{% endif %}">
           <div class="category-icon"><i class="fas fa-tshirt"></i></div>
           <span>Clothing</span>
         </a>
-        <a href="?category=sports" class="category-card {% if category == 'sports' %}active{% endif %}">
+        <a href="{% if category == 'sports' %}{% url 'explore' %}{% else %}?category=sports{% endif %}"
+          class="category-card {% if category == 'sports' %}active{% endif %}">
           <div class="category-icon"><i class="fas fa-basketball-ball"></i></div>
           <span>Sports</span>
         </a>
-        <a href="?category=other" class="category-card {% if category == 'other' %}active{% endif %}">
+        <a href="{% if category == 'other' %}{% url 'explore' %}{% else %}?category=other{% endif %}"
+          class="category-card {% if category == 'other' %}active{% endif %}">
           <div class="category-icon"><i class="fas fa-ellipsis-h"></i></div>
           <span>Other</span>
         </a>
