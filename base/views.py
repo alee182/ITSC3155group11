@@ -366,7 +366,14 @@ def edit_sale(request, pk):
         form = ListingForm(request.POST, request.FILES, instance=listing)
 
         if form.is_valid():
-            form.save()
+            listing = form.save(commit=False)  # save but don’t commit yet
+            listing.save()  # just in case
+
+            # Handle removed images
+            removed_ids_str = request.POST.get('removed_images', '')
+            if removed_ids_str:
+                removed_ids = [int(id) for id in removed_ids_str.split(',') if id.isdigit()]
+                listing.images.filter(id__in=removed_ids).delete()
 
             # Handle new image uploads
             files = request.FILES.getlist('images')
@@ -375,17 +382,29 @@ def edit_sale(request, pk):
 
             messages.success(request, 'Listing updated successfully!')
             return redirect('sales')
+        else:
+            messages.error(request, 'Form is invalid! Please check your fields.')
     else:
         form = ListingForm(instance=listing)
+        inital_data = {
+            'accepted_payments': listing.accepted_payments.split(',') if listing.accepted_payments else [],
+        }
+        form = ListingForm(instance=listing, initial=inital_data)
 
-    return render(request, 'base/edit_sale.html', {'form': form, 'listing': listing})
-
+    return render(request, 'base/edit_sale.html', {
+        'form': form,
+        'listing': listing,
+    })
 @login_required
 def delete_sale(request, pk):
     listing = get_object_or_404(Listing, pk=pk, created_by=request.user)
+
     if request.method == 'POST':
         listing.delete()
-        return redirect('sales')
+        messages.success(request, 'Listing deleted successfully!')
+        return redirect('sales')  # change 'sales' to your actual listings page name
+
+    messages.error(request, 'Invalid request method.')
     return redirect('edit_sale', pk=pk)
 
 def explore(request):

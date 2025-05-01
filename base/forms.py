@@ -110,6 +110,10 @@ class ListingForm(forms.ModelForm):
             'price': forms.NumberInput(attrs={'class': 'form-control'}),
             'quantity': forms.NumberInput(attrs={'class': 'form-control'}),
         }
+        
+    def clean_accepted_payments(self):
+        payments = self.cleaned_data.get('accepted_payments')
+        return ','.join(payments)
 
 class ReviewForm(forms.ModelForm):
     class Meta:

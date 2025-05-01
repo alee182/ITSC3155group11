@@ -73,7 +73,7 @@ class Listing(models.Model):
     description = models.TextField(default='No description provided.')
     price = models.DecimalField(max_digits=8, decimal_places=2)
     quantity = models.PositiveIntegerField(default=1)
-    accepted_payments = models.CharField(max_length=100, null=True, blank=True)
+    accepted_payments = models.CharField(max_length=255, null=True, blank=True)
     negotiable = models.BooleanField(default=False)
     condition = models.CharField(max_length=20, choices=CONDITION_CHOICES, default='used')
     created_by = models.ForeignKey('base.User', on_delete=models.CASCADE)

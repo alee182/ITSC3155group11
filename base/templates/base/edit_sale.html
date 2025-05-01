@@ -31,15 +31,18 @@
             <div class="image-count"><span id="imageCount">{{ listing.images.count }}</span>/5 images selected</div>
             <div class="image-preview-container" id="imagePreviewContainer">
               {% for image in listing.images.all %}
-                <div class="image-preview">
+                <div class="image-preview existing-image">
                   <img src="{{ image.image.url }}" alt="Preview">
                   <button type="button" class="remove-image" data-id="{{ image.id }}">
                     <i class="fas fa-times"></i>
                   </button>
                 </div>
               {% endfor %}
+
             </div>
           </div>
+
+          <input type="hidden" name="removed_images" id="removedImages">
 
           <!-- Item Name -->
           <div class="form-group">
@@ -105,6 +108,8 @@
         <button type="submit" class="submit-btn"><i class="fas fa-save"></i> Update Listing</button>
       </div>
       
+    </form>
+
       <!-- Delete Button -->
       <div class="delete-section">
         <form action="{% url 'delete_sale' listing.id %}" method="POST" onsubmit="return confirm('Are you sure you want to delete this listing? This action cannot be undone.');">
@@ -112,7 +117,6 @@
           <button type="submit" class="delete-btn"><i class="fas fa-trash-alt"></i> Delete Listing</button>
         </form>
       </div>
-    </form>
   </div>
 </div>
 <script src="{% static 'js/edit_sale.js' %}"></script>
