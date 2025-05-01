@@ -13,7 +13,7 @@ from django.utils.text import slugify
 from .forms import CreateUserForm
 from .models import Post
 from django.db.models import Count
-
+from django.core.paginator import Paginator
 # Create your views here.
 
 def home(request):
@@ -409,10 +409,43 @@ def delete_sale(request, pk):
 
 def explore(request):
     listings = Listing.objects.all()
-    query = request.GET.get('q')
+    query = request.GET.get('q', '')
+    category = request.GET.get('category', '')
+    sort_by = request.GET.get('sort', '')
+
+    # Filter by search
     if query:
         listings = listings.filter(title__icontains=query)
-    return render(request, 'base/explore.html', {'listings': listings, 'query': query})
+
+    # Filter by category
+    if category:
+        listings = listings.filter(category__iexact=category)
+
+    # Sort listings
+    if sort_by == 'price_low':
+        listings = listings.order_by('price')
+    elif sort_by == 'price_high':
+        listings = listings.order_by('-price')
+    else:  # default is most recent
+        listings = listings.order_by('-created_at')
+
+    # Pagination
+    paginator = Paginator(listings, 12)  # 12 per page
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+
+    # Category name display (title case)
+    category_display = category.title() if category else ''
+
+    return render(request, 'base/explore.html', {
+        'listings': page_obj.object_list,
+        'query': query,
+        'category': category,
+        'category_display': category_display,
+        'sort_by': sort_by,
+        'page_obj': page_obj,
+        'is_paginated': page_obj.has_other_pages(),
+    })
 
 
 def explore_detail(request, pk):
