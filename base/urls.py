@@ -34,6 +34,9 @@ urlpatterns = [
 
     path('profile/edit-first-name/', views.edit_first_name, name='edit_first_name'),
     path('profile/edit-last-name/', views.edit_last_name, name='edit_last_name'),
+    
+    path('report/<int:pk>/', views.report_listing, name='report_listing'),
+
 
 
 ]

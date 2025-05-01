@@ -108,7 +108,7 @@ class Report(models.Model):
     user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
     reason = models.TextField()
     timestamp = models.DateTimeField(auto_now_add=True)
-    category = models.CharField(max_length=255, choices=[('spam', 'Spam'), ('scam', 'Scam'), ('other', 'Other')])
+    category = models.CharField(max_length=255, choices=[('Inappropriate', 'Inappropriate'), ('Misleading', 'misleading'), ('Scam', 'Scam'), ('offensive', 'Offensive'), ('other', 'Other')])
 
 
 class Tag(models.Model):

@@ -10,7 +10,7 @@ from django.contrib.auth.forms import UserCreationForm
 from .forms import UserProfileForm, ListingForm, ReviewForm
 from django.contrib.auth import get_user_model
 from django.utils.text import slugify
-from .forms import CreateUserForm
+from .forms import CreateUserForm, ReportForm
 from .models import Post
 from django.db.models import Count
 from django.core.paginator import Paginator
@@ -473,4 +473,25 @@ def explore_detail(request, pk):
         'listing': listing,
         'form': form,
         'reviews': reviews
+    })
+
+@login_required
+def report_listing(request, pk):
+    listing = get_object_or_404(Listing, pk=pk)
+
+    if request.method == 'POST':
+        form = ReportForm(request.POST)
+        if form.is_valid():
+            report = form.save(commit=False)
+            report.user = request.user
+            report.listing = listing
+            report.save()
+            messages.success(request, 'Your report has been submitted.')
+            return redirect('explore_detail', pk=pk)
+    else:
+        form = ReportForm()
+
+    return render(request, 'base/report_listing.html', {
+        'listing': listing,
+        'form': form
     })

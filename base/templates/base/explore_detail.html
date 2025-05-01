@@ -45,6 +45,12 @@
         
         <!-- Product information -->
         <div class="product-info">
+          <div class="report-wrapper">
+            <a href="{% url 'report_listing' listing.id %}" class="report-link">
+              <i class="fas fa-flag"></i> Report Listing
+            </a>
+          </div>
+          
           <h1 class="product-title">{{ listing.title }}</h1>
           <div class="product-price">
             ${{ listing.price }}

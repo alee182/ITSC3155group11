@@ -3,6 +3,7 @@ from .models import Comment, Listing, Review
 from base.models import User
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.admin import UserAdmin
+from .models import Report
 class CommentForm(forms.ModelForm):
     class Meta:
         model = Comment
@@ -121,4 +122,17 @@ class ReviewForm(forms.ModelForm):
         fields = ['body']
         widgets = {
             'body': forms.Textarea(attrs={'rows': 3, 'placeholder': 'Write your review here...'})
+        }
+        
+class ReportForm(forms.ModelForm):
+    class Meta:
+        model = Report
+        fields = ['category', 'reason']
+        widgets = {
+            'category': forms.Select(attrs={'class': 'form-control'}),
+            'reason': forms.Textarea(attrs={
+                'placeholder': 'Write the reason for reporting here...',
+                'class': 'form-control',
+                'rows': 5,
+            }),
         }
