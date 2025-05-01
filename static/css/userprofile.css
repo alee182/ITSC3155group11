@@ -1,0 +1,119 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap');
+
+:root {
+  --color-main: #004225;
+  --color-main-dark: #003018;
+  --color-accent: #F1E6B2;
+  --color-white: #ffffff;
+  --color-bg: #f0f5f0;
+  --color-border: rgba(0, 66, 37, 0.1);
+  --color-text: #333333;
+  --color-text-light: #666666;
+  --border-radius-sm: 6px;
+  --border-radius-md: 8px;
+  --border-radius-lg: 12px;
+  --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.08);
+  --transition-fast: 0.2s ease;
+  --transition-medium: 0.3s ease;
+  --font-base: 'Montserrat', sans-serif;
+}
+
+body {
+  background-color: var(--color-bg);
+  font-family: var(--font-base);
+  color: var(--color-white);
+  margin: 0;
+  padding: 0;
+}
+
+.container {
+  max-width: 800px;
+  margin: 40px auto;
+  padding: 0 20px;
+}
+
+h2 {
+  font-size: 28px;
+  font-weight: 700;
+  color: var(--color-main);
+  margin-bottom: 25px;
+}
+
+.card {
+  background-color: var(--color-main);
+  border-radius: var(--border-radius-lg);
+  box-shadow: var(--shadow-sm);
+  padding: 30px;
+  border: 1px solid var(--color-border);
+}
+
+.card .d-flex {
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.card img {
+  border-radius: 50%;
+  border: 2px solid var(--color-white);
+  object-fit: cover;
+  box-shadow: var(--shadow-sm);
+  transition: transform var(--transition-fast);
+  margin-bottom: 20px;
+}
+
+.card img:hover {
+  transform: scale(1.03);
+}
+
+.btn-outline-primary {
+  font-weight: 600;
+  font-size: 14px;
+  padding: 8px 14px;
+  border: 2px solid var(--color-main);
+  color: var(--color-main);
+  background-color: transparent;
+  border-radius: var(--border-radius-sm);
+  transition: all var(--transition-fast);
+}
+
+.btn-outline-primary:hover {
+  background-color: var(--color-main);
+  color: var(--color-white);
+}
+
+.btn-outline-secondary {
+  font-weight: 500;
+  font-size: 13px;
+  padding: 6px 10px;
+  border: 1px solid var(--color-border);
+  color: var(--color-text-light);
+  background-color: var(--color-bg);
+  border-radius: var(--border-radius-sm);
+  transition: all var(--transition-fast);
+}
+
+.btn-outline-secondary:hover {
+  background-color: var(--color-main);
+  color: var(--color-white);
+  border-color: var(--color-main);
+}
+
+.mb-2 {
+  margin-bottom: 16px;
+  color: var(--color-white);
+}
+
+strong {
+  font-weight: 600;
+  color: var(--color-white);
+}
+
+.profile-pic-clickable {
+    transition: transform 0.2s ease;
+  }
+  
+  .profile-pic-clickable:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 0 3px rgba(0, 66, 37, 0.2);
+  }

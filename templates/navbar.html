@@ -60,7 +60,8 @@
         {% if user.is_authenticated %}
             <div class="desktop-buttons">
                 <a href="{% url 'profile' %}" class="profile-icon">
-                    <img src="{% static 'images/Profile.png' %}" alt="profile">
+                    <img src="{% if user.profile_pic %}{{ user.profile_pic.url }}{% else %}{% static 'images/emptyuserprofile.jpg' %}{% endif %}"
+                         alt="Profile" class="nav-profile-pic">
                 </a>
                 <a href="{% url 'logout' %}" class="desktop-login">Logout</a>
             </div>

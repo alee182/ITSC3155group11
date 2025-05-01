@@ -32,5 +32,8 @@ urlpatterns = [
     path('explore/', views.explore, name='explore'),
     path('explore/<int:pk>/', views.explore_detail, name='explore_detail'),
 
+    path('profile/edit-first-name/', views.edit_first_name, name='edit_first_name'),
+    path('profile/edit-last-name/', views.edit_last_name, name='edit_last_name'),
+
 
 ]

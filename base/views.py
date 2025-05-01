@@ -286,8 +286,9 @@ def edit_first_name(request):
         if first_name:
             request.user.first_name = first_name
             request.user.save()
-            return redirect('profile')
-    return render(request, 'base/edit_first_name.html')
+        return redirect('profile')
+
+    return render(request, 'base/edit_first_name.html', {'user': request.user})
 
 @login_required
 def edit_last_name(request):
@@ -296,8 +297,9 @@ def edit_last_name(request):
         if last_name:
             request.user.last_name = last_name
             request.user.save()
-            return redirect('profile')
-    return render(request, 'base/edit_last_name.html')
+        return redirect('profile')
+
+    return render(request, 'base/edit_last_name.html', {'user': request.user})
 
 @login_required
 def edit_email(request):

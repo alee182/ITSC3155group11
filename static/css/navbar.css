@@ -268,11 +268,6 @@ a {
   transform: translateY(-2px);
 }
 
-.profile-icon img {
-  width: 2.4rem;
-  height: 2.4rem;
-}
-
 /* Login Buttons */
 .desktop-login,
 .mobile-login,
@@ -458,4 +453,17 @@ a {
       transform: translateY(0);
     }
   }
+}
+
+.nav-profile-pic {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid var(--color-main);
+  transition: transform 0.2s ease;
+}
+
+.nav-profile-pic:hover {
+  transform: scale(1.05);
 }
