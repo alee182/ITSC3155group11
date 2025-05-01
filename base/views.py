@@ -335,22 +335,27 @@ def sales_page(request):
 def create_sale(request):
     if request.method == 'POST':
         form = ListingForm(request.POST)
-        images = request.FILES.getlist('images')  # Get all uploaded files
+        images = request.FILES.getlist('images')
 
         if form.is_valid():
             listing = form.save(commit=False)
             listing.created_by = request.user
-            listing.accepted_payments = ','.join(form.cleaned_data['accepted_payments'])
+
+            # These fields are NOT part of the form — you rendered them manually
+            listing.description = request.POST.get('description')
+            listing.category = request.POST.get('category')
+            listing.negotiable = request.POST.get('negotiable') == 'yes'
+            listing.accepted_payments = ','.join(request.POST.getlist('accepted_payments'))
+
             listing.save()
 
-            # Save each uploaded image
             for img in images:
                 ListingImage.objects.create(listing=listing, image=img)
 
             return redirect('sales')
     else:
         form = ListingForm()
-    
+
     return render(request, 'base/create_sale.html', {'form': form})
 
 @login_required

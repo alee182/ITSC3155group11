@@ -54,26 +54,63 @@ class CreateUserForm(UserCreationForm):
         
         return cleaned_data
 
+from django import forms
+from .models import Listing
+
 class ListingForm(forms.ModelForm):
     accepted_payments = forms.MultipleChoiceField(
         choices=Listing.PAYMENT_CHOICES,
         widget=forms.CheckboxSelectMultiple,
         required=False
     )
+
     negotiable = forms.ChoiceField(
-        choices=[(True, 'Yes'), (False, 'No')],
+        choices=[
+            (True, 'Yes'),
+            (False, 'No')
+        ],
         widget=forms.RadioSelect
     )
+
     condition = forms.ChoiceField(
         choices=Listing.CONDITION_CHOICES,
         widget=forms.RadioSelect
     )
+    
+    CATEGORY_CHOICES = [
+            ('Electronics', 'Electronics'),
+            ('Sports', 'Sports'),
+            ('Clothing', 'Clothing'),
+            ('Books', 'Books'),
+            ('Furniture', 'Furniture'),
+            ('Other', 'Other')
+        ]
+    
+    category = forms.ChoiceField(
+            choices=CATEGORY_CHOICES,
+            widget=forms.Select(attrs={'class': 'form-control'})
+        )
 
     class Meta:
         model = Listing
-        fields = ['title', 'description', 'price', 'quantity',
-                  'accepted_payments', 'negotiable', 'condition']
         
+        fields = [
+            'title',
+            'description',
+            'price',
+            'quantity',
+            'accepted_payments',
+            'negotiable',
+            'condition',
+            'category',
+        ]
+        widgets = {
+            'title': forms.TextInput(attrs={'class': 'form-control'}),
+            'description': forms.Textarea(attrs={'rows': 4, 'class': 'form-control'}),
+            'price': forms.NumberInput(attrs={'class': 'form-control'}),
+            'quantity': forms.NumberInput(attrs={'class': 'form-control'}),
+        }
+
 class ReviewForm(forms.ModelForm):
     class Meta:
         model = Review

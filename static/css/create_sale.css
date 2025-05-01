@@ -1,65 +1,347 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap');
+
+:root {
+  --color-main: #004225;
+  --color-light-main: #00532e;
+  --color-accent: #F1E6B2;
+  --color-hover: #A49665;
+  --color-white: #ffffff;
+  --color-bg: #f0f5f0;
+  --color-text: #333333;
+  --color-text-light: #666666;
+  --color-border: #e0e0e0;
+  --shadow-sm: 0 2px 5px rgba(0, 0, 0, 0.05);
+  --transition-medium: 0.3s ease;
+  --border-radius: 10px;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Montserrat', sans-serif;
+}
+
+body {
+  background-color: var(--color-bg);
+  color: var(--color-text);
+  font-size: 16px;
+  padding-top: 0;
+  min-height: 100vh;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 100px auto 50px; /* Added top margin to position below navbar */
+  padding: 0 20px;
+}
+
+/* Section Title - matches with explore page */
+.section-title {
+  font-size: 24px;
+  font-weight: 600;
+  color: var(--color-main);
+  text-align: center;
+  margin: 20px 0 30px;
+}
+
+/* Create Sale Form Wrapper */
 .create-sale-wrapper {
-    max-width: 1000px;
-    margin: auto;
-    background-color: hsl(103, 21%, 76%);
-    padding: 30px;
-    border-radius: 15px;
-  }
-  
-  .create-sale-wrapper h2 {
-    text-align: center;
-    color: #004225;
-  }
-  
+  background-color: var(--color-white);
+  border-radius: var(--border-radius);
+  padding: 30px;
+  box-shadow: var(--shadow-sm);
+  margin-bottom: 40px;
+}
+
+/* Form Grid Layout */
+.form-grid {
+  display: flex;
+  gap: 30px;
+  margin-bottom: 30px;
+}
+
+.left-section,
+.right-section {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* Form Groups */
+.form-group {
+  margin-bottom: 5px;
+}
+
+.form-row {
+  display: flex;
+  gap: 15px;
+  margin-bottom: 5px;
+}
+
+.form-group.half {
+  flex: 1;
+}
+
+label {
+  display: block;
+  font-weight: 600;
+  color: var(--color-main);
+  margin-bottom: 8px;
+}
+
+/* Inputs Styling */
+input[type="text"],
+input[type="number"],
+textarea,
+select {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--border-radius);
+  font-size: 15px;
+  transition: border-color var(--transition-medium);
+}
+
+input:focus,
+textarea:focus,
+select:focus {
+  outline: none;
+  border-color: var(--color-main);
+  box-shadow: 0 0 0 2px rgba(0, 66, 37, 0.1);
+}
+
+textarea {
+  min-height: 150px;
+  resize: vertical;
+}
+
+/* Image Upload Area */
+.image-upload-container {
+  margin-bottom: 20px;
+}
+
+.upload-area {
+  border: 2px dashed var(--color-border);
+  border-radius: var(--border-radius);
+  padding: 30px;
+  text-align: center;
+  cursor: pointer;
+  transition: all var(--transition-medium);
+}
+
+.upload-area:hover {
+  border-color: var(--color-main);
+  background-color: rgba(0, 66, 37, 0.03);
+}
+
+.upload-area i {
+  font-size: 40px;
+  color: var(--color-main);
+  margin-bottom: 10px;
+  display: block;
+}
+
+.upload-area span {
+  font-weight: 600;
+  color: var(--color-main);
+  display: block;
+  margin-bottom: 5px;
+}
+
+.upload-hint {
+  font-size: 13px;
+  color: var(--color-text-light);
+}
+
+input[type="file"] {
+  display: none;
+}
+
+/* Image count display */
+.image-count {
+  margin-top: 10px;
+  font-size: 14px;
+  color: var(--color-text-light);
+  text-align: right;
+}
+
+/* Image Preview */
+.image-preview-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 15px;
+}
+
+.image-preview {
+  position: relative;
+  width: 100px;
+  height: 100px;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.image-preview:hover {
+  transform: scale(1.05);
+  box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+}
+
+.image-preview img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.remove-image {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background-color: rgba(255, 255, 255, 0.9);
+  color: #ff5252;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 12px;
+  border: none;
+  transition: background-color 0.2s ease, transform 0.2s ease;
+}
+
+.remove-image:hover {
+  background-color: #ff5252;
+  color: white;
+  transform: rotate(90deg);
+}
+
+/* Category with Icon */
+select.with-icon {
+  padding-right: 40px; /* Space for the icon */
+}
+
+.form-group {
+  position: relative;
+}
+
+.category-icon {
+  position: absolute;
+  right: 10px;
+  top: 40px;
+  color: var(--color-main);
+  pointer-events: none;
+}
+
+/* Negotiable checkbox styling */
+.negotiable-container {
+  margin-top: 10px;
+}
+
+.checkbox-label {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  font-weight: normal;
+  margin-bottom: 0;
+}
+
+input[type="checkbox"] {
+  width: 18px;
+  height: 18px;
+  margin-right: 8px;
+  accent-color: var(--color-main);
+}
+
+.checkbox-text {
+  font-size: 14px;
+  color: var(--color-text-light);
+}
+
+/* Payment options */
+.payment-options {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+/* Submit Section */
+.submit-section {
+  display: flex;
+  justify-content: flex-end;
+  gap: 15px;
+  margin-top: 20px;
+}
+
+.cancel-btn {
+  padding: 12px 24px;
+  background-color: #f0f0f0;
+  color: var(--color-text);
+  border: none;
+  border-radius: 25px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color var(--transition-medium);
+}
+
+.cancel-btn:hover {
+  background-color: #e0e0e0;
+}
+
+.submit-btn {
+  padding: 12px 30px;
+  background-color: var(--color-main);
+  color: var(--color-white);
+  border: none;
+  border-radius: 25px;
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  transition: background-color var(--transition-medium);
+}
+
+.submit-btn:hover {
+  background-color: var(--color-light-main);
+}
+
+.submit-btn i {
+  font-size: 14px;
+}
+
+/* Condition-Negotiable section */
+.condition-negotiable {
+  align-items: flex-start;
+}
+
+.negotiable-group {
+  display: flex;
+  align-items: center;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
   .form-grid {
-    display: flex;
-    gap: 50px;
+    flex-direction: column;
+    gap: 20px;
   }
   
-  .left-section,
-  .right-section {
-    flex: 1;
-    display: flex;
+  .form-row {
     flex-direction: column;
     gap: 15px;
   }
   
-  label {
-    font-weight: bold;
-    color: #004225;
+  .submit-section {
+    flex-direction: column;
   }
   
-  input[type="text"],
-  input[type="number"],
-  textarea,
-  select,
-  input[type="file"] {
-    padding: 10px;
-    font-size: 1rem;
-    border-radius: 10px;
-    border: none;
+  .cancel-btn, .submit-btn {
     width: 100%;
+    justify-content: center;
   }
-  
-  textarea {
-    min-height: 100px;
-  }
-  
-  .submit-btn {
-    text-align: center;
-    margin-top: 20px;
-  }
-  
-  button {
-    background-color: #175f1e;
-    color: white;
-    padding: 12px 40px;
-    border: none;
-    font-size: 1.2rem;
-    border-radius: 20px;
-    cursor: pointer;
-  }
-  
-  button:hover {
-    background-color: #143d18;
-  }
+}
