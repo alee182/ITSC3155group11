@@ -1,10 +1,10 @@
 from django.db import models
-from django.contrib.auth.models import AbstractUser
+from django.contrib.auth.models import AbstractUser, User
 from taggit.managers import TaggableManager
 from django.conf import settings
 from django.utils.text import slugify
 from django.contrib.auth.models import BaseUserManager, AbstractBaseUser, PermissionsMixin
-
+import datetime
 
 class CustomUserManager(BaseUserManager):
     def create_user(self, email, password=None, **extra_fields):
@@ -77,7 +77,7 @@ class Listing(models.Model):
     negotiable = models.BooleanField(default=False)
     condition = models.CharField(max_length=20, choices=CONDITION_CHOICES, default='used')
     created_by = models.ForeignKey('base.User', on_delete=models.CASCADE)
-    created_at = models.DateTimeField(auto_now_add=True)
+    created_at = created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
         return self.title
@@ -101,17 +101,26 @@ class Report(models.Model):
     category = models.CharField(max_length=255, choices=[('spam', 'Spam'), ('scam', 'Scam'), ('other', 'Other')])
 
 
+class Tag(models.Model):
+    name = models.CharField(max_length=50)
+    
+    def __str__(self):
+        return self.name
+
+
 class Post(models.Model):
     title = models.CharField(max_length=100)
     description = models.TextField()
+    image = models.ImageField(upload_to='posts/', blank=True, null=True)
+    created_by = models.ForeignKey(User, on_delete=models.CASCADE)
+    created_at = models.DateTimeField(default=datetime.datetime.now)
     start_date = models.DateField()
     end_date = models.DateField()
-    image = models.ImageField(upload_to='post_images/', null=True, blank=True)
-    created_by = models.ForeignKey('base.User', on_delete=models.CASCADE)
-    tags = TaggableManager(blank=True)
+    tags = TaggableManager()
 
     def __str__(self):
         return self.title
+
 
 
 class Comment(models.Model):

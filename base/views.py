@@ -11,6 +11,8 @@ from .forms import UserProfileForm, ListingForm, ReviewForm
 from django.contrib.auth import get_user_model
 from django.utils.text import slugify
 from .forms import CreateUserForm
+from .models import Post
+from django.db.models import Count
 
 # Create your views here.
 
@@ -57,25 +59,51 @@ def message_view(request, slug=None):
 
 @login_required
 def community_view(request):
-    tag = request.GET.get('tag')
-    search_query = request.GET.get('q', '')
-
-    if tag:
-        posts = Post.objects.filter(tags__name__icontains=tag).distinct().order_by('-start_date')
-    elif search_query:
-        posts = Post.objects.filter(
-            Q(title__icontains=search_query) |
-            Q(description__icontains=search_query) |
-            Q(tags__name__icontains=search_query)
-        ).distinct().order_by('-start_date')
-    else:
-        posts = Post.objects.all().order_by('-start_date')
-
-    return render(request, 'base/community.html', {
+    """Main view for the community page with tag search integration"""
+    
+    # Get query parameters
+    tag_filter = request.GET.get('tag')
+    search_query = request.GET.get('q')
+    
+    # Start with all posts
+    posts = Post.objects.all().order_by('-created_at')
+    
+    # Apply tag filter if specified
+    if tag_filter:
+        posts = posts.filter(tags__name__iexact=tag_filter)
+    
+    # Apply search filter if specified
+    if search_query:
+        posts = posts.filter(title__icontains=search_query) | posts.filter(description__icontains=search_query)
+    
+    # Get all tags with post counts for the tag search feature
+    all_tags = Tag.objects.annotate(post_count=Count('taggit_taggeditem_items'))
+    
+    # Prepare tag data with icon mappings
+    tag_icon_mapping = {
+        'haircut': 'fa-cut',
+        'food': 'fa-utensils',
+        'nails': 'fa-hand-sparkles',
+        'photography': 'fa-camera',
+        'events': 'fa-calendar-day',
+        'tutoring': 'fa-book',
+        'fitness': 'fa-dumbbell',
+        'art': 'fa-palette',
+        'plants': 'fa-leaf',
+    }
+    
+    # Assign icons to tags
+    for tag in all_tags:
+        tag.icon_class = tag_icon_mapping.get(tag.name.lower(), 'fa-tag')
+    
+    context = {
         'posts': posts,
-        'selected_tag': tag,
+        'all_tags': all_tags,
         'search_query': search_query,
-    })
+        'current_tag': tag_filter,
+    }
+    
+    return render(request, 'base/community.html', context)
 
 @login_required
 def create_post(request):

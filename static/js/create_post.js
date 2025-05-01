@@ -418,7 +418,7 @@ document.addEventListener('DOMContentLoaded', () => {
       
       const confirmed = confirm('Are you sure you want to cancel? Any unsaved changes will be lost.');
       if (confirmed) {
-        window.location.href = '/'; // Redirect to homepage or listing page
+        window.location.href = '/community';
       }
     });
     
