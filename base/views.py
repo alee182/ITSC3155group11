@@ -17,7 +17,7 @@ from django.db.models import Count
 # Create your views here.
 
 def home(request):
-    return render(request, 'base/index.html')
+    return render(request, 'index.html')
 
 User = get_user_model()
 
